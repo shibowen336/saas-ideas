@@ -6,6 +6,8 @@ type ToolIdeaFormProps = {
 };
 
 export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormProps) {
+  const isZh = locale === "zh";
+
   return (
     <form
       action={localizedStaticPath(locale, "report")}
@@ -14,14 +16,16 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
       <div className="grid gap-5">
         <div>
           <label htmlFor="idea" className="mb-2 block text-sm font-semibold text-slate-900">
-            SaaS idea
+            {isZh ? "SaaS 想法" : "SaaS idea"}
           </label>
           <textarea
             id="idea"
             name="idea"
             required
             rows={compact ? 3 : 4}
-            placeholder="Example: AI onboarding assistant for Shopify stores"
+            placeholder={
+              isZh ? "例如：面向 Shopify 商家的 AI 新客引导助手" : "Example: AI onboarding assistant for Shopify stores"
+            }
             className="w-full rounded-3xl border border-slate-300 px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-accent"
           />
         </div>
@@ -31,36 +35,38 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
               htmlFor="targetCustomer"
               className="mb-2 block text-sm font-semibold text-slate-900"
             >
-              Target customer
+              {isZh ? "目标客户" : "Target customer"}
             </label>
             <input
               id="targetCustomer"
               name="targetCustomer"
-              placeholder="Indie hackers, Shopify brands, recruiters..."
+              placeholder={isZh ? "独立开发者、Shopify 商家、招聘顾问……" : "Indie hackers, Shopify brands, recruiters..."}
               className="min-h-12 w-full rounded-full border border-slate-300 px-4 text-sm text-slate-950 outline-none transition focus:border-accent"
             />
           </div>
           <div>
             <label htmlFor="pricingIdea" className="mb-2 block text-sm font-semibold text-slate-900">
-              Pricing idea
+              {isZh ? "定价思路" : "Pricing idea"}
             </label>
             <input
               id="pricingIdea"
               name="pricingIdea"
-              placeholder="$29/month, annual, usage-based..."
+              placeholder={isZh ? "例如：$29/月、年付、按用量收费……" : "$29/month, annual, usage-based..."}
               className="min-h-12 w-full rounded-full border border-slate-300 px-4 text-sm text-slate-950 outline-none transition focus:border-accent"
             />
           </div>
         </div>
         <div>
           <label htmlFor="problem" className="mb-2 block text-sm font-semibold text-slate-900">
-            Problem being solved
+            {isZh ? "要解决的问题" : "Problem being solved"}
           </label>
           <textarea
             id="problem"
             name="problem"
             rows={3}
-            placeholder="Describe the pain, the workflow bottleneck, and why it matters."
+            placeholder={
+              isZh ? "描述痛点、流程卡点，以及它为什么值得被解决。" : "Describe the pain, the workflow bottleneck, and why it matters."
+            }
             className="w-full rounded-3xl border border-slate-300 px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-accent"
           />
         </div>
@@ -69,12 +75,14 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
             htmlFor="currentAlternatives"
             className="mb-2 block text-sm font-semibold text-slate-900"
           >
-            Current alternatives
+            {isZh ? "当前替代方案" : "Current alternatives"}
           </label>
           <input
             id="currentAlternatives"
             name="currentAlternatives"
-            placeholder="Spreadsheets, agencies, manual workflows, incumbent tools..."
+            placeholder={
+              isZh ? "表格、代理服务、手工流程、现有工具……" : "Spreadsheets, agencies, manual workflows, incumbent tools..."
+            }
             className="min-h-12 w-full rounded-full border border-slate-300 px-4 text-sm text-slate-950 outline-none transition focus:border-accent"
           />
         </div>
@@ -84,10 +92,12 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
           type="submit"
           className="inline-flex min-h-12 items-center justify-center rounded-full bg-ink px-5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-900"
         >
-          Generate Validation Report
+          {isZh ? "生成验证报告" : "Generate Validation Report"}
         </button>
         <p className="text-sm leading-6 text-slate-500">
-          Reports include scores, risks, differentiation ideas, niche angle suggestions, and next-step tests.
+          {isZh
+            ? "报告包含评分、风险提示、差异化建议、细分切口建议和下一步验证动作。"
+            : "Reports include scores, risks, differentiation ideas, niche angle suggestions, and next-step tests."}
         </p>
       </div>
     </form>

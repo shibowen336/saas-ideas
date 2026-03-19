@@ -39,6 +39,9 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: "how-to-validate-a-saas-idea",
+    slugByLocale: {
+      zh: "如何验证saas想法"
+    },
     title: "How to Validate a SaaS Idea Before You Build",
     description:
       "A founder-friendly framework for validating a SaaS idea with interviews, landing page tests, pricing signals, and a practical next-step plan.",
@@ -122,6 +125,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "saas-idea-validation-checklist",
+    slugByLocale: {
+      zh: "saas想法验证清单"
+    },
     title: "SaaS Idea Validation Checklist for Founders",
     description:
       "Use this SaaS idea validation checklist to pressure-test customer pain, distribution, pricing, MVP scope, and founder risk before building.",
@@ -192,6 +198,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "micro-saas-ideas",
+    slugByLocale: {
+      zh: "适合独立创始人的25个微型saas想法"
+    },
     title: "25 Micro SaaS Ideas for Solopreneurs",
     description:
       "Explore 25 practical micro SaaS ideas for solopreneurs and learn how to evaluate each one for demand, distribution, and monetization.",
@@ -260,6 +269,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "ai-saas-ideas",
+    slugByLocale: {
+      zh: "值得探索的ai-saas想法"
+    },
     title: "AI SaaS Ideas Worth Exploring in 2026",
     description:
       "Practical AI SaaS ideas for founders, plus a framework for validating whether the market, buyer, and economics are strong enough to pursue.",
@@ -328,6 +340,9 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "startup-idea-validator-vs-market-research",
+    slugByLocale: {
+      zh: "创业想法验证器与传统市场研究"
+    },
     title: "Startup Idea Validator vs Traditional Market Research",
     description:
       "Learn when a startup idea validator is more useful than traditional market research and how to combine both approaches effectively.",

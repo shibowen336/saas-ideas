@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { NewsletterForm } from "@/components/newsletter-form";
+import { getProgrammaticPageSlug, programmaticPages } from "@/content/programmatic-pages";
 import { type Locale, getUiCopy, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 
@@ -10,6 +11,8 @@ type SiteFooterProps = {
 
 export function SiteFooter({ locale }: SiteFooterProps) {
   const copy = getUiCopy(locale);
+  const aiStartupPage = programmaticPages.find((page) => page.slug === "how-to-validate-an-ai-startup-idea");
+  const recruiterIdeasPage = programmaticPages.find((page) => page.slug === "micro-saas-ideas-for-recruiters");
 
   return (
     <footer className="border-t border-slate-200 bg-slate-950 text-slate-200">
@@ -72,7 +75,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
               </li>
               <li>
                 <Link
-                  href={localizedPath(locale, "/programmatic/how-to-validate-an-ai-startup-idea")}
+                  href={localizedPath(
+                    locale,
+                    `/programmatic/${aiStartupPage ? getProgrammaticPageSlug(locale, aiStartupPage) : "how-to-validate-an-ai-startup-idea"}`
+                  )}
                   className="hover:text-white"
                 >
                   {copy.footer.aiStartupValidation}
@@ -80,7 +86,10 @@ export function SiteFooter({ locale }: SiteFooterProps) {
               </li>
               <li>
                 <Link
-                  href={localizedPath(locale, "/programmatic/micro-saas-ideas-for-recruiters")}
+                  href={localizedPath(
+                    locale,
+                    `/programmatic/${recruiterIdeasPage ? getProgrammaticPageSlug(locale, recruiterIdeasPage) : "micro-saas-ideas-for-recruiters"}`
+                  )}
                   className="hover:text-white"
                 >
                   {copy.footer.recruiterIdeas}

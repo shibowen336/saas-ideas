@@ -29,6 +29,9 @@ export type ProgrammaticPage = {
 export const programmaticPages: ProgrammaticPage[] = [
   {
     slug: "validate-healthcare-saas-idea",
+    slugByLocale: {
+      zh: "验证医疗saas想法"
+    },
     title: "Validate a Healthcare SaaS Idea Before You Build",
     description:
       "Use a healthcare SaaS validation framework to assess demand, compliance friction, monetization, and founder fit before committing to a build.",
@@ -68,6 +71,9 @@ export const programmaticPages: ProgrammaticPage[] = [
   },
   {
     slug: "micro-saas-ideas-for-recruiters",
+    slugByLocale: {
+      zh: "招聘行业微型saas想法"
+    },
     title: "Micro SaaS Ideas for Recruiters That Are Worth Validating",
     description:
       "Explore practical micro SaaS ideas for recruiters and learn how to validate buyer pain, workflow fit, and monetization before building.",
@@ -107,6 +113,9 @@ export const programmaticPages: ProgrammaticPage[] = [
   },
   {
     slug: "industry-saas-ideas-for-accountants",
+    slugByLocale: {
+      zh: "会计行业saas想法"
+    },
     title: "Industry SaaS Ideas for Accountants and Bookkeeping Firms",
     description:
       "Find accounting SaaS ideas and use a founder-friendly framework to validate workflow pain, differentiation, and pricing before you build.",
@@ -146,6 +155,9 @@ export const programmaticPages: ProgrammaticPage[] = [
   },
   {
     slug: "how-to-validate-an-ai-startup-idea",
+    slugByLocale: {
+      zh: "如何验证ai创业想法"
+    },
     title: "How to Validate an AI Startup Idea Without Getting Lost in the Hype",
     description:
       "Learn how to validate an AI startup idea with a practical framework centered on buyer pain, distribution, trust, and monetization.",
