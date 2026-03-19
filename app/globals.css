@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body), sans-serif;
+    background:
+      radial-gradient(circle at top, rgba(249, 115, 22, 0.08), transparent 26rem),
+      linear-gradient(180deg, #fffaf2 0%, #fffdf9 55%, #fffaf4 100%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), sans-serif;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-space {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .surface-card {
+    @apply rounded-[2rem] border border-slate-200 bg-white shadow-sm;
+  }
+
+  .article-copy {
+    @apply max-w-prose text-base leading-8 text-slate-700;
+  }
+
+  .article-copy p + p {
+    @apply mt-5;
+  }
+
+  .article-copy ul {
+    @apply mt-5 list-disc pl-6;
+  }
+
+  .article-copy li + li {
+    @apply mt-2;
+  }
+}

@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#FFF8EF"/>
+  <circle cx="980" cy="120" r="220" fill="#F97316" fill-opacity="0.12"/>
+  <circle cx="220" cy="560" r="260" fill="#0F766E" fill-opacity="0.1"/>
+  <rect x="92" y="96" width="176" height="176" rx="40" fill="#111827"/>
+  <path d="M135 147C135 133.193 146.193 122 160 122H228V157H171V168H228C241.807 168 253 179.193 253 193V228C253 241.807 241.807 253 228 253H135V218H217V207H160C146.193 207 135 195.807 135 182V147Z" fill="#FFF8EF"/>
+  <circle cx="228" cy="139" r="16" fill="#F97316"/>
+  <text x="332" y="214" fill="#111827" font-family="Arial, sans-serif" font-size="72" font-weight="700">SaaS Idea Validator</text>
+  <text x="332" y="288" fill="#334155" font-family="Arial, sans-serif" font-size="34">Validate demand, competition, monetization, and MVP scope</text>
+  <rect x="332" y="354" width="214" height="64" rx="32" fill="#111827"/>
+  <text x="376" y="395" fill="#FFF8EF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Validate My Idea</text>
+  <rect x="606" y="354" width="210" height="64" rx="32" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="648" y="395" fill="#111827" font-family="Arial, sans-serif" font-size="28" font-weight="700">See Examples</text>
+</svg>
