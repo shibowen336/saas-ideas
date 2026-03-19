@@ -1,3 +1,4 @@
+import { type Locale, localizedPath } from "@/lib/i18n";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 type BreadcrumbItem = {
@@ -11,34 +12,37 @@ type FaqItem = {
 };
 
 type BlogSchemaInput = {
+  locale: Locale;
   title: string;
   description: string;
-  slug: string;
+  path: string;
   publishedTime: string;
   modifiedTime?: string;
 };
 
-export function organizationSchema() {
+export function organizationSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
     logo: absoluteUrl("/brand-mark.svg"),
-    sameAs: [siteConfig.links.x, siteConfig.links.linkedin]
+    sameAs: [siteConfig.links.x, siteConfig.links.linkedin],
+    inLanguage: locale === "zh" ? "zh-CN" : "en"
   };
 }
 
-export function websiteSchema() {
+export function websiteSchema(locale: Locale, description: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
-    description: siteConfig.description,
+    description,
+    inLanguage: locale === "zh" ? "zh-CN" : "en",
     potentialAction: {
       "@type": "SearchAction",
-      target: `${siteConfig.url}/blog?query={search_term_string}`,
+      target: `${siteConfig.url}${localizedPath(locale, "/blog")}?query={search_term_string}`,
       "query-input": "required name=search_term_string"
     }
   };
@@ -72,34 +76,42 @@ export function faqSchema(faqs: FaqItem[]) {
   };
 }
 
-export function softwareApplicationSchema() {
+type SoftwareApplicationInput = {
+  locale: Locale;
+  description: string;
+  featureList: readonly string[];
+  path: string;
+};
+
+export function softwareApplicationSchema({
+  locale,
+  description,
+  featureList,
+  path
+}: SoftwareApplicationInput) {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     name: siteConfig.name,
-    description: siteConfig.description,
-    url: absoluteUrl("/tool/saas-idea-validator"),
+    description,
+    url: absoluteUrl(path),
+    inLanguage: locale === "zh" ? "zh-CN" : "en",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD"
     },
-    featureList: [
-      "SaaS idea scoring",
-      "Demand and competition analysis",
-      "Monetization and MVP assessment",
-      "Founder-oriented validation checklist",
-      "Differentiation and positioning suggestions"
-    ]
+    featureList
   };
 }
 
 export function blogPostingSchema({
+  locale,
   title,
   description,
-  slug,
+  path,
   publishedTime,
   modifiedTime
 }: BlogSchemaInput) {
@@ -110,7 +122,8 @@ export function blogPostingSchema({
     description,
     datePublished: publishedTime,
     dateModified: modifiedTime ?? publishedTime,
-    mainEntityOfPage: absoluteUrl(`/blog/${slug}`),
+    mainEntityOfPage: absoluteUrl(path),
+    inLanguage: locale === "zh" ? "zh-CN" : "en",
     author: {
       "@type": "Organization",
       name: siteConfig.name

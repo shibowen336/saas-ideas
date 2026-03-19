@@ -1,3 +1,4 @@
+import type { Locale } from "@/lib/i18n";
 import type { FaqEntry } from "@/content/faq";
 
 export type BlogSection = {
@@ -7,8 +8,21 @@ export type BlogSection = {
 
 export type BlogPost = {
   slug: string;
+  slugByLocale?: Partial<Record<Locale, string>>;
   title: string;
   description: string;
+  translations?: Partial<
+    Record<
+      Locale,
+      {
+        title: string;
+        description: string;
+        category: string;
+        ctaTitle: string;
+        ctaCopy: string;
+      }
+    >
+  >;
   date: string;
   publishedTime: string;
   readingTime: string;
@@ -28,6 +42,15 @@ export const blogPosts: BlogPost[] = [
     title: "How to Validate a SaaS Idea Before You Build",
     description:
       "A founder-friendly framework for validating a SaaS idea with interviews, landing page tests, pricing signals, and a practical next-step plan.",
+    translations: {
+      zh: {
+        title: "如何在开发前验证一个 SaaS 想法",
+        description: "一套适合创始人的 SaaS 想法验证框架，涵盖访谈、落地页测试、定价信号和下一步行动。",
+        category: "验证",
+        ctaTitle: "用工具验证你的想法",
+        ctaCopy: "生成结构化验证报告，在真正投入开发前先看清需求、差异化和下一步计划。"
+      }
+    },
     date: "March 18, 2026",
     publishedTime: "2026-03-18T08:00:00.000Z",
     readingTime: "10 min read",
@@ -102,6 +125,15 @@ export const blogPosts: BlogPost[] = [
     title: "SaaS Idea Validation Checklist for Founders",
     description:
       "Use this SaaS idea validation checklist to pressure-test customer pain, distribution, pricing, MVP scope, and founder risk before building.",
+    translations: {
+      zh: {
+        title: "SaaS 想法验证清单",
+        description: "用这份 SaaS 想法验证清单，在开建前检查用户痛点、分发、定价、MVP 范围和创始人风险。",
+        category: "框架",
+        ctaTitle: "把清单变成报告",
+        ctaCopy: "使用 SaaS Idea Validator，把零散笔记转成有评分、有行动建议的验证报告。"
+      }
+    },
     date: "March 18, 2026",
     publishedTime: "2026-03-18T09:00:00.000Z",
     readingTime: "8 min read",
@@ -163,6 +195,15 @@ export const blogPosts: BlogPost[] = [
     title: "25 Micro SaaS Ideas for Solopreneurs",
     description:
       "Explore 25 practical micro SaaS ideas for solopreneurs and learn how to evaluate each one for demand, distribution, and monetization.",
+    translations: {
+      zh: {
+        title: "适合独立创始人的 25 个 Micro SaaS 想法",
+        description: "查看 25 个实用的 Micro SaaS 想法，并学习如何从需求、分发和变现角度进行评估。",
+        category: "想法",
+        ctaTitle: "给你的 Micro SaaS 想法打分",
+        ctaCopy: "把其中一个想法代入验证器，先找到最值得切入的细分角度。"
+      }
+    },
     date: "March 18, 2026",
     publishedTime: "2026-03-18T10:00:00.000Z",
     readingTime: "11 min read",
@@ -222,6 +263,15 @@ export const blogPosts: BlogPost[] = [
     title: "AI SaaS Ideas Worth Exploring in 2026",
     description:
       "Practical AI SaaS ideas for founders, plus a framework for validating whether the market, buyer, and economics are strong enough to pursue.",
+    translations: {
+      zh: {
+        title: "2026 年值得探索的 AI SaaS 想法",
+        description: "面向创始人的 AI SaaS 想法，以及判断市场、买家和经济模型是否足够成立的验证框架。",
+        category: "AI",
+        ctaTitle: "验证你的 AI SaaS 想法",
+        ctaCopy: "用验证器先评估市场清晰度、竞争强度和 MVP 复杂度，再决定是否开建。"
+      }
+    },
     date: "March 18, 2026",
     publishedTime: "2026-03-18T11:00:00.000Z",
     readingTime: "9 min read",
@@ -281,6 +331,15 @@ export const blogPosts: BlogPost[] = [
     title: "Startup Idea Validator vs Traditional Market Research",
     description:
       "Learn when a startup idea validator is more useful than traditional market research and how to combine both approaches effectively.",
+    translations: {
+      zh: {
+        title: "创业想法验证器 vs 传统市场研究",
+        description: "了解什么时候创业想法验证器比传统市场研究更有效，以及如何把两者结合起来使用。",
+        category: "策略",
+        ctaTitle: "先用更快的第一层过滤",
+        ctaCopy: "先用 SaaS Idea Validator 压测你的核心想法，再决定哪些风险需要更深的市场研究。"
+      }
+    },
     date: "March 18, 2026",
     publishedTime: "2026-03-18T12:00:00.000Z",
     readingTime: "8 min read",
@@ -338,4 +397,26 @@ export const blogPosts: BlogPost[] = [
 
 export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
+}
+
+export function getBlogPostByLocaleSlug(locale: Locale, slug: string) {
+  return blogPosts.find((post) => (post.slugByLocale?.[locale] ?? post.slug) === slug);
+}
+
+export function getBlogPostSlug(locale: Locale, post: BlogPost) {
+  return post.slugByLocale?.[locale] ?? post.slug;
+}
+
+export function getLocalizedBlogPost(post: BlogPost, locale: Locale) {
+  const translation = post.translations?.[locale];
+
+  return {
+    ...post,
+    slug: getBlogPostSlug(locale, post),
+    title: translation?.title ?? post.title,
+    description: translation?.description ?? post.description,
+    category: translation?.category ?? post.category,
+    ctaTitle: translation?.ctaTitle ?? post.ctaTitle,
+    ctaCopy: translation?.ctaCopy ?? post.ctaCopy
+  };
 }

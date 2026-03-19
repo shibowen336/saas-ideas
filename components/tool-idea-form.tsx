@@ -1,11 +1,14 @@
+import { type Locale, localizedStaticPath } from "@/lib/i18n";
+
 type ToolIdeaFormProps = {
+  locale?: Locale;
   compact?: boolean;
 };
 
-export function ToolIdeaForm({ compact = false }: ToolIdeaFormProps) {
+export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormProps) {
   return (
     <form
-      action="/tool/saas-idea-validator/report"
+      action={localizedStaticPath(locale, "report")}
       className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-glow sm:p-8"
     >
       <div className="grid gap-5">

@@ -1,8 +1,23 @@
+import type { Locale } from "@/lib/i18n";
+
 export type ProgrammaticPage = {
   slug: string;
+  slugByLocale?: Partial<Record<Locale, string>>;
   title: string;
   description: string;
   h1: string;
+  translations?: Partial<
+    Record<
+      Locale,
+      {
+        title: string;
+        description: string;
+        h1: string;
+        ctaTitle: string;
+        ctaCopy: string;
+      }
+    >
+  >;
   intro: string[];
   painPoints: string[];
   exampleIdeas: string[];
@@ -17,6 +32,15 @@ export const programmaticPages: ProgrammaticPage[] = [
     title: "Validate a Healthcare SaaS Idea Before You Build",
     description:
       "Use a healthcare SaaS validation framework to assess demand, compliance friction, monetization, and founder fit before committing to a build.",
+    translations: {
+      zh: {
+        title: "在开建前验证医疗 SaaS 想法",
+        description: "用医疗 SaaS 验证框架评估需求、合规摩擦、变现潜力和创始人匹配度。",
+        h1: "在开建前验证医疗 SaaS 想法",
+        ctaTitle: "给你的医疗 SaaS 想法打分",
+        ctaCopy: "先用 SaaS Idea Validator 压测需求、竞争和 MVP 复杂度，再决定是否进入合规投入更高的开发阶段。"
+      }
+    },
     h1: "Validate a Healthcare SaaS Idea Before You Build",
     intro: [
       "Healthcare SaaS ideas often look attractive because the pain is real and the budgets can be meaningful. They also fail faster when founders underestimate compliance, workflow change, and the time it takes to win trust.",
@@ -47,6 +71,15 @@ export const programmaticPages: ProgrammaticPage[] = [
     title: "Micro SaaS Ideas for Recruiters That Are Worth Validating",
     description:
       "Explore practical micro SaaS ideas for recruiters and learn how to validate buyer pain, workflow fit, and monetization before building.",
+    translations: {
+      zh: {
+        title: "值得验证的招聘行业 Micro SaaS 想法",
+        description: "探索适合招聘行业的 Micro SaaS 想法，并在开发前验证痛点、流程匹配和变现方式。",
+        h1: "招聘行业的 Micro SaaS 想法",
+        ctaTitle: "把招聘 SaaS 想法放进验证器",
+        ctaCopy: "生成结构化报告，查看你的招聘 SaaS 概念在需求、风险和下一步验证动作上的表现。"
+      }
+    },
     h1: "Micro SaaS Ideas for Recruiters",
     intro: [
       "Recruiting is full of repetitive, high-friction workflows that look perfect for micro SaaS. The trap is building another generic productivity tool without proving that recruiters will change process or pay for the outcome.",
@@ -77,6 +110,15 @@ export const programmaticPages: ProgrammaticPage[] = [
     title: "Industry SaaS Ideas for Accountants and Bookkeeping Firms",
     description:
       "Find accounting SaaS ideas and use a founder-friendly framework to validate workflow pain, differentiation, and pricing before you build.",
+    translations: {
+      zh: {
+        title: "面向会计师与代账公司的行业 SaaS 想法",
+        description: "寻找会计行业 SaaS 想法，并用创始人友好的框架验证流程痛点、差异化和定价。",
+        h1: "会计行业 SaaS 想法",
+        ctaTitle: "验证你的会计 SaaS 方向",
+        ctaCopy: "用核心验证器先评估变现、竞争压力和受众清晰度，再决定是否进入垂直 SaaS 开发。"
+      }
+    },
     h1: "Industry SaaS Ideas for Accountants",
     intro: [
       "Accounting teams already live inside multiple tools, templates, and recurring client workflows. That makes the category attractive for vertical SaaS, but only if the product removes a painful operational bottleneck instead of adding one more dashboard.",
@@ -107,6 +149,15 @@ export const programmaticPages: ProgrammaticPage[] = [
     title: "How to Validate an AI Startup Idea Without Getting Lost in the Hype",
     description:
       "Learn how to validate an AI startup idea with a practical framework centered on buyer pain, distribution, trust, and monetization.",
+    translations: {
+      zh: {
+        title: "如何验证一个 AI 创业想法",
+        description: "学习如何用一套围绕买家痛点、分发、信任和变现的实用框架来验证 AI 创业想法。",
+        h1: "如何验证一个 AI 创业想法",
+        ctaTitle: "压测你的 AI 创业想法",
+        ctaCopy: "先生成需求、竞争、MVP 简洁度和下一步动作的报告，再决定是否去做 AI SaaS。"
+      }
+    },
     h1: "How to Validate an AI Startup Idea",
     intro: [
       "AI startup ideas can feel compelling because the feature velocity is high and the demos look impressive. Validation still comes down to old fundamentals: a painful problem, a clear buyer, a believable workflow change, and a business model that survives the cost structure.",
@@ -133,3 +184,25 @@ export const programmaticPages: ProgrammaticPage[] = [
       "Generate a report with demand, competition, MVP simplicity, and founder-oriented next steps before you build an AI SaaS product."
   }
 ];
+
+export function getProgrammaticPageByLocaleSlug(locale: Locale, slug: string) {
+  return programmaticPages.find((page) => (page.slugByLocale?.[locale] ?? page.slug) === slug);
+}
+
+export function getProgrammaticPageSlug(locale: Locale, page: ProgrammaticPage) {
+  return page.slugByLocale?.[locale] ?? page.slug;
+}
+
+export function getLocalizedProgrammaticPage(page: ProgrammaticPage, locale: Locale) {
+  const translation = page.translations?.[locale];
+
+  return {
+    ...page,
+    slug: getProgrammaticPageSlug(locale, page),
+    title: translation?.title ?? page.title,
+    description: translation?.description ?? page.description,
+    h1: translation?.h1 ?? page.h1,
+    ctaTitle: translation?.ctaTitle ?? page.ctaTitle,
+    ctaCopy: translation?.ctaCopy ?? page.ctaCopy
+  };
+}

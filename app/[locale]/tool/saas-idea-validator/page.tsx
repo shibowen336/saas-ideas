@@ -9,25 +9,37 @@ import { SectionHeading } from "@/components/section-heading";
 import { ToolIdeaForm } from "@/components/tool-idea-form";
 import { ButtonLink } from "@/components/ui/button-link";
 import { toolFaqs } from "@/content/faq";
-import { getUiCopy } from "@/lib/i18n";
-import { createMetadata } from "@/lib/metadata";
+import { createLocalizedMetadata } from "@/lib/metadata";
+import { getUiCopy, isLocale, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { breadcrumbSchema, faqSchema, softwareApplicationSchema } from "@/lib/schema";
 
-export const metadata = createMetadata({
-  title: "SaaS Idea Validator Tool",
-  description:
-    "Use the SaaS Idea Validator tool to score demand, competition, audience clarity, monetization potential, MVP simplicity, and founder next steps.",
-  path: "/tool/saas-idea-validator",
-  keywords: [
-    "saas idea validator",
-    "validate saas idea",
-    "startup idea validator",
-    "saas idea generator and validator"
-  ]
-});
+type ToolPageProps = {
+  params: Promise<{ locale: string }>;
+};
 
-export default function ToolPage() {
-  const copy = getUiCopy("en");
+export async function generateMetadata({ params }: ToolPageProps) {
+  const { locale } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "en";
+  const copy = getUiCopy(resolvedLocale);
+
+  return createLocalizedMetadata({
+    locale: resolvedLocale,
+    title: copy.pageMeta.tool.title,
+    description: copy.pageMeta.tool.description,
+    pathname: "/tool/saas-idea-validator",
+    keywords: [
+      "saas idea validator",
+      "validate saas idea",
+      "startup idea validator",
+      "saas idea generator and validator"
+    ]
+  });
+}
+
+export default async function ToolPage({ params }: ToolPageProps) {
+  const { locale } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "en";
+  const copy = getUiCopy(resolvedLocale);
 
   return (
     <main className="section-space pb-32 md:pb-20">
@@ -35,22 +47,22 @@ export default function ToolPage() {
         <SchemaScript
           schema={[
             softwareApplicationSchema({
-              locale: "en",
+              locale: resolvedLocale,
               description: copy.pageMeta.tool.description,
               featureList: copy.schema.softwareFeatures,
-              path: "/tool/saas-idea-validator"
+              path: localizedStaticPath(resolvedLocale, "tool")
             }),
             breadcrumbSchema([
-              { name: "Home", path: "/" },
-              { name: "Tool", path: "/tool/saas-idea-validator" }
+              { name: "Home", path: localizedStaticPath(resolvedLocale, "home") },
+              { name: "Tool", path: localizedStaticPath(resolvedLocale, "tool") }
             ]),
             faqSchema(toolFaqs)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: "Home", href: "/" },
-            { label: "Tool", href: "/tool/saas-idea-validator" }
+            { label: "Home", href: localizedStaticPath(resolvedLocale, "home") },
+            { label: "Tool", href: localizedStaticPath(resolvedLocale, "tool") }
           ]}
         />
 
@@ -75,16 +87,16 @@ export default function ToolPage() {
               </p>
             </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href="/examples" variant="secondary">
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                 See Example Reports
               </ButtonLink>
-              <ButtonLink href="/pricing" variant="ghost">
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "pricing")} variant="ghost">
                 Compare plans
               </ButtonLink>
             </div>
           </div>
           <div id="validator-form">
-            <ToolIdeaForm />
+            <ToolIdeaForm locale={resolvedLocale} />
           </div>
         </section>
 
@@ -138,7 +150,7 @@ export default function ToolPage() {
           </div>
           <div className="space-y-6">
             <NewsletterForm
-              source="tool-page"
+              source={`tool-page-${resolvedLocale}`}
               title="Save your report and get follow-up validation prompts"
               buttonLabel="Save report"
             />
@@ -146,17 +158,20 @@ export default function ToolPage() {
               <h2 className="text-2xl font-semibold text-slate-950">Keep validating</h2>
               <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
                 <li>
-                  <Link href="/examples" className="text-accent hover:underline">
+                  <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
                     Compare with example reports
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog/how-to-validate-a-saas-idea" className="text-accent hover:underline">
+                  <Link
+                    href={localizedPath(resolvedLocale, "/blog/how-to-validate-a-saas-idea")}
+                    className="text-accent hover:underline"
+                  >
                     Read the SaaS validation guide
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pricing" className="text-accent hover:underline">
+                  <Link href={localizedStaticPath(resolvedLocale, "pricing")} className="text-accent hover:underline">
                     Upgrade for saved reports and collaboration
                   </Link>
                 </li>
@@ -165,7 +180,7 @@ export default function ToolPage() {
           </div>
         </section>
       </div>
-      <MobileStickyCta />
+      <MobileStickyCta locale={resolvedLocale} />
     </main>
   );
 }

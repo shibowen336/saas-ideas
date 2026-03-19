@@ -2,10 +2,6 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
-import { SchemaScript } from "@/components/schema-script";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -52,13 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
       <body className="bg-clay text-slate-900 antialiased">
-        <SchemaScript schema={[organizationSchema(), websiteSchema()]} />
-        <div className="relative min-h-screen overflow-x-hidden">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-hero-radial" />
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </div>
+        <div className="relative min-h-screen overflow-x-hidden">{children}</div>
       </body>
     </html>
   );

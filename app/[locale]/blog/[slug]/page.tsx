@@ -5,47 +5,66 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
 import { SchemaScript } from "@/components/schema-script";
 import { ButtonLink } from "@/components/ui/button-link";
-import { blogPosts, getBlogPost } from "@/content/blog-posts";
-import { createMetadata } from "@/lib/metadata";
+import {
+  blogPosts,
+  getBlogPostByLocaleSlug,
+  getBlogPostSlug,
+  getLocalizedBlogPost
+} from "@/content/blog-posts";
+import { isLocale, locales, localizedPath, localizedStaticPath } from "@/lib/i18n";
+import { createLocalizedMetadata } from "@/lib/metadata";
 import { blogPostingSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
 
 type BlogPostPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+  return locales.flatMap((locale) =>
+    blogPosts.map((post) => ({ locale, slug: getBlogPostSlug(locale, post) }))
+  );
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getBlogPost(slug);
+  const { locale, slug } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "en";
+  const post = getBlogPostByLocaleSlug(resolvedLocale, slug);
 
   if (!post) {
-    return createMetadata({
+    return createLocalizedMetadata({
+      locale: resolvedLocale,
       title: "Article not found",
       description: "The requested article could not be found.",
-      path: `/blog/${slug}`,
+      pathname: `/blog/${slug}`,
       noIndex: true
     });
   }
 
-  return createMetadata({
-    title: post.title,
-    description: post.description,
-    path: `/blog/${post.slug}`,
-    keywords: post.keywords,
+  const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
+
+  return createLocalizedMetadata({
+    locale: resolvedLocale,
+    title: localizedPost.title,
+    description: localizedPost.description,
+    pathnames: {
+      en: localizedPath("en", `/blog/${getBlogPostSlug("en", post)}`),
+      zh: localizedPath("zh", `/blog/${getBlogPostSlug("zh", post)}`)
+    },
+    keywords: localizedPost.keywords,
     type: "article"
   });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = getBlogPost(slug);
+  const { locale, slug } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "en";
+  const post = getBlogPostByLocaleSlug(resolvedLocale, slug);
 
   if (!post) {
     notFound();
   }
+
+  const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
 
   return (
     <main className="section-space">
@@ -53,39 +72,48 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <SchemaScript
           schema={[
             blogPostingSchema({
-              locale: "en",
-              title: post.title,
-              description: post.description,
-              path: `/blog/${post.slug}`,
-              publishedTime: post.publishedTime
+              locale: resolvedLocale,
+              title: localizedPost.title,
+              description: localizedPost.description,
+              path: localizedPath(resolvedLocale, `/blog/${localizedPost.slug}`),
+              publishedTime: localizedPost.publishedTime
             }),
             breadcrumbSchema([
-              { name: "Home", path: "/" },
-              { name: "Blog", path: "/blog" },
-              { name: post.title, path: `/blog/${post.slug}` }
+              { name: "Home", path: localizedStaticPath(resolvedLocale, "home") },
+              { name: "Blog", path: localizedStaticPath(resolvedLocale, "blog") },
+              {
+                name: localizedPost.title,
+                path: localizedPath(resolvedLocale, `/blog/${localizedPost.slug}`)
+              }
             ]),
-            faqSchema(post.faq)
+            faqSchema(localizedPost.faq)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: "Home", href: "/" },
-            { label: "Blog", href: "/blog" },
-            { label: post.title, href: `/blog/${post.slug}` }
+            { label: "Home", href: localizedStaticPath(resolvedLocale, "home") },
+            { label: "Blog", href: localizedStaticPath(resolvedLocale, "blog") },
+            {
+              label: localizedPost.title,
+              href: localizedPath(resolvedLocale, `/blog/${localizedPost.slug}`)
+            }
           ]}
         />
+
         <article className="mt-8">
           <header className="max-w-4xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              {post.category}
+              {localizedPost.category}
             </p>
             <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-slate-950">
-              {post.title}
+              {localizedPost.title}
             </h1>
             <p className="mt-4 text-sm text-slate-500">
-              {post.date} · {post.readingTime}
+              {localizedPost.date} · {localizedPost.readingTime}
             </p>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">{post.description}</p>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+              {localizedPost.description}
+            </p>
           </header>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
@@ -93,7 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="surface-card p-6">
                 <h2 className="text-xl font-semibold text-slate-950">Article outline</h2>
                 <ol className="mt-4 space-y-3 text-slate-700">
-                  {post.outline.map((item, index) => (
+                  {localizedPost.outline.map((item, index) => (
                     <li key={item}>
                       {index + 1}. {item}
                     </li>
@@ -101,23 +129,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </ol>
               </div>
               <div className="surface-card p-6">
-                <h2 className="text-xl font-semibold text-slate-950">{post.ctaTitle}</h2>
-                <p className="mt-4 leading-7 text-slate-600">{post.ctaCopy}</p>
+                <h2 className="text-xl font-semibold text-slate-950">{localizedPost.ctaTitle}</h2>
+                <p className="mt-4 leading-7 text-slate-600">{localizedPost.ctaCopy}</p>
                 <div className="mt-6">
-                  <ButtonLink href="/tool/saas-idea-validator">Use the tool</ButtonLink>
+                  <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>Use the tool</ButtonLink>
                 </div>
               </div>
             </aside>
 
             <div className="space-y-10">
               <section className="surface-card p-8">
-                {post.intro.map((paragraph) => (
+                {localizedPost.intro.map((paragraph) => (
                   <p key={paragraph} className="article-copy">
                     {paragraph}
                   </p>
                 ))}
               </section>
-              {post.sections.map((section) => (
+              {localizedPost.sections.map((section) => (
                 <section key={section.title} className="surface-card p-8">
                   <h2 className="text-3xl font-semibold text-slate-950">{section.title}</h2>
                   <div className="article-copy mt-4">
@@ -135,15 +163,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div>
             <h2 className="text-3xl font-semibold text-slate-950">Article FAQ</h2>
             <div className="mt-8">
-              <FaqList items={post.faq} />
+              <FaqList items={localizedPost.faq} />
             </div>
           </div>
           <div className="surface-card p-8">
             <h2 className="text-3xl font-semibold text-slate-950">Next step</h2>
-            <p className="mt-4 text-lg leading-8 text-slate-600">{post.ctaCopy}</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600">{localizedPost.ctaCopy}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href="/tool/saas-idea-validator">Validate My Idea</ButtonLink>
-              <ButtonLink href="/examples" variant="secondary">
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>Validate My Idea</ButtonLink>
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                 See Example Reports
               </ButtonLink>
             </div>
