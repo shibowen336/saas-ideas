@@ -65,6 +65,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
+  const pageCopy =
+    resolvedLocale === "zh"
+      ? {
+          home: "首页",
+          blog: "博客",
+          outline: "文章提纲",
+          useTool: "使用验证器",
+          faq: "文章 FAQ",
+          nextStep: "下一步",
+          validate: "验证我的想法",
+          examples: "查看示例报告"
+        }
+      : {
+          home: "Home",
+          blog: "Blog",
+          outline: "Article outline",
+          useTool: "Use the tool",
+          faq: "Article FAQ",
+          nextStep: "Next step",
+          validate: "Validate My Idea",
+          examples: "See Example Reports"
+        };
+  const formattedDate = new Intl.DateTimeFormat(resolvedLocale === "zh" ? "zh-CN" : "en-US", {
+    dateStyle: "long"
+  }).format(new Date(localizedPost.publishedTime));
 
   return (
     <main className="section-space">
@@ -79,8 +104,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               publishedTime: localizedPost.publishedTime
             }),
             breadcrumbSchema([
-              { name: "Home", path: localizedStaticPath(resolvedLocale, "home") },
-              { name: "Blog", path: localizedStaticPath(resolvedLocale, "blog") },
+              { name: pageCopy.home, path: localizedStaticPath(resolvedLocale, "home") },
+              { name: pageCopy.blog, path: localizedStaticPath(resolvedLocale, "blog") },
               {
                 name: localizedPost.title,
                 path: localizedPath(resolvedLocale, `/blog/${localizedPost.slug}`)
@@ -91,8 +116,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         />
         <Breadcrumbs
           items={[
-            { label: "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            { label: "Blog", href: localizedStaticPath(resolvedLocale, "blog") },
+            { label: pageCopy.home, href: localizedStaticPath(resolvedLocale, "home") },
+            { label: pageCopy.blog, href: localizedStaticPath(resolvedLocale, "blog") },
             {
               label: localizedPost.title,
               href: localizedPath(resolvedLocale, `/blog/${localizedPost.slug}`)
@@ -109,7 +134,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {localizedPost.title}
             </h1>
             <p className="mt-4 text-sm text-slate-500">
-              {localizedPost.date} · {localizedPost.readingTime}
+              {formattedDate} · {localizedPost.readingTime}
             </p>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
               {localizedPost.description}
@@ -119,7 +144,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="mt-12 grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
             <aside className="space-y-6">
               <div className="surface-card p-6">
-                <h2 className="text-xl font-semibold text-slate-950">Article outline</h2>
+                <h2 className="text-xl font-semibold text-slate-950">{pageCopy.outline}</h2>
                 <ol className="mt-4 space-y-3 text-slate-700">
                   {localizedPost.outline.map((item, index) => (
                     <li key={item}>
@@ -132,7 +157,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <h2 className="text-xl font-semibold text-slate-950">{localizedPost.ctaTitle}</h2>
                 <p className="mt-4 leading-7 text-slate-600">{localizedPost.ctaCopy}</p>
                 <div className="mt-6">
-                  <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>Use the tool</ButtonLink>
+                  <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
+                    {pageCopy.useTool}
+                  </ButtonLink>
                 </div>
               </div>
             </aside>
@@ -161,18 +188,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <section className="mt-16 grid gap-12 lg:grid-cols-[1fr_0.9fr]">
           <div>
-            <h2 className="text-3xl font-semibold text-slate-950">Article FAQ</h2>
+            <h2 className="text-3xl font-semibold text-slate-950">{pageCopy.faq}</h2>
             <div className="mt-8">
               <FaqList items={localizedPost.faq} />
             </div>
           </div>
           <div className="surface-card p-8">
-            <h2 className="text-3xl font-semibold text-slate-950">Next step</h2>
+            <h2 className="text-3xl font-semibold text-slate-950">{pageCopy.nextStep}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">{localizedPost.ctaCopy}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>Validate My Idea</ButtonLink>
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
+                {pageCopy.validate}
+              </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
-                See Example Reports
+                {pageCopy.examples}
               </ButtonLink>
             </div>
           </div>

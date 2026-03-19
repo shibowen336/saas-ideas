@@ -169,10 +169,10 @@ export const uiCopy = {
       example: "查看示例报告"
     },
     footer: {
-      eyebrow: "面向创始人的 SaaS 创意验证",
-      title: "更快验证，更早收窄方向，用证据而不是猜测来决定是否开建。",
+      eyebrow: "面向创始人的 SaaS 想法验证工具",
+      title: "更快验证，更早收窄方向，用证据而不是猜测决定是否开建。",
       description:
-        "获取聚焦创始人场景的验证报告，覆盖需求、用户清晰度、变现潜力、竞争压力和下一步验证动作。",
+        "获取聚焦创始人场景的验证报告，覆盖需求、受众清晰度、变现潜力、竞争压力和下一步验证动作。",
       newsletterTitle: "获取验证框架与产品更新",
       newsletterButton: "免费订阅",
       product: "产品",
@@ -207,7 +207,7 @@ export const uiCopy = {
       examples: {
         title: "SaaS 想法验证报告示例",
         description:
-          "查看真实感更强的 SaaS 想法验证报告示例，涵盖电商、代理商软件、AI SaaS 和细分定位。"
+          "查看更有真实感的 SaaS 想法验证报告示例，涵盖电商、代理商软件、AI SaaS 和细分定位。"
       },
       blog: {
         title: "博客",

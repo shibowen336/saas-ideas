@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { ButtonLink } from "@/components/ui/button-link";
 import { type Locale, getUiCopy, localizedStaticPath } from "@/lib/i18n";
 
@@ -9,7 +11,6 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ locale }: SiteHeaderProps) {
   const copy = getUiCopy(locale);
-  const alternateLocale = locale === "en" ? "zh" : "en";
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur">
@@ -42,12 +43,18 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <Link
-            href={localizedStaticPath(alternateLocale, "home")}
-            className="hidden rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950 sm:inline-flex"
+          <Suspense
+            fallback={
+              <span className="hidden rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 sm:inline-flex">
+                {copy.switchLabel}
+              </span>
+            }
           >
-            {copy.switchLabel}
-          </Link>
+            <LanguageSwitcher
+              locale={locale}
+              className="hidden rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-950 sm:inline-flex"
+            />
+          </Suspense>
           <ButtonLink href={localizedStaticPath(locale, "tool")} className="hidden sm:inline-flex">
             {copy.cta.validate}
           </ButtonLink>

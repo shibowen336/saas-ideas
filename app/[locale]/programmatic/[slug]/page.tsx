@@ -63,13 +63,33 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
   }
 
   const localizedPage = getLocalizedProgrammaticPage(page, resolvedLocale);
+  const pageCopy =
+    resolvedLocale === "zh"
+      ? {
+          home: "首页",
+          eyebrow: "程序化 SEO 页面",
+          useTool: "使用验证器",
+          examples: "查看示例",
+          painPoints: "关键痛点",
+          ideaExamples: "示例想法",
+          framework: "验证框架"
+        }
+      : {
+          home: "Home",
+          eyebrow: "Programmatic SEO page",
+          useTool: "Use the validator",
+          examples: "See examples",
+          painPoints: "Key pain points",
+          ideaExamples: "Example ideas",
+          framework: "Validation framework"
+        };
 
   return (
     <main className="section-space">
       <div className="page-shell">
         <SchemaScript
           schema={breadcrumbSchema([
-            { name: "Home", path: localizedStaticPath(resolvedLocale, "home") },
+            { name: pageCopy.home, path: localizedStaticPath(resolvedLocale, "home") },
             {
               name: localizedPage.h1,
               path: localizedPath(resolvedLocale, `/programmatic/${localizedPage.slug}`)
@@ -78,7 +98,7 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
         />
         <Breadcrumbs
           items={[
-            { label: "Home", href: localizedStaticPath(resolvedLocale, "home") },
+            { label: pageCopy.home, href: localizedStaticPath(resolvedLocale, "home") },
             {
               label: localizedPage.h1,
               href: localizedPath(resolvedLocale, `/programmatic/${localizedPage.slug}`)
@@ -88,7 +108,7 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
         <article className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              Programmatic SEO page
+              {pageCopy.eyebrow}
             </p>
             <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-slate-950">
               {localizedPage.h1}
@@ -103,9 +123,11 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
             <h2 className="text-2xl font-semibold text-slate-950">{localizedPage.ctaTitle}</h2>
             <p className="mt-4 leading-7 text-slate-600">{localizedPage.ctaCopy}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>Use the validator</ButtonLink>
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
+                {pageCopy.useTool}
+              </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
-                See examples
+                {pageCopy.examples}
               </ButtonLink>
             </div>
           </div>
@@ -113,7 +135,7 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
 
         <section className="mt-12 grid gap-6 lg:grid-cols-3">
           <article className="surface-card p-8">
-            <h2 className="text-2xl font-semibold text-slate-950">Key pain points</h2>
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.painPoints}</h2>
             <ul className="mt-4 space-y-3 text-slate-700">
               {localizedPage.painPoints.map((point) => (
                 <li key={point}>• {point}</li>
@@ -121,7 +143,7 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
             </ul>
           </article>
           <article className="surface-card p-8">
-            <h2 className="text-2xl font-semibold text-slate-950">Example ideas</h2>
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.ideaExamples}</h2>
             <ul className="mt-4 space-y-3 text-slate-700">
               {localizedPage.exampleIdeas.map((idea) => (
                 <li key={idea}>• {idea}</li>
@@ -129,7 +151,7 @@ export default async function ProgrammaticPage({ params }: ProgrammaticPageProps
             </ul>
           </article>
           <article className="surface-card p-8">
-            <h2 className="text-2xl font-semibold text-slate-950">Validation framework</h2>
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.framework}</h2>
             <ol className="mt-4 space-y-3 text-slate-700">
               {localizedPage.validationFramework.map((step, index) => (
                 <li key={step}>
