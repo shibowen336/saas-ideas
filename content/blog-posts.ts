@@ -672,8 +672,18 @@ export function getBlogPost(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
 }
 
+function normalizeIncomingSlug(slug: string) {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 export function getBlogPostByLocaleSlug(locale: Locale, slug: string) {
-  return blogPosts.find((post) => (post.slugByLocale?.[locale] ?? post.slug) === slug);
+  const normalizedSlug = normalizeIncomingSlug(slug);
+
+  return blogPosts.find((post) => (post.slugByLocale?.[locale] ?? post.slug) === normalizedSlug);
 }
 
 export function getBlogPostSlug(locale: Locale, post: BlogPost) {

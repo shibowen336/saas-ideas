@@ -1,6 +1,8 @@
+import type { Locale } from "@/lib/i18n";
 import { formatScore } from "@/lib/utils";
 
 type ScoreGridProps = {
+  locale?: Locale;
   scores: Array<{
     label: string;
     score: number;
@@ -8,7 +10,12 @@ type ScoreGridProps = {
   }>;
 };
 
-export function ScoreGrid({ scores }: ScoreGridProps) {
+export function ScoreGrid({ scores, locale = "en" }: ScoreGridProps) {
+  const toneLabels =
+    locale === "zh"
+      ? { warning: "关注", positive: "较强", neutral: "信号" }
+      : { warning: "Watch", positive: "Strong", neutral: "Signal" };
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {scores.map((item) => (
@@ -30,7 +37,11 @@ export function ScoreGrid({ scores }: ScoreGridProps) {
                     : "rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600"
               }
             >
-              {item.tone === "warning" ? "Watch" : item.tone === "positive" ? "Strong" : "Signal"}
+              {item.tone === "warning"
+                ? toneLabels.warning
+                : item.tone === "positive"
+                  ? toneLabels.positive
+                  : toneLabels.neutral}
             </span>
           </div>
         </article>

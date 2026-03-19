@@ -32,6 +32,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
               source={`footer-${locale}`}
               title={copy.footer.newsletterTitle}
               buttonLabel={copy.footer.newsletterButton}
+              locale={locale}
             />
           </div>
         </div>

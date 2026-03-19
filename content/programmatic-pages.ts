@@ -287,7 +287,17 @@ export const programmaticPages: ProgrammaticPage[] = [
 ];
 
 export function getProgrammaticPageByLocaleSlug(locale: Locale, slug: string) {
-  return programmaticPages.find((page) => (page.slugByLocale?.[locale] ?? page.slug) === slug);
+  let normalizedSlug = slug;
+
+  try {
+    normalizedSlug = decodeURIComponent(slug);
+  } catch {
+    normalizedSlug = slug;
+  }
+
+  return programmaticPages.find(
+    (page) => (page.slugByLocale?.[locale] ?? page.slug) === normalizedSlug
+  );
 }
 
 export function getProgrammaticPageSlug(locale: Locale, page: ProgrammaticPage) {
