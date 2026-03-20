@@ -7,24 +7,34 @@ export type FaqEntry = {
 
 export const homeFaqs: FaqEntry[] = [
   {
-    question: "What does SaaS Idea Validator score?",
+    question: "How do I validate a SaaS idea before building?",
     answer:
-      "The tool scores demand, competition pressure, audience clarity, monetization potential, MVP simplicity, and go-to-market ease so founders can decide whether to validate, narrow, or pause an idea."
+      "Start by naming one buyer, one painful workflow, one current alternative, and one believable outcome. Then test the idea with interviews, a focused landing page, and a lightweight pilot before you build depth."
   },
   {
-    question: "Who is SaaS Idea Validator for?",
+    question: "What makes a SaaS idea worth validating?",
     answer:
-      "It is built for indie hackers, solo founders, developers exploring micro SaaS, and builders evaluating AI SaaS ideas before committing months of build time."
-  },
-  {
-    question: "Can I use it before I have a full business plan?",
-    answer:
-      "Yes. The best time to use the validator is when the idea is still rough and cheap to change. A short description, target customer, and problem statement are enough to generate direction."
+      "An idea is worth validating when the pain is repeated, the buyer is easy to identify, the workaround is weak or expensive, and there is a believable path to pricing and distribution."
   },
   {
     question: "Does a high score mean I should build immediately?",
     answer:
-      "No. A high score means the idea is promising enough to validate with interviews, a landing page, and small demand tests. It is a filter, not a guarantee."
+      "No. A high score means the idea deserves stronger proof, not blind execution. The next move is usually buyer interviews, message testing, and a narrow pilot, not a bigger roadmap."
+  },
+  {
+    question: "How is SaaS Idea Validator different from a SaaS idea generator?",
+    answer:
+      "A generator helps you come up with ideas. SaaS Idea Validator helps you pressure-test one specific idea by scoring demand, competition, audience clarity, monetization, MVP simplicity, and next-step validation actions."
+  },
+  {
+    question: "Can I validate an AI SaaS idea before coding?",
+    answer:
+      "Yes. AI ideas still need a clear buyer, a painful workflow, trust, and pricing that works. The validator helps you see whether the concept is a real product angle or just a broad AI feature idea."
+  },
+  {
+    question: "Who is SaaS Idea Validator for?",
+    answer:
+      "It is for indie hackers, solo founders, product-minded developers, and early-stage teams that want a structured SaaS idea validation workflow before spending months building."
   }
 ];
 
@@ -53,24 +63,29 @@ export const homeFaqsZh: FaqEntry[] = [
 
 export const toolFaqs: FaqEntry[] = [
   {
+    question: "What inputs does the SaaS idea validator need?",
+    answer:
+      "The strongest reports come from clear inputs: the idea, target customer, problem, current alternatives, pricing idea, founder advantage, existing evidence, and how you expect to reach the first 20 users."
+  },
+  {
+    question: "What does the report include?",
+    answer:
+      "The report includes an overall score, score breakdown, executive summary, recommendation, confidence level, risks, differentiation suggestions, a recommended wedge, validation experiments, launch channels, MVP boundaries, and messaging drafts."
+  },
+  {
     question: "How should I interpret a low audience clarity score?",
     answer:
-      "A low audience clarity score usually means the idea is targeting a broad market. Narrow the customer segment until you can list where they hang out, what triggers the pain, and what alternatives they already use."
-  },
-  {
-    question: "Why does competition pressure matter?",
-    answer:
-      "Competition pressure helps founders judge how hard it will be to stand out. A crowded market is still viable, but you will need a sharper niche angle, stronger proof, or a faster distribution path."
-  },
-  {
-    question: "What should I do after getting my report?",
-    answer:
-      "Use the report as a next-step brief. Run founder interviews, test a landing page headline, and try a manual version of the promise before building product depth."
+      "It usually means the buyer is still too broad. Narrow the customer until you can describe where they hang out, what triggers the pain, and what they already use instead."
   },
   {
     question: "Can the tool help with AI SaaS ideas?",
     answer:
       "Yes. AI ideas often look exciting on the surface but still need clear buyers, painful use cases, and believable monetization. The report makes those gaps explicit."
+  },
+  {
+    question: "Does the validator replace customer interviews?",
+    answer:
+      "No. The tool is a decision aid, not a substitute for talking to buyers. Use the output to decide which interviews, message tests, and pilots to run next."
   }
 ];
 

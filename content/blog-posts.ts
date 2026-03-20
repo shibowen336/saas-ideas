@@ -665,6 +665,139 @@ export const blogPosts: BlogPost[] = [
     ctaTitle: "Use the faster first filter",
     ctaCopy:
       "Run your idea through the SaaS Idea Validator and identify the biggest validation gaps before you dive into broader research."
+  },
+  {
+    slug: "saas-pricing-validation",
+    slugByLocale: {
+      zh: "saas-ding-jia-yan-zheng"
+    },
+    title: "SaaS Pricing Validation for Early-Stage Founders",
+    description:
+      "Learn how to validate SaaS pricing with interviews, pilots, willingness-to-pay signals, and simple offer tests before you lock in packaging.",
+    translations: {
+      zh: {
+        title: "早期创始人的 SaaS 定价验证指南",
+        description:
+          "学习如何在正式定价前，用访谈、试点、付费意愿信号和轻量报价测试来验证 SaaS 定价。",
+        category: "定价",
+        readingTime: "约 8 分钟阅读",
+        intro: [
+          "很多创始人把定价放到最后，等产品快上线时才临时决定。更好的做法是更早验证：买家是否理解价值、是否愿意为结果付费、以及你的收费逻辑是否和业务结果挂钩。",
+          "定价验证不是先问“这个价格贵不贵”，而是先判断你交付的结果是否足够重要，替代方案是否已经在消耗预算，以及买家愿意为哪种价值指标买单。"
+        ],
+        outline: [
+          "先验证价值，再验证价格",
+          "从当前替代方案反推付费意愿",
+          "用试点和报价测试收集真实信号",
+          "避免过早复杂化套餐结构"
+        ],
+        sections: [
+          {
+            title: "1. 先验证价值，而不是直接讨论价格数字",
+            paragraphs: [
+              "如果买家还不相信问题值得解决，任何价格都会显得贵。先验证的是：问题是否频繁、后果是否明确、以及你承诺的结果是否值得换工具或调整流程。",
+              "只有当价值被承认后，价格讨论才会变得有意义。否则你得到的只是没有上下文的礼貌反馈。"
+            ]
+          },
+          {
+            title: "2. 从替代方案成本反推价格区间",
+            paragraphs: [
+              "很多早期 SaaS 真正竞争的不是同类产品，而是人工、外包、Excel、顾问服务，或团队内部的低效流程。定价验证要先看买家今天已经在花什么成本。",
+              "如果你的产品能节省明确的时间、减少流失、提升转化或减少返工，价格锚点就应该围绕这些结果，而不是围绕你做了多少功能。"
+            ]
+          },
+          {
+            title: "3. 用试点和报价测试收集真实信号",
+            paragraphs: [
+              "早期最有效的定价验证方式，往往不是问卷，而是试点报价、付费 beta、候补名单后的预约沟通，或者带价格的落地页测试。",
+              "你要观察的不是“有人说挺好”，而是对方是否愿意继续谈预算、接受试点费用，或愿意为更快的结果买单。"
+            ]
+          },
+          {
+            title: "4. 套餐结构先保持克制",
+            paragraphs: [
+              "早期创始人很容易太早设计复杂套餐、团队席位和附加项。更好的方法是先验证一个清晰主张：谁付费、为什么付费、以及价格和哪个价值指标绑定。",
+              "等你拿到更多真实成交或试点反馈后，再扩展套餐结构会更稳。"
+            ]
+          }
+        ],
+        faq: [
+          {
+            question: "定价验证是不是一定要先收钱？",
+            answer:
+              "最好尽早看到真实付费信号，但不一定一开始就要完整订阅。试点费、咨询费、押金、预付测试，都是更早期但更真实的定价验证方式。"
+          },
+          {
+            question: "如果买家说价格太高怎么办？",
+            answer:
+              "先不要急着降价。先判断问题是价值主张不够强、买家不够精准，还是价格和结果的连接不清楚。很多时候问题不在数字本身。"
+          }
+        ],
+        ctaTitle: "用验证报告检查你的定价逻辑",
+        ctaCopy:
+          "把你的 SaaS 想法放进验证器，先看需求、受众和变现潜力，再决定该如何测试价格。"
+      }
+    },
+    date: "March 20, 2026",
+    publishedTime: "2026-03-20T09:00:00.000Z",
+    readingTime: "8 min read",
+    category: "Pricing",
+    keywords: ["saas pricing validation", "validate saas pricing", "saas pricing strategy for founders"],
+    intro: [
+      "Many founders leave pricing until the product feels almost ready. That is backwards. SaaS pricing validation should start while the idea is still being shaped, because pricing reveals whether the buyer actually believes the problem is worth paying to solve.",
+      "The goal is not to ask whether a number feels high or low. The goal is to learn what the buyer compares you against, what result they value, and whether your offer supports a believable commercial model."
+    ],
+    outline: [
+      "Validate value before price",
+      "Use the current alternative as your pricing anchor",
+      "Look for real willingness-to-pay signals",
+      "Keep packaging simple until the offer is proven"
+    ],
+    sections: [
+      {
+        title: "1. Validate value before you validate price",
+        paragraphs: [
+          "If the buyer does not believe the workflow is painful, urgent, or expensive, every price will feel too high. Pricing validation starts with problem validation and outcome clarity.",
+          "That means your first pricing conversations should sound like commercial discovery, not like a survey. Ask what the problem costs today, what the workaround looks like, and what better outcomes are worth."
+        ]
+      },
+      {
+        title: "2. Anchor pricing against the current alternative",
+        paragraphs: [
+          "Your buyer may compare you against internal labor, an agency, spreadsheets, legacy software, or doing nothing. That current alternative is the real anchor for pricing, not a random SaaS benchmark.",
+          "If your product saves ten hours a week, reduces churn, speeds up close, or improves conversions, price against that result. Feature count is a weak way to justify a price."
+        ]
+      },
+      {
+        title: "3. Collect willingness-to-pay signals from real offers",
+        paragraphs: [
+          "The strongest pricing signals usually come from paid pilots, proposal conversations, deposit requests, or landing pages that include commercial framing. Founders learn more from a hesitant yes than from a vague compliment.",
+          "You want signals like budget conversations, requests to start with a pilot, and pushback that clarifies the value metric. Those are stronger than generic survey answers."
+        ]
+      },
+      {
+        title: "4. Keep packaging simple until the core offer is proven",
+        paragraphs: [
+          "Early-stage teams often over-design pricing tiers. Start with one clear buyer, one clear promise, and one simple commercial model. Complexity can wait until the underlying value case is stronger.",
+          "Once the offer is proven, you can add usage limits, team seats, services, or premium workflows. Before that, simplicity improves both selling and learning."
+        ]
+      }
+    ],
+    faq: [
+      {
+        question: "Do I need to charge before I can validate pricing?",
+        answer:
+          "Ideally yes, or at least get close to a real buying moment. Pilot fees, deposits, paid discovery, and proposal conversations produce better signals than abstract pricing surveys."
+      },
+      {
+        question: "What if buyers say the price is too high?",
+        answer:
+          "Do not cut immediately. First check whether the audience is wrong, the problem is too weak, or the value story is not clear enough. The objection is often about perceived value, not only the number."
+      }
+    ],
+    ctaTitle: "Pressure-test your pricing logic with the validator",
+    ctaCopy:
+      "Use SaaS Idea Validator to score demand, monetization potential, and buyer clarity before you decide how to price the product."
   }
 ];
 

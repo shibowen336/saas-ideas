@@ -1,5 +1,5 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { NewsletterForm } from "@/components/newsletter-form";
+import { ReportEmailForm } from "@/components/report-email-form";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -7,6 +7,7 @@ import { getUiCopy, isLocale, localizedStaticPath } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/metadata";
 import { buildValidationReport } from "@/lib/report";
 import { breadcrumbSchema } from "@/lib/schema";
+import { absoluteUrl } from "@/lib/site";
 
 type ReportPageProps = {
   params: Promise<{ locale: string }>;
@@ -15,6 +16,25 @@ type ReportPageProps = {
 
 function firstValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function toSearchParams(query: Record<string, string | string[] | undefined>) {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(query)) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        if (item) params.append(key, item);
+      }
+      continue;
+    }
+
+    if (value) {
+      params.set(key, value);
+    }
+  }
+
+  return params;
 }
 
 export async function generateMetadata({ params }: ReportPageProps) {
@@ -57,6 +77,9 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
   const validationExperiments = report.validationExperiments ?? [];
   const mvpMustHave = report.mvpMustHave ?? [];
   const mvpAvoidNow = report.mvpAvoidNow ?? [];
+  const reportUrl = absoluteUrl(
+    `${localizedStaticPath(resolvedLocale, "report")}?${toSearchParams(query).toString()}`
+  );
 
   const pageCopy =
     resolvedLocale === "zh"
@@ -198,12 +221,11 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
           </div>
 
           <div className="space-y-6">
-            <NewsletterForm
+            <ReportEmailForm
               source={`report-${resolvedLocale}`}
-              title={pageCopy.saveTitle}
-              buttonLabel={pageCopy.saveButton}
               locale={resolvedLocale}
-              description={pageCopy.saveDescription}
+              report={report}
+              reportUrl={reportUrl}
             />
 
             <div className="surface-card p-6">

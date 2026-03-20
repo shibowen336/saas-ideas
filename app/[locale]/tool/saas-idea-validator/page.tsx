@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
 import { MobileStickyCta } from "@/components/mobile-sticky-cta";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { SchemaScript } from "@/components/schema-script";
 import { SectionHeading } from "@/components/section-heading";
 import { ToolIdeaForm } from "@/components/tool-idea-form";
 import { ButtonLink } from "@/components/ui/button-link";
 import { blogPosts, getBlogPostSlug } from "@/content/blog-posts";
 import { getToolFaqs } from "@/content/faq";
+import { exampleReports } from "@/content/example-reports";
 import { getUiCopy, isLocale, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema, softwareApplicationSchema } from "@/lib/schema";
@@ -20,99 +20,128 @@ type ToolPageProps = {
 
 const toolPageCopy = {
   en: {
-    eyebrow: "Main tool",
-    title: "Validate your SaaS idea before you write code",
+    eyebrow: "Primary commercial page",
+    title: "Use the SaaS Idea Validator tool to validate a SaaS idea before you build",
     description:
-      "This version is built like a founder memo generator, not a toy scorecard. It weighs urgency, buyer clarity, competition pressure, monetization, MVP scope, and go-to-market reality.",
+      "This page is built for founders who want a structured answer to a practical question: does this startup idea deserve more validation, a narrower angle, or a slower rollout before engineering starts?",
     intro: [
-      "The tool is most useful when you are still deciding whether the idea deserves deeper effort. Strong inputs produce a stronger report: who the buyer is, what painful workflow breaks today, what they use now, how you plan to reach them, and why you have any right to win the first few users.",
-      "Instead of handing back a vague score, the report now returns an executive summary, recommendation, confidence level, score rationale, wedge recommendation, first validation experiments, launch channels, and an MVP boundary."
+      "SaaS Idea Validator is designed to score one specific idea, not generate dozens of generic suggestions. The tool asks for the buyer, the painful workflow, the current workaround, the pricing angle, the founder advantage, and the path to the first users.",
+      "The output is a validation report you can actually use. It is meant to support interviews, message tests, pricing checks, and small pilots rather than push you straight into product development."
     ],
-    supportingCards: [
-      [
-        "What makes the report more useful",
-        "The system forces a sharper thesis. It asks for founder advantage, distribution thinking, existing evidence, and current stage, so the output feels closer to an operator memo than a startup horoscope."
-      ],
-      [
-        "When to trust the output",
-        "Trust the report most when your answers are concrete. If the buyer is still broad, the problem is vague, or the distribution plan is generic, the report will reflect that uncertainty instead of hiding it."
-      ],
-      [
-        "What a good result should trigger",
-        "A strong report should not push you straight into engineering. It should push you into interviews, pilots, paid tests, and proof collection that make the product thesis harder to ignore."
-      ]
+    whatItDoesTitle: "What the tool does",
+    whatItDoesBody:
+      "The validator scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation readiness. It then turns that score into a report with an executive summary, recommendation, score rationale, risks, differentiation suggestions, a recommended wedge, and suggested experiments.",
+    builtForTitle: "Who it is for",
+    builtForBody:
+      "It is built for indie hackers, solo founders, product-minded developers, and early-stage teams evaluating a SaaS idea, an AI workflow product, or a micro SaaS angle before they commit to a larger build.",
+    inputsTitle: "What inputs improve the report",
+    inputsBody:
+      "The tool works best when the inputs are concrete: who the buyer is, why the problem matters now, what alternatives exist, what the pricing logic might be, how you can reach the first users, and what evidence you already have.",
+    outputTitle: "What the report includes",
+    outputBody:
+      "The report includes an overall score, score breakdown, verdict, confidence level, next-step validation plan, risks, differentiation ideas, wedge recommendation, positioning draft, landing page headline, launch channels, and MVP boundaries.",
+    useCasesEyebrow: "Sample use cases",
+    useCasesTitle: "The tool is especially useful in these founder moments",
+    useCases: [
+      {
+        title: "Before building a first MVP",
+        body:
+          "Use it when you have a clear product idea but still need to know whether the pain, audience, and pricing story are strong enough to justify building."
+      },
+      {
+        title: "When the idea still feels too broad",
+        body:
+          "If the concept sounds promising but the buyer and workflow are still fuzzy, the tool helps narrow the wedge before you waste effort on a generic product."
+      },
+      {
+        title: "When comparing multiple startup angles",
+        body:
+          "Founders often use the validator to compare two or three related directions and see which one has the strongest buyer clarity, monetization path, or go-to-market edge."
+      }
     ],
-    signalTitle: "What the upgraded tool now produces",
-    signalItems: [
-      "Executive summary with recommendation and confidence",
-      "Score-by-score rationale instead of raw numbers only",
-      "Sharper differentiation and niche-angle guidance",
-      "Priority validation experiments with expected signals",
-      "Launch channel recommendations and MVP do-not-build boundaries"
+    methodologyEyebrow: "Methodology",
+    methodologyTitle: "How founders should use the result",
+    methodologyPoints: [
+      "Treat the score as a decision aid, not a guarantee.",
+      "Use the report to decide what to validate next with real buyers.",
+      "If the output feels vague, the inputs are usually still too broad.",
+      "A high score should lead to stronger proof, not to skipping validation."
     ],
-    faqEyebrow: "FAQ",
-    faqTitle: "Questions about the new validator workflow",
+    relatedTitle: "Keep moving the validation process forward",
+    relatedLinks: {
+      examples: "Review SaaS idea validation examples",
+      guide: "Read the guide to validating a SaaS idea",
+      pricing: "Learn how to validate SaaS pricing"
+    },
+    faqEyebrow: "Tool FAQ",
+    faqTitle: "Questions about the SaaS idea validator tool",
     faqDescription:
-      "Treat this tool as a decision-quality upgrade for validation, not a shortcut around talking to buyers.",
-    newsletterTitle: "Save your report and keep the validation loop moving",
-    newsletterButton: "Save report",
-    newsletterDescription:
-      "Get founder-focused prompts for interviews, proof gathering, pricing tests, and early pilot execution.",
-    keepValidating: "Keep validating",
-    compareExamples: "Compare against example reports",
-    readGuide: "Read the full SaaS validation guide",
-    upgrade: "See pricing for saved reports and team workflows",
-    examples: "See Example Reports",
-    pricing: "Compare plans",
-    home: "Home",
-    tool: "Tool"
+      "These questions focus on how to use the tool well, what the report actually means, and where it fits into a real founder workflow.",
+    finalTitle: "Validate your idea, then compare it with real examples",
+    finalBody:
+      "Run the tool, study the examples library, and use the strongest next-step test before you expand the scope of the product."
   },
   zh: {
-    eyebrow: "核心工具",
-    title: "在你写代码之前，先把 SaaS 想法验证清楚",
+    eyebrow: "核心商业页面",
+    title: "用 SaaS Idea Validator 在开发前验证你的 SaaS 想法",
     description:
-      "这版工具不再只是一个玩具打分器，而是更像创始人判断备忘录生成器。它会一起评估痛点紧迫度、买家清晰度、竞争压力、变现逻辑、MVP 范围和获客现实性。",
+      "这个页面面向需要更清晰判断的创始人：这个创业想法究竟值得继续验证、需要收窄切口，还是应该在进入工程开发前先放慢节奏。",
     intro: [
-      "它最适合用在你还没决定这个想法值不值得深做的时候。输入越具体，报告就越有判断力。尤其要写清楚：买家是谁、今天卡在哪个痛苦工作流、现在用什么凑合、你准备怎么触达他们，以及你为什么有资格拿到第一批用户。",
-      "报告也不再只是给你几个分数。现在会输出执行摘要、推荐动作、当前把握度、逐项评分依据、切口建议、首轮验证实验、优先获客路径和 MVP 边界。"
+      "SaaS Idea Validator 的目标不是一次生成一堆泛泛的点子，而是帮助你判断一个具体想法是否站得住。工具会要求你写清买家、痛苦工作流、当前替代方案、定价思路、创始人优势，以及拿到第一批用户的路径。",
+      "输出也不是一个空洞分数，而是一份可以直接用于访谈、信息测试、定价验证和试点设计的结构化报告。"
     ],
-    supportingCards: [
-      [
-        "为什么现在的报告更有用",
-        "它会逼你补齐创始人优势、分发思路、已有证据和当前阶段这些高信号输入，所以输出更像运营判断，而不是创业星座。"
-      ],
-      [
-        "什么时候应该相信结果",
-        "当你的回答足够具体时，报告最有参考价值。如果买家还很宽、问题还很泛、分发还只是空话，报告也会把这种不确定性直接暴露出来。"
-      ],
-      [
-        "好结果真正应该触发什么",
-        "一个强报告不应该把你直接推向开发，而应该把你推向访谈、试点、付费测试和证据收集，让产品 thesis 更难被忽视。"
-      ]
+    whatItDoesTitle: "这个工具会做什么",
+    whatItDoesBody:
+      "它会评估需求、竞争压力、受众清晰度、变现潜力、MVP 简洁度和下一步验证可执行性，再把这些维度整理成执行摘要、建议动作、评分依据、风险、差异化建议、推荐切口和验证实验。",
+    builtForTitle: "它适合谁",
+    builtForBody:
+      "它适合独立开发者、单人创始人、产品型工程师和早期团队，在真正投入开发前评估 SaaS 想法、AI 工作流产品或 micro SaaS 切口。",
+    inputsTitle: "哪些输入会让报告更有价值",
+    inputsBody:
+      "越具体越好：买家是谁、为什么这个问题现在必须解决、用户当前用什么替代、价格逻辑是什么、前 20 个用户怎么来、以及你已经掌握了哪些证据。",
+    outputTitle: "报告会包含什么",
+    outputBody:
+      "报告会给出综合得分、维度评分、结论、把握度、下一步验证计划、风险、差异化建议、推荐切口、定位语句、落地页标题、获客路径和 MVP 边界。",
+    useCasesEyebrow: "典型使用场景",
+    useCasesTitle: "这些时刻最适合先用工具判断",
+    useCases: [
+      {
+        title: "准备做第一版 MVP 之前",
+        body:
+          "当你已经有方向，但还不确定痛点、受众和价格故事是否足够强时，先用工具压测，而不是直接进入完整开发。"
+      },
+      {
+        title: "想法看起来有潜力，但仍然偏宽",
+        body:
+          "如果你觉得方向不错，但买家和工作流还不够具体，这个工具能帮你先收窄切口，再去验证。"
+      },
+      {
+        title: "你在比较多个创业方向",
+        body:
+          "很多创始人会把两三个相近方向都跑一遍，看看哪一个在受众清晰度、变现路径和获客可行性上更强。"
+      }
     ],
-    signalTitle: "升级后的工具现在会输出",
-    signalItems: [
-      "带推荐动作和把握度的执行摘要",
-      "不是只有数字，而是逐项评分依据",
-      "更尖锐的差异化和细分切口建议",
-      "按优先级排序的验证实验及预期信号",
-      "优先获客路径建议，以及 MVP 明确“不该做什么”"
+    methodologyEyebrow: "方法说明",
+    methodologyTitle: "应该如何使用这个结果",
+    methodologyPoints: [
+      "把分数当成辅助判断，不要当成成功保证。",
+      "用报告决定下一步要和哪些真实买家验证什么。",
+      "如果输出仍然模糊，通常说明输入还不够具体。",
+      "高分应该推动更多证据，而不是跳过验证。"
     ],
-    faqEyebrow: "常见问题",
-    faqTitle: "关于新版验证工作流的问题",
-    faqDescription: "把它当成提升判断质量的工具，而不是绕过真实买家对话的捷径。",
-    newsletterTitle: "保存报告，让验证循环继续往前走",
-    newsletterButton: "保存报告",
-    newsletterDescription:
-      "获取更贴近创始人实战的访谈提纲、证据收集模板、定价测试和试点动作提示。",
-    keepValidating: "继续验证",
-    compareExamples: "对照示例报告",
-    readGuide: "阅读完整 SaaS 验证指南",
-    upgrade: "查看支持保存报告与团队协作的定价",
-    examples: "查看示例报告",
-    pricing: "查看定价",
-    home: "首页",
-    tool: "工具"
+    relatedTitle: "继续推进你的验证流程",
+    relatedLinks: {
+      examples: "查看 SaaS 想法验证示例",
+      guide: "阅读 SaaS 想法验证指南",
+      pricing: "学习如何验证 SaaS 定价"
+    },
+    faqEyebrow: "工具 FAQ",
+    faqTitle: "关于 SaaS 想法验证工具的常见问题",
+    faqDescription:
+      "这些问题主要回答如何正确使用工具、如何理解报告，以及它在真实创始人流程中的位置。",
+    finalTitle: "先验证你的想法，再和真实示例对照",
+    finalBody:
+      "先跑一份报告，再去看示例库，并执行最值得做的下一步验证动作，而不是直接扩张产品范围。"
   }
 } as const;
 
@@ -129,8 +158,8 @@ export async function generateMetadata({ params }: ToolPageProps) {
     keywords: [
       "saas idea validator",
       "validate saas idea",
-      "startup idea validator",
-      "saas idea generator and validator"
+      "saas idea validation tool",
+      "startup idea validator"
     ]
   });
 }
@@ -138,10 +167,10 @@ export async function generateMetadata({ params }: ToolPageProps) {
 export default async function ToolPage({ params }: ToolPageProps) {
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
-  const copy = getUiCopy(resolvedLocale);
   const pageCopy = toolPageCopy[resolvedLocale];
   const faqs = getToolFaqs(resolvedLocale);
   const validationGuide = blogPosts.find((post) => post.slug === "how-to-validate-a-saas-idea");
+  const pricingGuide = blogPosts.find((post) => post.slug === "saas-pricing-validation");
 
   return (
     <main className="section-space pb-32 md:pb-20">
@@ -150,21 +179,21 @@ export default async function ToolPage({ params }: ToolPageProps) {
           schema={[
             softwareApplicationSchema({
               locale: resolvedLocale,
-              description: copy.pageMeta.tool.description,
-              featureList: copy.schema.softwareFeatures,
+              description: getUiCopy(resolvedLocale).pageMeta.tool.description,
+              featureList: getUiCopy(resolvedLocale).schema.softwareFeatures,
               path: localizedStaticPath(resolvedLocale, "tool")
             }),
             breadcrumbSchema([
-              { name: pageCopy.home, path: localizedStaticPath(resolvedLocale, "home") },
-              { name: pageCopy.tool, path: localizedStaticPath(resolvedLocale, "tool") }
+              { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
+              { name: resolvedLocale === "zh" ? "工具" : "Tool", path: localizedStaticPath(resolvedLocale, "tool") }
             ]),
             faqSchema(faqs)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: pageCopy.home, href: localizedStaticPath(resolvedLocale, "home") },
-            { label: pageCopy.tool, href: localizedStaticPath(resolvedLocale, "tool") }
+            { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
+            { label: resolvedLocale === "zh" ? "工具" : "Tool", href: localizedStaticPath(resolvedLocale, "tool") }
           ]}
         />
 
@@ -180,20 +209,12 @@ export default async function ToolPage({ params }: ToolPageProps) {
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.signalTitle}</h2>
-              <ul className="mt-5 space-y-3 text-slate-700">
-                {pageCopy.signalItems.map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
-            </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
-                {pageCopy.examples}
+                {resolvedLocale === "zh" ? "查看示例报告" : "See example reports"}
               </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "pricing")} variant="ghost">
-                {pageCopy.pricing}
+                {resolvedLocale === "zh" ? "查看定价" : "Compare plans"}
               </ButtonLink>
             </div>
           </div>
@@ -202,40 +223,62 @@ export default async function ToolPage({ params }: ToolPageProps) {
           </div>
         </section>
 
-        <section className="mt-16 grid gap-6 lg:grid-cols-3">
-          {pageCopy.supportingCards.map(([title, body]) => (
-            <article key={title} className="surface-card p-8">
-              <h2 className="text-2xl font-semibold text-slate-950">{title}</h2>
-              <p className="mt-4 leading-7 text-slate-600">{body}</p>
-            </article>
-          ))}
+        <section className="mt-16 grid gap-6 lg:grid-cols-2">
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.whatItDoesTitle}</h2>
+            <p className="mt-4 leading-7 text-slate-600">{pageCopy.whatItDoesBody}</p>
+          </article>
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.builtForTitle}</h2>
+            <p className="mt-4 leading-7 text-slate-600">{pageCopy.builtForBody}</p>
+          </article>
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.inputsTitle}</h2>
+            <p className="mt-4 leading-7 text-slate-600">{pageCopy.inputsBody}</p>
+          </article>
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.outputTitle}</h2>
+            <p className="mt-4 leading-7 text-slate-600">{pageCopy.outputBody}</p>
+          </article>
         </section>
 
-        <section className="mt-16 grid gap-12 lg:grid-cols-[1fr_0.85fr]">
+        <section className="mt-16">
+          <SectionHeading
+            eyebrow={pageCopy.useCasesEyebrow}
+            title={pageCopy.useCasesTitle}
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {pageCopy.useCases.map((item) => (
+              <article key={item.title} className="surface-card p-8">
+                <h2 className="text-2xl font-semibold text-slate-950">{item.title}</h2>
+                <p className="mt-4 leading-7 text-slate-600">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16 grid gap-12 lg:grid-cols-[1fr_0.88fr]">
           <div>
             <SectionHeading
-              eyebrow={pageCopy.faqEyebrow}
-              title={pageCopy.faqTitle}
-              description={pageCopy.faqDescription}
+              eyebrow={pageCopy.methodologyEyebrow}
+              title={pageCopy.methodologyTitle}
             />
-            <div className="mt-10">
-              <FaqList items={faqs} />
-            </div>
+            <ul className="mt-8 space-y-4">
+              {pageCopy.methodologyPoints.map((item) => (
+                <li key={item} className="surface-card p-6 text-base leading-7 text-slate-700">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
+
           <div className="space-y-6">
-            <NewsletterForm
-              source={`tool-page-${resolvedLocale}`}
-              title={pageCopy.newsletterTitle}
-              buttonLabel={pageCopy.newsletterButton}
-              locale={resolvedLocale}
-              description={pageCopy.newsletterDescription}
-            />
-            <div className="surface-card p-6">
-              <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.keepValidating}</h2>
-              <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
+            <div className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.relatedTitle}</h2>
+              <ul className="mt-5 space-y-4 text-base leading-7 text-slate-600">
                 <li>
                   <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
-                    {pageCopy.compareExamples}
+                    {pageCopy.relatedLinks.examples}
                   </Link>
                 </li>
                 <li>
@@ -246,15 +289,57 @@ export default async function ToolPage({ params }: ToolPageProps) {
                     )}
                     className="text-accent hover:underline"
                   >
-                    {pageCopy.readGuide}
+                    {pageCopy.relatedLinks.guide}
                   </Link>
                 </li>
                 <li>
-                  <Link href={localizedStaticPath(resolvedLocale, "pricing")} className="text-accent hover:underline">
-                    {pageCopy.upgrade}
+                  <Link
+                    href={localizedPath(
+                      resolvedLocale,
+                      `/blog/${pricingGuide ? getBlogPostSlug(resolvedLocale, pricingGuide) : "saas-pricing-validation"}`
+                    )}
+                    className="text-accent hover:underline"
+                  >
+                    {pageCopy.relatedLinks.pricing}
                   </Link>
                 </li>
               </ul>
+            </div>
+
+            <div className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">
+                {resolvedLocale === "zh" ? "示例对照" : "Example context"}
+              </h2>
+              <p className="mt-4 leading-7 text-slate-600">
+                {resolvedLocale === "zh"
+                  ? `当前示例库包含 ${exampleReports.length} 份结构化报告，可帮助你对照不同方向在需求、竞争和变现上的差异。`
+                  : `The examples library currently includes ${exampleReports.length} structured reports you can use to compare demand, competition, and monetization patterns across ideas.`}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-16 grid gap-12 lg:grid-cols-[1fr_0.9fr]">
+          <div>
+            <SectionHeading
+              eyebrow={pageCopy.faqEyebrow}
+              title={pageCopy.faqTitle}
+              description={pageCopy.faqDescription}
+            />
+            <div className="mt-10">
+              <FaqList items={faqs} />
+            </div>
+          </div>
+          <div className="surface-card p-8">
+            <h2 className="text-3xl font-semibold text-slate-950">{pageCopy.finalTitle}</h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">{pageCopy.finalBody}</p>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <ButtonLink href="#validator-form">
+                {resolvedLocale === "zh" ? "开始验证我的想法" : "Validate my idea now"}
+              </ButtonLink>
+              <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
+                {resolvedLocale === "zh" ? "查看示例报告" : "See SaaS idea validation examples"}
+              </ButtonLink>
             </div>
           </div>
         </section>

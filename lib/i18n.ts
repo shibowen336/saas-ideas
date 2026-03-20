@@ -93,17 +93,17 @@ export const uiCopy = {
       newsletterButton: "Join free",
       product: "Product",
       content: "Content",
-      exampleReports: "Example reports",
-      aiStartupValidation: "AI startup validation",
-      recruiterIdeas: "Recruiter micro SaaS ideas",
+      exampleReports: "SaaS idea validation examples",
+      aiStartupValidation: "How to validate an AI startup idea",
+      recruiterIdeas: "Micro SaaS ideas for recruiters",
       about: "About",
       builtFor: "Built for indie hackers, solo founders, and product builders."
     },
     pageMeta: {
       home: {
-        title: "Validate Your SaaS Idea Before You Build",
+        title: "SaaS Idea Validator: Validate Your SaaS Idea Before You Build",
         description:
-          "SaaS Idea Validator helps founders score demand, competition, audience clarity, monetization, MVP complexity, and next-step validation actions before building."
+          "Validate a SaaS idea before you build. SaaS Idea Validator scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions."
       },
       about: {
         title: "About SaaS Idea Validator",
@@ -121,19 +121,19 @@ export const uiCopy = {
           "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, pricing, and founder validation workflows."
       },
       examples: {
-        title: "SaaS Idea Validation Report Examples",
+        title: "SaaS Idea Validation Examples and Startup Idea Scoring Reports",
         description:
-          "Browse realistic SaaS idea validation report examples covering ecommerce, agency software, AI SaaS, and founder-focused niche positioning."
+          "Browse SaaS idea validation examples, startup idea scoring reports, and founder-focused breakdowns for AI SaaS, ecommerce SaaS, and vertical SaaS ideas."
       },
       blog: {
-        title: "Blog",
+        title: "SaaS Idea Validation Blog and Founder Guides",
         description:
-          "Founder-focused blog content on SaaS idea validation, micro SaaS ideas, AI SaaS ideas, startup validation frameworks, and market research."
+          "Practical founder guides on how to validate a SaaS idea, micro SaaS ideas, AI SaaS ideas, startup validation, and SaaS pricing validation."
       },
       tool: {
-        title: "SaaS Idea Validator Tool",
+        title: "SaaS Idea Validator Tool for Founders",
         description:
-          "Use the SaaS Idea Validator tool to score demand, competition, audience clarity, monetization potential, MVP simplicity, and founder next steps."
+          "Use the SaaS Idea Validator tool to validate a SaaS idea with scoring for demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions."
       },
       report: {
         title: "SaaS Idea Validation Report",
@@ -143,7 +143,7 @@ export const uiCopy = {
     },
     schema: {
       websiteDescription:
-        "Validate your SaaS idea before you build. Score demand, competition, audience clarity, monetization potential, MVP complexity, and next-step validation actions.",
+        "Validate a SaaS idea before you build. Score demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions.",
       softwareFeatures: [
         "SaaS idea scoring",
         "Demand and competition analysis",

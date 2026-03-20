@@ -2,10 +2,10 @@ export const siteConfig = {
   name: "SaaS Idea Validator",
   shortName: "Idea Validator",
   description:
-    "Validate your SaaS idea before you build. Score demand, competition, audience clarity, monetization potential, MVP complexity, and next-step validation actions.",
-  url: "https://www.saasideavalidator.com",
-  ogImage: "/og-default.svg",
-  email: "hello@saasideavalidator.com",
+    "SaaS Idea Validator helps founders validate SaaS ideas by scoring demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions.",
+  url: "https://www.saasideas.app",
+  ogImage: "/og-default.png",
+  email: "hello@saasideas.app",
   links: {
     x: "https://x.com/saasideas",
     linkedin: "https://www.linkedin.com/company/saas-idea-validator"

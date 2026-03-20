@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
@@ -65,13 +66,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
+  const pricingGuide = blogPosts.find((entry) => entry.slug === "saas-pricing-validation");
   const pageCopy =
     resolvedLocale === "zh"
       ? {
           home: "首页",
           blog: "博客",
           outline: "文章提纲",
-          useTool: "使用验证器",
+          useTool: "使用工具",
+          examplesTitle: "查看 SaaS 想法验证示例",
+          pricingTitle: "阅读 SaaS 定价验证指南",
+          publishedBy: "发布方：SaaS Idea Validator",
           faq: "文章 FAQ",
           nextStep: "下一步",
           validate: "验证我的想法",
@@ -82,6 +87,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           blog: "Blog",
           outline: "Article outline",
           useTool: "Use the tool",
+          examplesTitle: "See SaaS idea validation examples",
+          pricingTitle: "Read the SaaS pricing validation guide",
+          publishedBy: "Published by SaaS Idea Validator",
           faq: "Article FAQ",
           nextStep: "Next step",
           validate: "Validate My Idea",
@@ -134,8 +142,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {localizedPost.title}
             </h1>
             <p className="mt-4 text-sm text-slate-500">
-              {formattedDate} · {localizedPost.readingTime}
+              {formattedDate}
+              {" · "}
+              {localizedPost.readingTime}
             </p>
+            <p className="mt-2 text-sm text-slate-500">{pageCopy.publishedBy}</p>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
               {localizedPost.description}
             </p>
@@ -156,10 +167,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="surface-card p-6">
                 <h2 className="text-xl font-semibold text-slate-950">{localizedPost.ctaTitle}</h2>
                 <p className="mt-4 leading-7 text-slate-600">{localizedPost.ctaCopy}</p>
-                <div className="mt-6">
+                <div className="mt-6 flex flex-col gap-3">
                   <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
                     {pageCopy.useTool}
                   </ButtonLink>
+                  <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
+                    {pageCopy.examplesTitle}
+                  </Link>
+                  <Link
+                    href={localizedPath(
+                      resolvedLocale,
+                      `/blog/${getBlogPostSlug(resolvedLocale, pricingGuide ?? post)}`
+                    )}
+                    className="text-accent hover:underline"
+                  >
+                    {pageCopy.pricingTitle}
+                  </Link>
                 </div>
               </div>
             </aside>
