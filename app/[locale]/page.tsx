@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { FaqList } from "@/components/faq-list";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { SectionHeading } from "@/components/section-heading";
@@ -30,9 +29,9 @@ const homePageCopy = {
       "SaaS Idea Validator helps founders validate a SaaS idea by scoring demand, competition pressure, audience clarity, monetization, MVP simplicity, and the next validation actions to run.",
     eyebrow: "SaaS idea validator for founders",
     heroStats: [
-      ["Primary use case", "Validate a SaaS idea before writing code"],
-      ["What gets scored", "Demand, competition, audience, monetization, MVP scope"],
-      ["What you receive", "A structured report with risks, wedge, and next steps"]
+      ["Pain worth paying for", "See whether the problem is urgent enough to support real budget."],
+      ["A clear niche angle", "Find a tighter wedge you can explain, test, and sell first."],
+      ["What to validate next", "Turn the score into interviews, pricing tests, and a smaller MVP."]
     ],
     heroSupporting: "Designed for indie hackers, solo founders, product-minded developers, and early-stage teams that want sharper evidence before they build.",
     methodologyEyebrow: "What is SaaS idea validation?",
@@ -135,10 +134,6 @@ const homePageCopy = {
     faqTitle: "Questions founders ask when validating a SaaS idea",
     faqDescription:
       "These answers are meant to help with search intent and real decisions, not to decorate the page with filler.",
-    emailTitle: "Get one founder-focused validation email stream",
-    emailDescription:
-      "Receive practical notes on SaaS idea validation, report methodology, pricing tests, and launch decisions. The main action on this page is still to validate your idea.",
-    emailButton: "Get validation notes",
     browseExamples: "Browse SaaS idea validation examples",
     seeTool: "Use the SaaS idea validator",
     resources: {
@@ -287,13 +282,7 @@ export async function generateMetadata({ params }: HomePageProps) {
     locale: resolvedLocale,
     title: copy.pageMeta.home.title,
     description: copy.pageMeta.home.description,
-    pathname: "/",
-    keywords: [
-      "saas idea validator",
-      "validate saas idea",
-      "saas idea validation",
-      "startup idea validator"
-    ]
+    pathname: "/"
   });
 }
 
@@ -641,13 +630,27 @@ export default async function HomePage({ params }: HomePageProps) {
             </ul>
           </div>
           <div className="space-y-6">
-            <NewsletterForm
-              source={`homepage-${resolvedLocale}`}
-              title={copy.emailTitle}
-              buttonLabel={copy.emailButton}
-              locale={resolvedLocale}
-              description={copy.emailDescription}
-            />
+            <div className="surface-card p-6">
+              <h2 className="text-2xl font-semibold text-slate-950">
+                {resolvedLocale === "zh" ? "如何使用这份分数" : "How founders should use the score"}
+              </h2>
+              <p className="mt-4 leading-7 text-slate-600">
+                {resolvedLocale === "zh"
+                  ? "把报告当成下一步验证简报，而不是立刻开工的许可。高分代表值得继续收集证据，低分通常意味着受众、痛点或定价逻辑还需要继续收窄。"
+                  : "Treat the report as a next-step validation brief, not as permission to start building. A strong score means the idea deserves stronger proof. A weak score usually means the audience, pain, or pricing logic still needs work."}
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
+                  {getUiCopy(resolvedLocale).cta.validate}
+                </ButtonLink>
+                <ButtonLink
+                  href={localizedStaticPath(resolvedLocale, "examples")}
+                  variant="secondary"
+                >
+                  {copy.browseExamples}
+                </ButtonLink>
+              </div>
+            </div>
             <div className="surface-card p-6">
               <h2 className="text-2xl font-semibold text-slate-950">{copy.resourcesTitle}</h2>
               <p className="mt-4 leading-7 text-slate-600">{copy.resourcesDescription}</p>

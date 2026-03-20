@@ -30,7 +30,7 @@ export function createMetadata({
   return {
     title,
     description,
-    keywords,
+    ...(keywords.length ? { keywords } : {}),
     alternates: {
       canonical
     },
@@ -96,7 +96,7 @@ export function createLocalizedMetadata({
   return {
     title,
     description,
-    keywords,
+    ...(keywords.length ? { keywords } : {}),
     alternates: buildLanguageAlternates(pathByLocale, locale),
     openGraph: {
       title,

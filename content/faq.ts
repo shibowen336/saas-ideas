@@ -32,9 +32,9 @@ export const homeFaqs: FaqEntry[] = [
       "Yes. AI ideas still need a clear buyer, a painful workflow, trust, and pricing that works. The validator helps you see whether the concept is a real product angle or just a broad AI feature idea."
   },
   {
-    question: "Who is SaaS Idea Validator for?",
+    question: "What should I do after getting my SaaS idea score?",
     answer:
-      "It is for indie hackers, solo founders, product-minded developers, and early-stage teams that want a structured SaaS idea validation workflow before spending months building."
+      "Use the score as a next-step brief. Run buyer interviews, test the positioning on a landing page, pressure-test pricing, and try a narrow pilot before you expand the product scope."
   }
 ];
 
