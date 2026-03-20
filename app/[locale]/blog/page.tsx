@@ -13,7 +13,7 @@ type BlogIndexPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const pageCopy = {
+const copy = {
   en: {
     eyebrow: "Founder guides",
     title: "SaaS idea validation blog for founders",
@@ -23,6 +23,8 @@ const pageCopy = {
       "This blog is for indie hackers, solopreneurs, and early-stage SaaS founders who want clearer validation frameworks, sharper positioning, and more useful examples before they build.",
     support:
       "Start with the core guides below, then move into the validator and examples library when you are ready to score your own idea.",
+    supportPrimary: "Use the SaaS idea validation tool",
+    supportSecondary: "Review SaaS idea validation examples",
     hubTitle: "Start with the core SaaS idea validation guides",
     archiveTitle: "Browse the full founder guide library",
     read: "Read the full guide",
@@ -32,7 +34,10 @@ const pageCopy = {
     examplesTitle: "Review SaaS idea validation examples",
     examplesCopy: "Compare real example reports before you pressure-test your own startup angle.",
     pricingTitle: "Learn SaaS pricing validation",
-    pricingCopy: "Understand willingness to pay, pricing logic, and early packaging decisions."
+    pricingCopy: "Understand willingness to pay, pricing logic, and early packaging decisions.",
+    home: "Home",
+    blog: "Blog",
+    separator: "·"
   },
   zh: {
     eyebrow: "创始人指南",
@@ -43,6 +48,8 @@ const pageCopy = {
       "这个博客面向独立开发者、单人创始人和早期 SaaS 团队，帮助你在真正开始构建前获得更清晰的验证框架、更扎实的定位思路和更有用的示例。",
     support:
       "你可以先从下面的核心指南开始，再进入验证工具和示例库，进一步评估自己的想法。",
+    supportPrimary: "使用 SaaS 想法验证工具",
+    supportSecondary: "查看 SaaS 想法验证示例",
     hubTitle: "先读这些核心 SaaS 想法验证指南",
     archiveTitle: "浏览完整的创始人内容库",
     read: "阅读全文",
@@ -52,20 +59,23 @@ const pageCopy = {
     examplesTitle: "查看 SaaS 想法验证示例",
     examplesCopy: "先研究真实示例报告，再去评估你自己的方向。",
     pricingTitle: "学习 SaaS 定价验证",
-    pricingCopy: "理解付费意愿、定价逻辑和早期套餐决策。"
+    pricingCopy: "理解付费意愿、定价逻辑和早期套餐决策。",
+    home: "首页",
+    blog: "博客",
+    separator: "·"
   }
 } as const;
 
 export async function generateMetadata({ params }: BlogIndexPageProps) {
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
-  const copy = getUiCopy(resolvedLocale);
+  const ui = getUiCopy(resolvedLocale);
 
   return createLocalizedMetadata({
     locale: resolvedLocale,
-    absoluteTitle: copy.pageMeta.blog.title,
-    title: copy.pageMeta.blog.title,
-    description: copy.pageMeta.blog.description,
+    absoluteTitle: ui.pageMeta.blog.title,
+    title: ui.pageMeta.blog.title,
+    description: ui.pageMeta.blog.description,
     pathname: "/blog"
   });
 }
@@ -73,7 +83,7 @@ export async function generateMetadata({ params }: BlogIndexPageProps) {
 export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
-  const copy = pageCopy[resolvedLocale];
+  const page = copy[resolvedLocale];
   const formattedLocale = resolvedLocale === "zh" ? "zh-CN" : "en-US";
 
   const contentHubs = [
@@ -99,43 +109,37 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
         <SchemaScript
           schema={[
             breadcrumbSchema([
-              { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
-              { name: resolvedLocale === "zh" ? "博客" : "Blog", path: localizedStaticPath(resolvedLocale, "blog") }
+              { name: page.home, path: localizedStaticPath(resolvedLocale, "home") },
+              { name: page.blog, path: localizedStaticPath(resolvedLocale, "blog") }
             ]),
             itemListSchema(blogListItems)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            { label: resolvedLocale === "zh" ? "博客" : "Blog", href: localizedStaticPath(resolvedLocale, "blog") }
+            { label: page.home, href: localizedStaticPath(resolvedLocale, "home") },
+            { label: page.blog, href: localizedStaticPath(resolvedLocale, "blog") }
           ]}
         />
 
         <div className="mt-8 max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            {copy.eyebrow}
-          </p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{page.eyebrow}</p>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-            {copy.title}
+            {page.title}
           </h1>
-          <p className="mt-4 text-lg leading-8 text-slate-600">{copy.description}</p>
-          <p className="mt-6 article-copy">{copy.intro}</p>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            {copy.support}{" "}
-            <Link href={localizedStaticPath(resolvedLocale, "tool")} className="text-accent hover:underline">
-              {resolvedLocale === "zh" ? "开始验证你的 SaaS 想法" : "Use the SaaS idea validation tool"}
-            </Link>{" "}
-            {resolvedLocale === "zh" ? "或先查看" : "or review"}{" "}
-            <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
-              {resolvedLocale === "zh" ? "示例报告" : "SaaS idea validation examples"}
-            </Link>
-            .
-          </p>
+          <p className="mt-4 text-lg leading-8 text-slate-600">{page.description}</p>
+          <p className="mt-6 article-copy">{page.intro}</p>
+          <p className="mt-4 text-base leading-7 text-slate-600">{page.support}</p>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+            <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{page.supportPrimary}</ButtonLink>
+            <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
+              {page.supportSecondary}
+            </ButtonLink>
+          </div>
         </div>
 
         <section className="mt-12">
-          <SectionHeading title={copy.hubTitle} />
+          <SectionHeading title={page.hubTitle} />
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {contentHubs.map((post) => {
               const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
@@ -146,9 +150,7 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
                   href={localizedPath(resolvedLocale, `/blog/${getBlogPostSlug(resolvedLocale, post)}`)}
                   className="surface-card p-6 transition hover:-translate-y-0.5 hover:border-accent"
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                    {localizedPost.category}
-                  </p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{localizedPost.category}</p>
                   <h2 className="mt-3 text-2xl font-semibold text-slate-950">{localizedPost.title}</h2>
                   <p className="mt-3 leading-7 text-slate-600">{localizedPost.description}</p>
                 </Link>
@@ -158,7 +160,7 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
         </section>
 
         <section className="mt-12">
-          <SectionHeading title={copy.archiveTitle} />
+          <SectionHeading title={page.archiveTitle} />
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             {blogPosts.map((post) => {
               const localizedPost = getLocalizedBlogPost(post, resolvedLocale);
@@ -169,18 +171,14 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
 
               return (
                 <article key={post.slug} className="surface-card p-8">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                    {localizedPost.category}
-                  </p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{localizedPost.category}</p>
                   <h2 className="mt-4 text-3xl font-semibold text-slate-950">
                     <Link href={localizedPath(resolvedLocale, `/blog/${localizedSlug}`)} className="hover:text-accent">
                       {localizedPost.title}
                     </Link>
                   </h2>
                   <p className="mt-3 text-sm text-slate-500">
-                    {formattedDate}
-                    {" • "}
-                    {localizedPost.readingTime}
+                    {formattedDate} {page.separator} {localizedPost.readingTime}
                   </p>
                   <p className="mt-4 leading-7 text-slate-600">{localizedPost.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
@@ -195,7 +193,7 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
                   </div>
                   <div className="mt-8">
                     <ButtonLink href={localizedPath(resolvedLocale, `/blog/${localizedSlug}`)} variant="secondary">
-                      {copy.read}
+                      {page.read}
                     </ButtonLink>
                   </div>
                 </article>
@@ -205,28 +203,28 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
         </section>
 
         <section className="mt-16 surface-card p-8 sm:p-10">
-          <h2 className="text-3xl font-semibold text-slate-950">{copy.relatedTitle}</h2>
+          <h2 className="text-3xl font-semibold text-slate-950">{page.relatedTitle}</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             <Link
               href={localizedStaticPath(resolvedLocale, "tool")}
               className="rounded-[1.5rem] border border-slate-200 p-5 transition hover:border-accent"
             >
-              <h3 className="text-xl font-semibold text-slate-950">{copy.toolTitle}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{copy.toolCopy}</p>
+              <h3 className="text-xl font-semibold text-slate-950">{page.toolTitle}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{page.toolCopy}</p>
             </Link>
             <Link
               href={localizedStaticPath(resolvedLocale, "examples")}
               className="rounded-[1.5rem] border border-slate-200 p-5 transition hover:border-accent"
             >
-              <h3 className="text-xl font-semibold text-slate-950">{copy.examplesTitle}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{copy.examplesCopy}</p>
+              <h3 className="text-xl font-semibold text-slate-950">{page.examplesTitle}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{page.examplesCopy}</p>
             </Link>
             <Link
               href={localizedPath(resolvedLocale, `/blog/${getBlogPostSlug(resolvedLocale, pricingHub)}`)}
               className="rounded-[1.5rem] border border-slate-200 p-5 transition hover:border-accent"
             >
-              <h3 className="text-xl font-semibold text-slate-950">{copy.pricingTitle}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{copy.pricingCopy}</p>
+              <h3 className="text-xl font-semibold text-slate-950">{page.pricingTitle}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{page.pricingCopy}</p>
             </Link>
           </div>
         </section>

@@ -16,16 +16,18 @@ type ExamplesPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const pageCopy = {
+const copy = {
   en: {
     eyebrow: "Examples library",
     title: "SaaS idea validation examples and startup idea scoring examples",
     description:
       "Study SaaS idea validation examples, startup idea scoring examples, and founder-style reports for micro SaaS, AI SaaS, ecommerce SaaS, and vertical SaaS ideas.",
     intro:
-      "This page is for founders comparing different SaaS startup angles before they build. Each example shows how one idea scores, where the risks sit, what niche wedge looks strongest, and what should be validated next before committing to a broader MVP.",
+      "This page is for founders comparing different SaaS startup angles before they build. Each example shows how one idea scores, where the risks sit, what niche wedge looks strongest, and what should be validated next.",
     support:
       "Use these reports to compare ideas, then run your own SaaS idea through the validator to see which direction deserves deeper validation.",
+    supportPrimary: "Validate a SaaS idea now",
+    supportSecondary: "Read the validation guide",
     clusterEyebrow: "Browse by intent",
     clusterTitle: "Browse SaaS idea examples by category and validation intent",
     overall: "Overall score",
@@ -44,11 +46,15 @@ const pageCopy = {
     relatedTool: "Validate a SaaS idea with the tool",
     relatedGuide: "Read the SaaS idea validation guide",
     relatedPricing: "Learn how to validate SaaS pricing",
+    relatedBody:
+      "After reviewing the example, use the tool, validation guide, and pricing guide together to compare your own idea against the same criteria.",
     finalTitle: "Ready to compare your own SaaS idea against these examples?",
     finalBody:
       "Run the validator, then compare your score, wedge, and next-step plan with these example reports before you spend more time building.",
     finalPrimary: "Run my SaaS idea through the validator",
-    finalSecondary: "Read how to validate a SaaS idea"
+    finalSecondary: "Read how to validate a SaaS idea",
+    home: "Home",
+    examples: "SaaS Idea Validation Examples"
   },
   zh: {
     eyebrow: "示例库",
@@ -56,9 +62,11 @@ const pageCopy = {
     description:
       "查看更真实、更具体的 SaaS 想法验证示例，了解不同方向在需求、竞争、受众清晰度、变现和 MVP 范围上的差异。",
     intro:
-      "这些示例报告本身就是有用内容，而不只是占位卡片。每一份都解释了为什么这个方向有吸引力、风险在哪里、切口应该如何收窄，以及下一步该做什么验证。",
+      "这些示例报告本身就是有用内容，而不只是占位卡片。每一份都会解释为什么这个方向有吸引力、风险在哪里、切口应该如何收窄，以及下一步该做什么验证。",
     support:
       "先用这些报告对比方向，再把你自己的 SaaS 想法放进验证工具，看看哪个方向更值得继续推进。",
+    supportPrimary: "现在就开始验证",
+    supportSecondary: "阅读验证指南",
     clusterEyebrow: "按研究意图浏览",
     clusterTitle: "从你正在研究的 SaaS 方向进入对应内容",
     overall: "综合得分",
@@ -77,24 +85,26 @@ const pageCopy = {
     relatedTool: "用工具验证你的 SaaS 想法",
     relatedGuide: "阅读 SaaS 想法验证指南",
     relatedPricing: "学习如何验证 SaaS 定价",
+    relatedBody: "看完这份示例后，继续用工具、验证指南和定价内容交叉判断，路径会更清楚。",
     finalTitle: "准备把自己的想法和这些示例对照了吗？",
-    finalBody:
-      "先跑一份报告，再把你的得分、切口和这些示例做对照，然后再决定是否继续投入开发。",
+    finalBody: "先跑一份报告，再把你的得分、切口和这些示例做对照，然后再决定是否继续投入开发。",
     finalPrimary: "验证我的 SaaS 想法",
-    finalSecondary: "阅读如何验证 SaaS 想法"
+    finalSecondary: "阅读如何验证 SaaS 想法",
+    home: "首页",
+    examples: "SaaS 想法验证示例"
   }
 } as const;
 
 export async function generateMetadata({ params }: ExamplesPageProps) {
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
-  const copy = getUiCopy(resolvedLocale);
+  const ui = getUiCopy(resolvedLocale);
 
   return createLocalizedMetadata({
     locale: resolvedLocale,
-    absoluteTitle: copy.pageMeta.examples.title,
-    title: copy.pageMeta.examples.title,
-    description: copy.pageMeta.examples.description,
+    absoluteTitle: ui.pageMeta.examples.title,
+    title: ui.pageMeta.examples.title,
+    description: ui.pageMeta.examples.description,
     pathname: "/examples"
   });
 }
@@ -102,18 +112,16 @@ export async function generateMetadata({ params }: ExamplesPageProps) {
 export default async function ExamplesPage({ params }: ExamplesPageProps) {
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
-  const copy = pageCopy[resolvedLocale];
+  const page = copy[resolvedLocale];
   const validationGuide = blogPosts.find((post) => post.slug === "how-to-validate-a-saas-idea");
   const pricingGuide = blogPosts.find((post) => post.slug === "saas-pricing-validation");
   const aiIdeasGuide = blogPosts.find((post) => post.slug === "ai-saas-ideas");
   const microIdeasGuide = blogPosts.find((post) => post.slug === "micro-saas-ideas");
-  const accountantIdeasPage = programmaticPages.find(
-    (page) => page.slug === "industry-saas-ideas-for-accountants"
-  );
+  const accountantIdeasPage = programmaticPages.find((entry) => entry.slug === "industry-saas-ideas-for-accountants");
 
   const clusterLinks = [
     {
-      title: resolvedLocale === "zh" ? "AI SaaS 想法" : "AI SaaS validation examples",
+      title: resolvedLocale === "zh" ? "AI SaaS 验证示例" : "AI SaaS validation examples",
       body:
         resolvedLocale === "zh"
           ? "查看 AI 工作流产品应该如何验证买家、信任和竞争。"
@@ -124,10 +132,10 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       )
     },
     {
-      title: resolvedLocale === "zh" ? "Micro SaaS 想法" : "Micro SaaS idea validation examples",
+      title: resolvedLocale === "zh" ? "Micro SaaS 想法示例" : "Micro SaaS idea validation examples",
       body:
         resolvedLocale === "zh"
-          ? "从更窄、更容易验证的工作流型 SaaS 方向开始。"
+          ? "从更窄、更容易验证的工作流切口开始。"
           : "Start with narrower, easier-to-validate workflow ideas and founder-friendly wedges.",
       href: localizedPath(
         resolvedLocale,
@@ -138,7 +146,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       title: resolvedLocale === "zh" ? "垂直 SaaS 想法" : "Vertical SaaS ideas",
       body:
         resolvedLocale === "zh"
-          ? "进入行业型 SaaS 切口，理解工作流和买家差异。"
+          ? "进入行业型 SaaS 切口，理解工作流、买家和商业路径。"
           : "See how industry-specific SaaS ideas differ by workflow, buyer, and commercial path.",
       href: localizedPath(
         resolvedLocale,
@@ -146,7 +154,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       )
     },
     {
-      title: resolvedLocale === "zh" ? "电商 SaaS 想法" : "Ecommerce SaaS validation examples",
+      title: resolvedLocale === "zh" ? "电商 SaaS 验证示例" : "Ecommerce SaaS validation examples",
       body:
         resolvedLocale === "zh"
           ? "对照电商 SaaS 在需求、变现和分发上的强弱。"
@@ -154,7 +162,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       href: "#shopify-onboarding-assistant"
     },
     {
-      title: resolvedLocale === "zh" ? "创业想法评分示例" : "SaaS idea scoring examples",
+      title: resolvedLocale === "zh" ? "SaaS 想法评分示例" : "SaaS idea scoring examples",
       body:
         resolvedLocale === "zh"
           ? "直接查看完整评分报告，理解不同方向为什么得分不同。"
@@ -174,51 +182,43 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
         <SchemaScript
           schema={[
             breadcrumbSchema([
-              { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
-              {
-                name:
-                  resolvedLocale === "zh"
-                    ? "SaaS 想法验证示例"
-                    : "SaaS Idea Validation Examples",
-                path: localizedStaticPath(resolvedLocale, "examples")
-              }
+              { name: page.home, path: localizedStaticPath(resolvedLocale, "home") },
+              { name: page.examples, path: localizedStaticPath(resolvedLocale, "examples") }
             ]),
             itemListSchema(exampleListItems)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            {
-              label:
-                resolvedLocale === "zh"
-                  ? "SaaS 想法验证示例"
-                  : "SaaS Idea Validation Examples",
-              href: localizedStaticPath(resolvedLocale, "examples")
-            }
+            { label: page.home, href: localizedStaticPath(resolvedLocale, "home") },
+            { label: page.examples, href: localizedStaticPath(resolvedLocale, "examples") }
           ]}
         />
 
         <div className="mt-8 max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            {copy.eyebrow}
-          </p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{page.eyebrow}</p>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-            {copy.title}
+            {page.title}
           </h1>
-          <p className="mt-4 text-lg leading-8 text-slate-600">{copy.description}</p>
-          <p className="mt-6 article-copy">{copy.intro}</p>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            {copy.support}{" "}
-            <Link href={localizedStaticPath(resolvedLocale, "tool")} className="text-accent hover:underline">
-              {resolvedLocale === "zh" ? "现在就开始验证" : "Validate a SaaS idea now"}
-            </Link>
-            .
-          </p>
+          <p className="mt-4 text-lg leading-8 text-slate-600">{page.description}</p>
+          <p className="mt-6 article-copy">{page.intro}</p>
+          <p className="mt-4 text-base leading-7 text-slate-600">{page.support}</p>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+            <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{page.supportPrimary}</ButtonLink>
+            <ButtonLink
+              href={localizedPath(
+                resolvedLocale,
+                `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
+              )}
+              variant="secondary"
+            >
+              {page.supportSecondary}
+            </ButtonLink>
+          </div>
         </div>
 
         <section className="mt-12">
-          <SectionHeading eyebrow={copy.clusterEyebrow} title={copy.clusterTitle} />
+          <SectionHeading eyebrow={page.clusterEyebrow} title={page.clusterTitle} />
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {clusterLinks.map((item) => (
               <Link
@@ -245,22 +245,16 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                       <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                         {localizedReport.category}
                       </p>
-                      <h2 className="mt-3 text-3xl font-semibold text-slate-950">
-                        {localizedReport.idea}
-                      </h2>
+                      <h2 className="mt-3 text-3xl font-semibold text-slate-950">{localizedReport.idea}</h2>
                       <p className="mt-4 text-base leading-7 text-slate-600">
-                        <span className="font-semibold text-slate-950">{copy.reportContext}:</span>{" "}
+                        <span className="font-semibold text-slate-950">{page.reportContext}:</span>{" "}
                         {localizedReport.targetCustomer}. {localizedReport.problem}
                       </p>
-                      <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-                        {localizedReport.summary}
-                      </p>
+                      <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{localizedReport.summary}</p>
                     </div>
                     <div className="rounded-[1.5rem] bg-slate-950 px-6 py-5 text-white">
-                      <p className="text-sm font-medium text-slate-300">{copy.overall}</p>
-                      <p className="mt-2 text-4xl font-semibold tracking-tight">
-                        {localizedReport.overallScore}/100
-                      </p>
+                      <p className="text-sm font-medium text-slate-300">{page.overall}</p>
+                      <p className="mt-2 text-4xl font-semibold tracking-tight">{localizedReport.overallScore}/100</p>
                     </div>
                   </div>
                 </div>
@@ -268,35 +262,27 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                   <ScoreGrid
                     locale={resolvedLocale}
                     scores={[
-                      { label: copy.problem, score: localizedReport.problemUrgencyScore, tone: "positive" },
-                      { label: copy.audience, score: localizedReport.audienceClarityScore, tone: "positive" },
-                      { label: copy.competition, score: localizedReport.competitionPressure, tone: "warning" },
-                      { label: copy.monetization, score: localizedReport.monetizationPotential, tone: "positive" },
-                      { label: copy.mvp, score: localizedReport.mvpSimplicity },
-                      { label: copy.gtm, score: localizedReport.goToMarketEase }
+                      { label: page.problem, score: localizedReport.problemUrgencyScore, tone: "positive" },
+                      { label: page.audience, score: localizedReport.audienceClarityScore, tone: "positive" },
+                      { label: page.competition, score: localizedReport.competitionPressure, tone: "warning" },
+                      { label: page.monetization, score: localizedReport.monetizationPotential, tone: "positive" },
+                      { label: page.mvp, score: localizedReport.mvpSimplicity },
+                      { label: page.gtm, score: localizedReport.goToMarketEase }
                     ]}
                   />
 
                   <div className="mt-8 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
                     <div className="space-y-6">
                       <div className="rounded-[1.75rem] bg-sand p-6">
-                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                          {copy.positioning}
-                        </p>
-                        <p className="mt-4 text-lg leading-8 text-slate-700">
-                          {localizedReport.samplePositioningStatement}
-                        </p>
+                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{page.positioning}</p>
+                        <p className="mt-4 text-lg leading-8 text-slate-700">{localizedReport.samplePositioningStatement}</p>
                       </div>
                       <div className="rounded-[1.75rem] border border-slate-200 p-6">
-                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-                          {copy.niche}
-                        </p>
-                        <p className="mt-4 leading-7 text-slate-700">
-                          {localizedReport.recommendedNicheAngle}
-                        </p>
+                        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">{page.niche}</p>
+                        <p className="mt-4 leading-7 text-slate-700">{localizedReport.recommendedNicheAngle}</p>
                       </div>
                       <div className="rounded-[1.75rem] border border-slate-200 p-6">
-                        <h3 className="text-xl font-semibold text-slate-950">{copy.nextPlan}</h3>
+                        <h3 className="text-xl font-semibold text-slate-950">{page.nextPlan}</h3>
                         <ul className="mt-4 space-y-3 text-slate-700">
                           {localizedReport.nextStepValidationPlan.map((step) => (
                             <li key={step}>- {step}</li>
@@ -317,7 +303,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                         </section>
                       ))}
                       <section className="rounded-[1.75rem] border border-slate-200 p-6">
-                        <h3 className="text-2xl font-semibold text-slate-950">{copy.risks}</h3>
+                        <h3 className="text-2xl font-semibold text-slate-950">{page.risks}</h3>
                         <ul className="mt-4 space-y-3 text-slate-700">
                           {localizedReport.risks.map((risk) => (
                             <li key={risk}>- {risk}</li>
@@ -328,36 +314,29 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                   </div>
 
                   <div className="mt-8 rounded-[1.75rem] border border-slate-200 p-6">
-                    <h3 className="text-xl font-semibold text-slate-950">{copy.related}</h3>
-                    <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
-                      <li>
-                        <Link href={localizedStaticPath(resolvedLocale, "tool")} className="text-accent hover:underline">
-                          {copy.relatedTool}
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href={localizedPath(
-                            resolvedLocale,
-                            `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
-                          )}
-                          className="text-accent hover:underline"
-                        >
-                          {copy.relatedGuide}
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href={localizedPath(
-                            resolvedLocale,
-                            `/blog/${pricingGuide ? getBlogPostSlug(resolvedLocale, pricingGuide) : "saas-pricing-validation"}`
-                          )}
-                          className="text-accent hover:underline"
-                        >
-                          {copy.relatedPricing}
-                        </Link>
-                      </li>
-                    </ul>
+                    <h3 className="text-xl font-semibold text-slate-950">{page.related}</h3>
+                    <p className="mt-4 text-base leading-7 text-slate-600">{page.relatedBody}</p>
+                    <div className="mt-6 flex flex-col gap-3">
+                      <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{page.relatedTool}</ButtonLink>
+                      <ButtonLink
+                        href={localizedPath(
+                          resolvedLocale,
+                          `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
+                        )}
+                        variant="secondary"
+                      >
+                        {page.relatedGuide}
+                      </ButtonLink>
+                      <ButtonLink
+                        href={localizedPath(
+                          resolvedLocale,
+                          `/blog/${pricingGuide ? getBlogPostSlug(resolvedLocale, pricingGuide) : "saas-pricing-validation"}`
+                        )}
+                        variant="secondary"
+                      >
+                        {page.relatedPricing}
+                      </ButtonLink>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -366,10 +345,10 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
         </div>
 
         <section className="mt-16 surface-card p-8 sm:p-10">
-          <h2 className="text-3xl font-semibold text-slate-950">{copy.finalTitle}</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{copy.finalBody}</p>
+          <h2 className="text-3xl font-semibold text-slate-950">{page.finalTitle}</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{page.finalBody}</p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{copy.finalPrimary}</ButtonLink>
+            <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{page.finalPrimary}</ButtonLink>
             <ButtonLink
               href={localizedPath(
                 resolvedLocale,
@@ -377,7 +356,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
               )}
               variant="secondary"
             >
-              {copy.finalSecondary}
+              {page.finalSecondary}
             </ButtonLink>
           </div>
         </section>

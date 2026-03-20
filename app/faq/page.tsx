@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
 import { SchemaScript } from "@/components/schema-script";
 import { SectionHeading } from "@/components/section-heading";
+import { ButtonLink } from "@/components/ui/button-link";
 import { globalFaqs } from "@/content/faq";
 import { createMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, faqSchema } from "@/lib/schema";
@@ -53,6 +54,12 @@ export default function FaqPage() {
             </Link>
             .
           </p>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <ButtonLink href="/examples">See example reports</ButtonLink>
+            <ButtonLink href="/blog/how-to-validate-a-saas-idea" variant="secondary">
+              Read the full SaaS idea validation guide
+            </ButtonLink>
+          </div>
         </section>
       </div>
     </main>

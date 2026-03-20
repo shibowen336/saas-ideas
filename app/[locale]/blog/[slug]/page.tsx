@@ -171,18 +171,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>
                     {pageCopy.useTool}
                   </ButtonLink>
-                  <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
+                  <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                     {pageCopy.examplesTitle}
-                  </Link>
-                  <Link
+                  </ButtonLink>
+                  <ButtonLink
                     href={localizedPath(
                       resolvedLocale,
                       `/blog/${getBlogPostSlug(resolvedLocale, pricingGuide ?? post)}`
                     )}
-                    className="text-accent hover:underline"
+                    variant="secondary"
                   >
                     {pageCopy.pricingTitle}
-                  </Link>
+                  </ButtonLink>
                 </div>
               </div>
             </aside>

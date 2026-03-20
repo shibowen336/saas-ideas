@@ -1,9 +1,8 @@
-import Link from "next/link";
-
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
 import { SchemaScript } from "@/components/schema-script";
 import { SectionHeading } from "@/components/section-heading";
+import { ButtonLink } from "@/components/ui/button-link";
 import { blogPosts, getBlogPostSlug } from "@/content/blog-posts";
 import { getGlobalFaqs } from "@/content/faq";
 import { getUiCopy, isLocale, localizedPath, localizedStaticPath } from "@/lib/i18n";
@@ -21,8 +20,12 @@ const faqPageCopy = {
     description:
       "The answers below cover how the scoring works, what the tool is useful for, and how to use the report without over-reading a single score.",
     moreTitle: "Need more context?",
-    examplesLabel: "example reports",
-    guideLabel: "detailed SaaS idea validation guide"
+    moreDescription:
+      "Start with the examples library or move into the full SaaS idea validation guide for a deeper founder workflow.",
+    examplesCta: "See example reports",
+    guideCta: "Read the full SaaS idea validation guide",
+    home: "Home",
+    faq: "FAQ"
   },
   zh: {
     eyebrow: "常见问题",
@@ -30,8 +33,11 @@ const faqPageCopy = {
     description:
       "下面这些回答会解释评分是怎么来的、这个工具适合解决什么问题，以及为什么你不该把一项分数当成全部结论。",
     moreTitle: "还想继续看？",
-    examplesLabel: "示例报告",
-    guideLabel: "更完整的 SaaS 想法验证指南"
+    moreDescription: "你可以先看示例报告，或者继续阅读更完整的 SaaS 想法验证指南。",
+    examplesCta: "查看示例报告",
+    guideCta: "阅读完整的 SaaS 想法验证指南",
+    home: "首页",
+    faq: "常见问题"
   }
 } as const;
 
@@ -55,6 +61,10 @@ export default async function FaqPage({ params }: FaqPageProps) {
   const copy = faqPageCopy[resolvedLocale];
   const faqs = getGlobalFaqs(resolvedLocale);
   const validationGuide = blogPosts.find((post) => post.slug === "how-to-validate-a-saas-idea");
+  const guideHref = localizedPath(
+    resolvedLocale,
+    `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
+  );
 
   return (
     <main className="section-space">
@@ -62,16 +72,16 @@ export default async function FaqPage({ params }: FaqPageProps) {
         <SchemaScript
           schema={[
             breadcrumbSchema([
-              { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
-              { name: resolvedLocale === "zh" ? "常见问题" : "FAQ", path: localizedStaticPath(resolvedLocale, "faq") }
+              { name: copy.home, path: localizedStaticPath(resolvedLocale, "home") },
+              { name: copy.faq, path: localizedStaticPath(resolvedLocale, "faq") }
             ]),
             faqSchema(faqs)
           ]}
         />
         <Breadcrumbs
           items={[
-            { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            { label: resolvedLocale === "zh" ? "常见问题" : "FAQ", href: localizedStaticPath(resolvedLocale, "faq") }
+            { label: copy.home, href: localizedStaticPath(resolvedLocale, "home") },
+            { label: copy.faq, href: localizedStaticPath(resolvedLocale, "faq") }
           ]}
         />
         <div className="mt-8 max-w-3xl">
@@ -82,20 +92,13 @@ export default async function FaqPage({ params }: FaqPageProps) {
         </section>
         <section className="mt-16 surface-card p-8">
           <h2 className="text-3xl font-semibold text-slate-950">{copy.moreTitle}</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
-            {resolvedLocale === "zh" ? "你可以先看看" : "Explore the"}{" "}
-            <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
-              {copy.examplesLabel}
-            </Link>{" "}
-            {resolvedLocale === "zh" ? "或者阅读" : "or read the"}{" "}
-            <Link
-              href={localizedPath(resolvedLocale, `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`)}
-              className="text-accent hover:underline"
-            >
-              {copy.guideLabel}
-            </Link>
-            {resolvedLocale === "zh" ? "。" : "."}
-          </p>
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{copy.moreDescription}</p>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")}>{copy.examplesCta}</ButtonLink>
+            <ButtonLink href={guideHref} variant="secondary">
+              {copy.guideCta}
+            </ButtonLink>
+          </div>
         </section>
       </div>
     </main>
