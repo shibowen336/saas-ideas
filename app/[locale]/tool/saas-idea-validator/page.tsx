@@ -21,7 +21,7 @@ type ToolPageProps = {
 const toolPageCopy = {
   en: {
     eyebrow: "Primary commercial page",
-    title: "Validate your SaaS idea before you build with the SaaS Idea Validator tool",
+    title: "Validate your SaaS idea before you build",
     description:
       "Use this SaaS idea validation tool to score demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions before you commit to building.",
     intro: [
@@ -223,7 +223,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
             </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="#validator-form">
-                {resolvedLocale === "zh" ? "开始验证这个想法" : "Generate my validation report"}
+                {resolvedLocale === "zh" ? "开始验证这个想法" : "Generate my SaaS idea report"}
               </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                 {resolvedLocale === "zh" ? "查看示例报告" : "See validation examples"}

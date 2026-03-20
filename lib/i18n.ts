@@ -123,17 +123,17 @@ export const uiCopy = {
       examples: {
         title: "SaaS Idea Validation Examples | SaaS Idea Validator",
         description:
-          "Browse SaaS idea validation examples, startup idea scoring reports, and founder-focused breakdowns for micro SaaS, AI SaaS, ecommerce SaaS, and vertical SaaS ideas."
+          "Browse SaaS idea validation examples, scoring reports, and founder-focused breakdowns for micro SaaS, AI SaaS, ecommerce SaaS, and vertical SaaS ideas."
       },
       blog: {
-        title: "SaaS Idea Validation Blog and Founder Guides",
+        title: "SaaS Idea Validation Blog | SaaS Idea Validator",
         description:
-          "Practical founder guides on how to validate a SaaS idea, micro SaaS ideas, AI SaaS ideas, startup validation, and SaaS pricing validation."
+          "Read practical founder guides on how to validate a SaaS idea, explore micro SaaS and AI SaaS ideas, and pressure-test SaaS pricing."
       },
       tool: {
-        title: "SaaS Idea Validation Tool: Validate Your SaaS Idea Before You Build | SaaS Idea Validator",
+        title: "SaaS Idea Validation Tool | SaaS Idea Validator",
         description:
-          "Use the SaaS Idea Validator tool to score demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions before you build."
+          "Validate a SaaS idea before you build. Score demand, competition, audience clarity, monetization, MVP scope, and next-step validation actions."
       },
       report: {
         title: "SaaS Idea Validation Report",
