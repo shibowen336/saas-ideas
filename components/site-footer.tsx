@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { NewsletterForm } from "@/components/newsletter-form";
 import { getProgrammaticPageSlug, programmaticPages } from "@/content/programmatic-pages";
 import { type Locale, getUiCopy, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
@@ -27,14 +26,6 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
             {copy.footer.description}
           </p>
-          <div className="mt-8 max-w-md">
-            <NewsletterForm
-              source={`footer-${locale}`}
-              title={copy.footer.newsletterTitle}
-              buttonLabel={copy.footer.newsletterButton}
-              locale={locale}
-            />
-          </div>
         </div>
         <div className="grid gap-10 sm:grid-cols-2">
           <div>
@@ -50,11 +41,6 @@ export function SiteFooter({ locale }: SiteFooterProps) {
               <li>
                 <Link href={localizedStaticPath(locale, "examples")} className="hover:text-white">
                   {copy.footer.exampleReports}
-                </Link>
-              </li>
-              <li>
-                <Link href={localizedStaticPath(locale, "pricing")} className="hover:text-white">
-                  {copy.nav.pricing}
                 </Link>
               </li>
               <li>

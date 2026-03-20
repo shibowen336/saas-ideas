@@ -127,8 +127,8 @@ export default function ExamplesPage() {
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <ButtonLink href="/tool/saas-idea-validator">Validate My Idea</ButtonLink>
-            <ButtonLink href="/pricing" variant="secondary">
-              Compare Plans
+            <ButtonLink href="/blog/saas-pricing-validation" variant="secondary">
+              Learn Pricing Validation
             </ButtonLink>
           </div>
         </section>

@@ -11,7 +11,7 @@ import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 export const metadata = createMetadata({
   title: "FAQ",
   description:
-    "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, pricing, and founder validation workflows.",
+    "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, and founder validation workflows.",
   path: "/faq",
   keywords: ["saas idea validator faq", "how to validate a saas idea", "startup idea validation faq"]
 });

@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 import type { ValidationReport } from "@/lib/report";
-import { sendLoopsTransactionalEmail, upsertLoopsContact, isValidEmail } from "@/lib/loops";
+import { sendLoopsTransactionalEmail, isValidEmail } from "@/lib/loops";
 
 export const runtime = "nodejs";
 
@@ -61,7 +61,6 @@ export async function POST(request: Request) {
     const { buildReportEmailData } = await import("@/lib/report-email");
     const dataVariables = buildReportEmailData({ locale, report, reportUrl });
 
-    await upsertLoopsContact({ email, source });
     await sendLoopsTransactionalEmail({ transactionalId, email, dataVariables });
 
     return Response.json({ code: "sent", message: copy.sent });

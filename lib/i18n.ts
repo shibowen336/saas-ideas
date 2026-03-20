@@ -118,7 +118,7 @@ export const uiCopy = {
       faq: {
         title: "FAQ",
         description:
-          "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, pricing, and founder validation workflows."
+          "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, and founder validation workflows."
       },
       examples: {
         title: "SaaS Idea Validation Examples | SaaS Idea Validator",
@@ -202,7 +202,7 @@ export const uiCopy = {
       faq: {
         title: "常见问题",
         description:
-          "了解 SaaS Idea Validator 的评分方式、报告解读方式、定价与创始人验证工作流。"
+          "了解 SaaS Idea Validator 的评分方式、报告解读方式和创始人验证工作流。"
       },
       examples: {
         title: "SaaS 想法验证报告示例",

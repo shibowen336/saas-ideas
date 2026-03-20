@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { FaqList } from "@/components/faq-list";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { SectionHeading } from "@/components/section-heading";
@@ -225,32 +224,25 @@ export default function HomePage() {
               <FaqList items={homeFaqs} />
             </div>
           </div>
-          <div className="space-y-6">
-            <NewsletterForm
-              source="homepage"
-              title="Get validation templates and founder notes"
-              buttonLabel="Get updates"
-            />
-            <div className="surface-card p-6">
-              <h2 className="text-2xl font-semibold text-slate-950">Keep exploring</h2>
-              <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
-                <li>
-                  <Link href="/blog/how-to-validate-a-saas-idea" className="text-accent hover:underline">
-                    Read the guide to validating a SaaS idea
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog/micro-saas-ideas" className="text-accent hover:underline">
-                    Browse micro SaaS idea inspiration
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pricing" className="text-accent hover:underline">
-                    Compare free and paid plans
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          <div className="surface-card h-fit p-6">
+            <h2 className="text-2xl font-semibold text-slate-950">Keep exploring</h2>
+            <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
+              <li>
+                <Link href="/blog/how-to-validate-a-saas-idea" className="text-accent hover:underline">
+                  Read the guide to validating a SaaS idea
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog/micro-saas-ideas" className="text-accent hover:underline">
+                  Browse micro SaaS idea inspiration
+                </Link>
+              </li>
+              <li>
+                <Link href="/tool/saas-idea-validator" className="text-accent hover:underline">
+                  Run the validator on your own idea
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

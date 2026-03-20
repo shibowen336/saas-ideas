@@ -30,7 +30,6 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
             { href: localizedStaticPath(locale, "tool"), label: copy.nav.tool },
             { href: localizedStaticPath(locale, "examples"), label: copy.nav.examples },
             { href: localizedStaticPath(locale, "blog"), label: copy.nav.blog },
-            { href: localizedStaticPath(locale, "pricing"), label: copy.nav.pricing },
             { href: localizedStaticPath(locale, "faq"), label: copy.nav.faq }
           ].map((item) => (
             <Link

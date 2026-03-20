@@ -13,7 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         localizedStaticPath(locale, "tool"),
         localizedStaticPath(locale, "report"),
         localizedStaticPath(locale, "examples"),
-        localizedStaticPath(locale, "pricing"),
         localizedStaticPath(locale, "faq"),
         localizedStaticPath(locale, "about"),
         localizedStaticPath(locale, "blog")

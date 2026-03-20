@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FaqList } from "@/components/faq-list";
 import { MobileStickyCta } from "@/components/mobile-sticky-cta";
-import { NewsletterForm } from "@/components/newsletter-form";
 import { SchemaScript } from "@/components/schema-script";
 import { SectionHeading } from "@/components/section-heading";
 import { ToolIdeaForm } from "@/components/tool-idea-form";
@@ -78,8 +77,8 @@ export default function ToolPage() {
               <ButtonLink href="/examples" variant="secondary">
                 See Example Reports
               </ButtonLink>
-              <ButtonLink href="/pricing" variant="ghost">
-                Compare plans
+              <ButtonLink href="/blog/saas-pricing-validation" variant="ghost">
+                Learn pricing validation
               </ButtonLink>
             </div>
           </div>
@@ -136,32 +135,25 @@ export default function ToolPage() {
               <FaqList items={toolFaqs} />
             </div>
           </div>
-          <div className="space-y-6">
-            <NewsletterForm
-              source="tool-page"
-              title="Save your report and get follow-up validation prompts"
-              buttonLabel="Save report"
-            />
-            <div className="surface-card p-6">
-              <h2 className="text-2xl font-semibold text-slate-950">Keep validating</h2>
-              <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
-                <li>
-                  <Link href="/examples" className="text-accent hover:underline">
-                    Compare with example reports
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog/how-to-validate-a-saas-idea" className="text-accent hover:underline">
-                    Read the SaaS validation guide
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pricing" className="text-accent hover:underline">
-                    Upgrade for saved reports and collaboration
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          <div className="surface-card h-fit p-6">
+            <h2 className="text-2xl font-semibold text-slate-950">Keep validating</h2>
+            <ul className="mt-4 space-y-3 text-base leading-7 text-slate-600">
+              <li>
+                <Link href="/examples" className="text-accent hover:underline">
+                  Compare with example reports
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog/how-to-validate-a-saas-idea" className="text-accent hover:underline">
+                  Read the SaaS validation guide
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog/saas-pricing-validation" className="text-accent hover:underline">
+                  Learn how to validate pricing
+                </Link>
+              </li>
+            </ul>
           </div>
         </section>
       </div>

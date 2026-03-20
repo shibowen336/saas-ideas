@@ -1,5 +1,5 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { NewsletterForm } from "@/components/newsletter-form";
+import { ReportEmailForm } from "@/components/report-email-form";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -25,6 +25,23 @@ function firstValue(value: string | string[] | undefined) {
 
 export default async function ReportPage({ searchParams }: ReportPageProps) {
   const params = await searchParams;
+  const reportUrlSearch = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => {
+        if (entry) {
+          reportUrlSearch.append(key, entry);
+        }
+      });
+      return;
+    }
+
+    if (value) {
+      reportUrlSearch.set(key, value);
+    }
+  });
+
   const report = buildValidationReport({
     idea: firstValue(params.idea),
     targetCustomer: firstValue(params.targetCustomer),
@@ -32,6 +49,7 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
     pricingIdea: firstValue(params.pricingIdea),
     currentAlternatives: firstValue(params.currentAlternatives)
   });
+  const reportUrl = `/en/tool/saas-idea-validator/report${reportUrlSearch.toString() ? `?${reportUrlSearch.toString()}` : ""}`;
 
   return (
     <main className="section-space">
@@ -82,10 +100,14 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
             </div>
           </div>
           <div className="space-y-6">
-            <NewsletterForm
-              source="report"
-              title="Save this report and get the follow-up checklist"
-              buttonLabel="Save report"
+            <ReportEmailForm
+              source="report-en"
+              locale="en"
+              report={report}
+              reportUrl={reportUrl}
+              title="Send this report to your email"
+              buttonLabel="Email report"
+              description="Email this validation report to yourself so you can review it later or forward it to a co-founder."
             />
             <div className="surface-card p-6">
               <h2 className="text-2xl font-semibold text-slate-950">Sample landing page headline</h2>

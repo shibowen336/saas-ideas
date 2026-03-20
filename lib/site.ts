@@ -15,7 +15,6 @@ export const siteConfig = {
     { href: "/tool/saas-idea-validator", label: "Tool" },
     { href: "/examples", label: "Examples" },
     { href: "/blog", label: "Blog" },
-    { href: "/pricing", label: "Pricing" },
     { href: "/faq", label: "FAQ" }
   ]
 } as const;

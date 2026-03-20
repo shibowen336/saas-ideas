@@ -91,12 +91,12 @@ export default function BlogIndexPage() {
               </p>
             </Link>
             <Link
-              href="/pricing"
+              href="/blog/saas-pricing-validation"
               className="rounded-[1.5rem] border border-slate-200 p-5 transition hover:border-accent"
             >
-              <h3 className="text-xl font-semibold text-slate-950">Compare plans</h3>
+              <h3 className="text-xl font-semibold text-slate-950">Learn SaaS pricing validation</h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                See which plan fits your stage and workflow.
+                Pressure-test willingness to pay before you commit to packaging.
               </p>
             </Link>
           </div>
