@@ -66,9 +66,9 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
             { value: "pilot", label: "Preparing a pilot" },
             { value: "mvp", label: "Already have an MVP" }
           ],
-          submit: "Generate Professional Report",
+          submit: "Generate SaaS Idea Report",
           footnote:
-            "The report includes an executive summary, recommendation, confidence level, score rationale, differentiation ideas, validation experiments, launch channels, and MVP boundaries."
+            "Your report includes an executive summary, score rationale, wedge recommendation, validation experiments, launch channels, and MVP boundaries."
         };
 
   return (

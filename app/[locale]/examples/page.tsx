@@ -8,9 +8,9 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { blogPosts, getBlogPostSlug } from "@/content/blog-posts";
 import { exampleReports, getLocalizedExampleReport } from "@/content/example-reports";
 import { getProgrammaticPageSlug, programmaticPages } from "@/content/programmatic-pages";
-import { createLocalizedMetadata } from "@/lib/metadata";
 import { getUiCopy, isLocale, localizedPath, localizedStaticPath } from "@/lib/i18n";
-import { breadcrumbSchema } from "@/lib/schema";
+import { createLocalizedMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, itemListSchema } from "@/lib/schema";
 
 type ExamplesPageProps = {
   params: Promise<{ locale: string }>;
@@ -19,13 +19,15 @@ type ExamplesPageProps = {
 const pageCopy = {
   en: {
     eyebrow: "Examples library",
-    title: "SaaS idea validation examples for founders comparing different startup angles",
+    title: "SaaS idea validation examples and startup idea scoring examples",
     description:
-      "Study realistic SaaS idea validation examples to see how different startup ideas score across demand, competition, audience clarity, monetization, and MVP scope before you build.",
+      "Study SaaS idea validation examples, startup idea scoring examples, and founder-style reports for micro SaaS, AI SaaS, ecommerce SaaS, and vertical SaaS ideas.",
     intro:
-      "These example reports are meant to be useful on their own. Each one explains what makes the idea attractive, where the risks sit, how the wedge could be sharpened, and what the next validation tests should look like.",
+      "This page is for founders comparing different SaaS startup angles before they build. Each example shows how one idea scores, where the risks sit, what niche wedge looks strongest, and what should be validated next before committing to a broader MVP.",
+    support:
+      "Use these reports to compare ideas, then run your own SaaS idea through the validator to see which direction deserves deeper validation.",
     clusterEyebrow: "Browse by intent",
-    clusterTitle: "Jump to the type of SaaS idea you are researching",
+    clusterTitle: "Browse SaaS idea examples by category and validation intent",
     overall: "Overall score",
     problem: "Problem urgency",
     audience: "Audience clarity",
@@ -37,23 +39,26 @@ const pageCopy = {
     niche: "Recommended niche angle",
     nextPlan: "Next-step validation plan",
     risks: "Risks to watch",
+    reportContext: "Target buyer and problem",
     related: "Related resources",
     relatedTool: "Validate a SaaS idea with the tool",
     relatedGuide: "Read the SaaS idea validation guide",
     relatedPricing: "Learn how to validate SaaS pricing",
-    finalTitle: "Ready to compare your own idea against these examples?",
+    finalTitle: "Ready to compare your own SaaS idea against these examples?",
     finalBody:
-      "Run the tool, then compare your score and wedge with these example reports before you spend more time building.",
-    finalPrimary: "Validate my SaaS idea",
-    finalSecondary: "Compare pricing"
+      "Run the validator, then compare your score, wedge, and next-step plan with these example reports before you spend more time building.",
+    finalPrimary: "Run my SaaS idea through the validator",
+    finalSecondary: "Read how to validate a SaaS idea"
   },
   zh: {
     eyebrow: "示例库",
-    title: "帮助创始人比较不同创业方向的 SaaS 想法验证示例",
+    title: "帮助创始人比较不同方向的 SaaS 想法验证示例",
     description:
-      "查看真实感更强的 SaaS 想法验证示例，了解不同创业方向在需求、竞争、受众清晰度、变现和 MVP 范围上的差异。",
+      "查看更真实、更具体的 SaaS 想法验证示例，了解不同方向在需求、竞争、受众清晰度、变现和 MVP 范围上的差异。",
     intro:
       "这些示例报告本身就是有用内容，而不只是占位卡片。每一份都解释了为什么这个方向有吸引力、风险在哪里、切口应该如何收窄，以及下一步该做什么验证。",
+    support:
+      "先用这些报告对比方向，再把你自己的 SaaS 想法放进验证工具，看看哪个方向更值得继续推进。",
     clusterEyebrow: "按研究意图浏览",
     clusterTitle: "从你正在研究的 SaaS 方向进入对应内容",
     overall: "综合得分",
@@ -67,6 +72,7 @@ const pageCopy = {
     niche: "推荐切口",
     nextPlan: "下一步验证计划",
     risks: "需要关注的风险",
+    reportContext: "目标买家与问题",
     related: "相关资源",
     relatedTool: "用工具验证你的 SaaS 想法",
     relatedGuide: "阅读 SaaS 想法验证指南",
@@ -75,7 +81,7 @@ const pageCopy = {
     finalBody:
       "先跑一份报告，再把你的得分、切口和这些示例做对照，然后再决定是否继续投入开发。",
     finalPrimary: "验证我的 SaaS 想法",
-    finalSecondary: "查看定价"
+    finalSecondary: "阅读如何验证 SaaS 想法"
   }
 } as const;
 
@@ -86,14 +92,10 @@ export async function generateMetadata({ params }: ExamplesPageProps) {
 
   return createLocalizedMetadata({
     locale: resolvedLocale,
+    absoluteTitle: copy.pageMeta.examples.title,
     title: copy.pageMeta.examples.title,
     description: copy.pageMeta.examples.description,
-    pathname: "/examples",
-    keywords: [
-      "saas idea validation examples",
-      "startup idea scoring examples",
-      "micro saas idea validation examples"
-    ]
+    pathname: "/examples"
   });
 }
 
@@ -111,7 +113,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
 
   const clusterLinks = [
     {
-      title: resolvedLocale === "zh" ? "AI SaaS 想法" : "AI SaaS ideas",
+      title: resolvedLocale === "zh" ? "AI SaaS 想法" : "AI SaaS validation examples",
       body:
         resolvedLocale === "zh"
           ? "查看 AI 工作流产品应该如何验证买家、信任和竞争。"
@@ -122,10 +124,10 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       )
     },
     {
-      title: resolvedLocale === "zh" ? "Micro SaaS 想法" : "Micro SaaS ideas",
+      title: resolvedLocale === "zh" ? "Micro SaaS 想法" : "Micro SaaS idea validation examples",
       body:
         resolvedLocale === "zh"
-          ? "从更窄、更易验证的工作流型 SaaS 方向开始。"
+          ? "从更窄、更容易验证的工作流型 SaaS 方向开始。"
           : "Start with narrower, easier-to-validate workflow ideas and founder-friendly wedges.",
       href: localizedPath(
         resolvedLocale,
@@ -144,7 +146,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       )
     },
     {
-      title: resolvedLocale === "zh" ? "电商 SaaS 想法" : "Ecommerce SaaS ideas",
+      title: resolvedLocale === "zh" ? "电商 SaaS 想法" : "Ecommerce SaaS validation examples",
       body:
         resolvedLocale === "zh"
           ? "对照电商 SaaS 在需求、变现和分发上的强弱。"
@@ -152,8 +154,7 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
       href: "#shopify-onboarding-assistant"
     },
     {
-      title:
-        resolvedLocale === "zh" ? "创业想法评分示例" : "Startup idea scoring examples",
+      title: resolvedLocale === "zh" ? "创业想法评分示例" : "SaaS idea scoring examples",
       body:
         resolvedLocale === "zh"
           ? "直接查看完整评分报告，理解不同方向为什么得分不同。"
@@ -162,25 +163,58 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
     }
   ];
 
+  const exampleListItems = exampleReports.map((report) => ({
+    name: getLocalizedExampleReport(report, resolvedLocale).idea,
+    url: `${localizedStaticPath(resolvedLocale, "examples")}#${report.slug}`
+  }));
+
   return (
     <main className="section-space">
       <div className="page-shell">
         <SchemaScript
-          schema={breadcrumbSchema([
-            { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
-            { name: resolvedLocale === "zh" ? "示例" : "Examples", path: localizedStaticPath(resolvedLocale, "examples") }
-          ])}
+          schema={[
+            breadcrumbSchema([
+              { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
+              {
+                name:
+                  resolvedLocale === "zh"
+                    ? "SaaS 想法验证示例"
+                    : "SaaS Idea Validation Examples",
+                path: localizedStaticPath(resolvedLocale, "examples")
+              }
+            ]),
+            itemListSchema(exampleListItems)
+          ]}
         />
         <Breadcrumbs
           items={[
             { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            { label: resolvedLocale === "zh" ? "示例" : "Examples", href: localizedStaticPath(resolvedLocale, "examples") }
+            {
+              label:
+                resolvedLocale === "zh"
+                  ? "SaaS 想法验证示例"
+                  : "SaaS Idea Validation Examples",
+              href: localizedStaticPath(resolvedLocale, "examples")
+            }
           ]}
         />
 
         <div className="mt-8 max-w-4xl">
-          <SectionHeading eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+            {copy.eyebrow}
+          </p>
+          <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+            {copy.title}
+          </h1>
+          <p className="mt-4 text-lg leading-8 text-slate-600">{copy.description}</p>
           <p className="mt-6 article-copy">{copy.intro}</p>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            {copy.support}{" "}
+            <Link href={localizedStaticPath(resolvedLocale, "tool")} className="text-accent hover:underline">
+              {resolvedLocale === "zh" ? "现在就开始验证" : "Validate a SaaS idea now"}
+            </Link>
+            .
+          </p>
         </div>
 
         <section className="mt-12">
@@ -214,6 +248,10 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                       <h2 className="mt-3 text-3xl font-semibold text-slate-950">
                         {localizedReport.idea}
                       </h2>
+                      <p className="mt-4 text-base leading-7 text-slate-600">
+                        <span className="font-semibold text-slate-950">{copy.reportContext}:</span>{" "}
+                        {localizedReport.targetCustomer}. {localizedReport.problem}
+                      </p>
                       <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
                         {localizedReport.summary}
                       </p>
@@ -332,7 +370,13 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
           <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{copy.finalBody}</p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{copy.finalPrimary}</ButtonLink>
-            <ButtonLink href={localizedStaticPath(resolvedLocale, "pricing")} variant="secondary">
+            <ButtonLink
+              href={localizedPath(
+                resolvedLocale,
+                `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
+              )}
+              variant="secondary"
+            >
               {copy.finalSecondary}
             </ButtonLink>
           </div>

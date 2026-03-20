@@ -11,6 +11,11 @@ type FaqItem = {
   answer: string;
 };
 
+type ItemListItem = {
+  name: string;
+  url: string;
+};
+
 type BlogSchemaInput = {
   locale: Locale;
   title: string;
@@ -72,6 +77,19 @@ export function faqSchema(faqs: FaqItem[]) {
         "@type": "Answer",
         text: faq.answer
       }
+    }))
+  };
+}
+
+export function itemListSchema(items: ItemListItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: absoluteUrl(item.url)
     }))
   };
 }

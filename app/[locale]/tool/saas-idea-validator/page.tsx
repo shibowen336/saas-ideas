@@ -21,27 +21,27 @@ type ToolPageProps = {
 const toolPageCopy = {
   en: {
     eyebrow: "Primary commercial page",
-    title: "Use the SaaS Idea Validator tool to validate a SaaS idea before you build",
+    title: "Validate your SaaS idea before you build with the SaaS Idea Validator tool",
     description:
-      "This page is built for founders who want a structured answer to a practical question: does this startup idea deserve more validation, a narrower angle, or a slower rollout before engineering starts?",
+      "Use this SaaS idea validation tool to score demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions before you commit to building.",
     intro: [
-      "SaaS Idea Validator is designed to score one specific idea, not generate dozens of generic suggestions. The tool asks for the buyer, the painful workflow, the current workaround, the pricing angle, the founder advantage, and the path to the first users.",
-      "The output is a validation report you can actually use. It is meant to support interviews, message tests, pricing checks, and small pilots rather than push you straight into product development."
+      "SaaS Idea Validator is built for founders who need a practical answer to a commercial question: is this SaaS idea strong enough to validate further, narrow into a better wedge, or pause before engineering starts?",
+      "The tool scores one specific idea rather than generating generic suggestions. You enter the buyer, painful workflow, current alternative, pricing angle, founder advantage, and early distribution plan, then get a report you can use for interviews, message tests, pricing checks, and a tighter MVP."
     ],
-    whatItDoesTitle: "What the tool does",
+    whatItDoesTitle: "What this SaaS idea validation tool does",
     whatItDoesBody:
-      "The validator scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation readiness. It then turns that score into a report with an executive summary, recommendation, score rationale, risks, differentiation suggestions, a recommended wedge, and suggested experiments.",
-    builtForTitle: "Who it is for",
+      "The validator scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation readiness. It then turns that score into a founder-ready report with an executive summary, recommendation, score rationale, risks, differentiation suggestions, a recommended wedge, and validation experiments.",
+    builtForTitle: "Who should use this SaaS idea validator",
     builtForBody:
       "It is built for indie hackers, solo founders, product-minded developers, and early-stage teams evaluating a SaaS idea, an AI workflow product, or a micro SaaS angle before they commit to a larger build.",
-    inputsTitle: "What inputs improve the report",
+    inputsTitle: "What to enter for a stronger validation report",
     inputsBody:
       "The tool works best when the inputs are concrete: who the buyer is, why the problem matters now, what alternatives exist, what the pricing logic might be, how you can reach the first users, and what evidence you already have.",
-    outputTitle: "What the report includes",
+    outputTitle: "What your SaaS idea validation report includes",
     outputBody:
       "The report includes an overall score, score breakdown, verdict, confidence level, next-step validation plan, risks, differentiation ideas, wedge recommendation, positioning draft, landing page headline, launch channels, and MVP boundaries.",
     useCasesEyebrow: "Sample use cases",
-    useCasesTitle: "The tool is especially useful in these founder moments",
+    useCasesTitle: "When founders use a SaaS idea validation tool",
     useCases: [
       {
         title: "Before building a first MVP",
@@ -60,14 +60,14 @@ const toolPageCopy = {
       }
     ],
     methodologyEyebrow: "Methodology",
-    methodologyTitle: "How founders should use the result",
+    methodologyTitle: "How founders should use a SaaS idea score",
     methodologyPoints: [
       "Treat the score as a decision aid, not a guarantee.",
       "Use the report to decide what to validate next with real buyers.",
       "If the output feels vague, the inputs are usually still too broad.",
       "A high score should lead to stronger proof, not to skipping validation."
     ],
-    relatedTitle: "Keep moving the validation process forward",
+    relatedTitle: "Use examples and guides to pressure-test the result",
     relatedLinks: {
       examples: "Review SaaS idea validation examples",
       guide: "Read the guide to validating a SaaS idea",
@@ -77,9 +77,9 @@ const toolPageCopy = {
     faqTitle: "Questions about the SaaS idea validator tool",
     faqDescription:
       "These questions focus on how to use the tool well, what the report actually means, and where it fits into a real founder workflow.",
-    finalTitle: "Validate your idea, then compare it with real examples",
+    finalTitle: "Run the validator, then compare your result with real examples",
     finalBody:
-      "Run the tool, study the examples library, and use the strongest next-step test before you expand the scope of the product."
+      "Start with your own validation report, then compare it with example reports and pricing guidance before you expand the scope of the product."
   },
   zh: {
     eyebrow: "核心商业页面",
@@ -174,7 +174,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
           schema={[
             softwareApplicationSchema({
               locale: resolvedLocale,
-              description: getUiCopy(resolvedLocale).pageMeta.tool.description,
+              description:
+                resolvedLocale === "zh"
+                  ? pageCopy.description
+                  : "SaaS idea validation tool that scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions.",
               featureList: getUiCopy(resolvedLocale).schema.softwareFeatures,
               path: localizedStaticPath(resolvedLocale, "tool")
             }),
@@ -220,12 +223,24 @@ export default async function ToolPage({ params }: ToolPageProps) {
             </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="#validator-form">
-                {resolvedLocale === "zh" ? "开始验证这个想法" : "Start validating this idea"}
+                {resolvedLocale === "zh" ? "开始验证这个想法" : "Generate my validation report"}
               </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
-                {resolvedLocale === "zh" ? "查看示例报告" : "See example reports"}
+                {resolvedLocale === "zh" ? "查看示例报告" : "See validation examples"}
               </ButtonLink>
             </div>
+            <ul className="mt-6 space-y-3 text-base leading-7 text-slate-600">
+              <li>
+                {resolvedLocale === "zh"
+                  ? "输入买家、问题、替代方案、定价角度和首批用户获取路径。"
+                  : "Enter the buyer, problem, alternatives, pricing angle, and path to the first users."}
+              </li>
+              <li>
+                {resolvedLocale === "zh"
+                  ? "拿到综合得分、关键风险、推荐切口和下一步验证计划。"
+                  : "Get a SaaS idea score, key risks, a sharper wedge, and a next-step validation plan."}
+              </li>
+            </ul>
           </div>
           <div id="validator-form">
             <ToolIdeaForm locale={resolvedLocale} />
@@ -366,7 +381,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
             <p className="mt-4 text-lg leading-8 text-slate-600">{pageCopy.finalBody}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="#validator-form">
-                {resolvedLocale === "zh" ? "开始验证我的想法" : "Validate my idea now"}
+                {resolvedLocale === "zh" ? "开始验证我的想法" : "Create my SaaS idea report"}
               </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                 {resolvedLocale === "zh" ? "查看示例报告" : "See SaaS idea validation examples"}

@@ -121,9 +121,9 @@ export const uiCopy = {
           "Answers to common questions about SaaS Idea Validator, idea scoring, report interpretation, pricing, and founder validation workflows."
       },
       examples: {
-        title: "SaaS Idea Validation Examples and Startup Idea Scoring Reports",
+        title: "SaaS Idea Validation Examples | SaaS Idea Validator",
         description:
-          "Browse SaaS idea validation examples, startup idea scoring reports, and founder-focused breakdowns for AI SaaS, ecommerce SaaS, and vertical SaaS ideas."
+          "Browse SaaS idea validation examples, startup idea scoring reports, and founder-focused breakdowns for micro SaaS, AI SaaS, ecommerce SaaS, and vertical SaaS ideas."
       },
       blog: {
         title: "SaaS Idea Validation Blog and Founder Guides",
@@ -131,9 +131,9 @@ export const uiCopy = {
           "Practical founder guides on how to validate a SaaS idea, micro SaaS ideas, AI SaaS ideas, startup validation, and SaaS pricing validation."
       },
       tool: {
-        title: "SaaS Idea Validation Tool | SaaS Idea Validator",
+        title: "SaaS Idea Validation Tool: Validate Your SaaS Idea Before You Build | SaaS Idea Validator",
         description:
-          "Use the SaaS Idea Validator tool to validate a SaaS idea with scoring for demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions."
+          "Use the SaaS Idea Validator tool to score demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions before you build."
       },
       report: {
         title: "SaaS Idea Validation Report",
