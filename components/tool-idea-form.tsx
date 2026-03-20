@@ -40,7 +40,7 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
             "报告会输出执行摘要、推荐动作、把握度、逐项评分依据、差异化建议、验证实验、获客路径和 MVP 边界。"
         }
       : {
-          title: "Generate a more professional founder-style validation memo",
+          title: "Generate your SaaS idea validation report",
           description:
             "The more specific the input, the stronger the report. Be especially clear about the buyer, the urgency of the pain, why you can win early users, and how you will reach the first 20 customers.",
           idea: "SaaS idea",

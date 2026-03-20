@@ -116,10 +116,10 @@ const homePageCopy = {
     examplesTitle: "Use indexable example reports to compare different startup angles",
     examplesDescription:
       "The examples library is not a gallery of empty cards. Each report explains why an idea scored the way it did, what makes the angle stronger or weaker, and what should be validated next.",
-    categoryLinksTitle: "Explore example and content paths",
-    methodologyTitle2: "Methodology and usage notes",
+    categoryLinksTitle: "Compare SaaS idea examples by category",
+    methodologyTitle2: "How to use your result",
     methodologyDescription2:
-      "SaaS Idea Validator is for founders who need a sharper next move. The score is based on the information you provide about pain, audience, competition, pricing, distribution, and founder context.",
+      "Use the score as a decision aid. It reflects the quality of the inputs you provide about pain, audience, competition, pricing, distribution, and founder context.",
     methodologyPoints: [
       "Use the report as a validation brief, not as permission to build blindly.",
       "Trust the output most when the buyer and workflow are described in concrete terms.",
@@ -127,9 +127,9 @@ const homePageCopy = {
       "A weak score often means the idea needs a narrower audience, a clearer problem, or a more believable pricing angle."
     ],
     resourcesEyebrow: "Explore SaaS idea validation resources",
-    resourcesTitle: "Follow the strongest next path for your research or validation",
+    resourcesTitle: "Explore guides, examples, and validation resources",
     resourcesDescription:
-      "Use the homepage as a hub, then move into deeper guides, example reports, and niche pages that match what you are validating.",
+      "Start with the hub pages that best match the question you are trying to answer, then move into deeper guides and examples.",
     faqEyebrow: "Homepage FAQ",
     faqTitle: "Questions founders ask when validating a SaaS idea",
     faqDescription:
@@ -138,9 +138,9 @@ const homePageCopy = {
     seeTool: "Use the SaaS idea validator",
     resources: {
       guide: "How to validate a SaaS idea",
-      micro: "Micro SaaS idea inspiration",
+      micro: "Micro SaaS ideas",
       aiExamples: "AI SaaS idea validation examples",
-      startup: "Startup idea scoring examples",
+      startup: "SaaS idea scoring examples",
       pricing: "SaaS pricing validation guide",
       checklist: "Founder validation checklist"
     }
@@ -280,6 +280,7 @@ export async function generateMetadata({ params }: HomePageProps) {
 
   return createLocalizedMetadata({
     locale: resolvedLocale,
+    absoluteTitle: copy.pageMeta.home.title,
     title: copy.pageMeta.home.title,
     description: copy.pageMeta.home.description,
     pathname: "/"

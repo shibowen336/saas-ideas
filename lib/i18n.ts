@@ -101,7 +101,7 @@ export const uiCopy = {
     },
     pageMeta: {
       home: {
-        title: "SaaS Idea Validator: Validate Your SaaS Idea Before You Build",
+        title: "Validate Your SaaS Idea Before You Build | SaaS Idea Validator",
         description:
           "Validate a SaaS idea before you build. SaaS Idea Validator scores demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions."
       },
@@ -131,7 +131,7 @@ export const uiCopy = {
           "Practical founder guides on how to validate a SaaS idea, micro SaaS ideas, AI SaaS ideas, startup validation, and SaaS pricing validation."
       },
       tool: {
-        title: "SaaS Idea Validator Tool for Founders",
+        title: "SaaS Idea Validation Tool | SaaS Idea Validator",
         description:
           "Use the SaaS Idea Validator tool to validate a SaaS idea with scoring for demand, competition pressure, audience clarity, monetization, MVP simplicity, and next-step validation actions."
       },

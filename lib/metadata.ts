@@ -13,6 +13,7 @@ type CreateMetadataInput = {
   description: string;
   path: string;
   keywords?: string[];
+  absoluteTitle?: string;
   type?: "website" | "article";
   noIndex?: boolean;
 };
@@ -22,20 +23,22 @@ export function createMetadata({
   description,
   path,
   keywords = [],
+  absoluteTitle,
   type = "website",
   noIndex = false
 }: CreateMetadataInput): Metadata {
   const canonical = absoluteUrl(path);
+  const resolvedTitle = absoluteTitle ?? title;
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: absoluteTitle } : title,
     description,
     ...(keywords.length ? { keywords } : {}),
     alternates: {
       canonical
     },
     openGraph: {
-      title,
+      title: resolvedTitle,
       description,
       url: canonical,
       siteName: siteConfig.name,
@@ -51,7 +54,7 @@ export function createMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: resolvedTitle,
       description,
       images: [absoluteUrl(siteConfig.ogImage)]
     },
@@ -71,6 +74,7 @@ type CreateLocalizedMetadataInput = {
   pathname?: string;
   pathnames?: Record<Locale, string>;
   keywords?: string[];
+  absoluteTitle?: string;
   type?: "website" | "article";
   noIndex?: boolean;
 };
@@ -82,6 +86,7 @@ export function createLocalizedMetadata({
   pathname,
   pathnames,
   keywords = [],
+  absoluteTitle,
   type = "website",
   noIndex = false
 }: CreateLocalizedMetadataInput): Metadata {
@@ -92,14 +97,15 @@ export function createLocalizedMetadata({
       zh: localizedPath("zh", pathname ?? "/")
     };
   const canonical = absoluteUrl(pathByLocale[locale]);
+  const resolvedTitle = absoluteTitle ?? title;
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: absoluteTitle } : title,
     description,
     ...(keywords.length ? { keywords } : {}),
     alternates: buildLanguageAlternates(pathByLocale, locale),
     openGraph: {
-      title,
+      title: resolvedTitle,
       description,
       url: canonical,
       siteName: siteConfig.name,
@@ -116,7 +122,7 @@ export function createLocalizedMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: resolvedTitle,
       description,
       images: [absoluteUrl(siteConfig.ogImage)]
     },

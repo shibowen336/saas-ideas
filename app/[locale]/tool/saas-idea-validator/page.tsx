@@ -152,15 +152,10 @@ export async function generateMetadata({ params }: ToolPageProps) {
 
   return createLocalizedMetadata({
     locale: resolvedLocale,
+    absoluteTitle: copy.pageMeta.tool.title,
     title: copy.pageMeta.tool.title,
     description: copy.pageMeta.tool.description,
-    pathname: "/tool/saas-idea-validator",
-    keywords: [
-      "saas idea validator",
-      "validate saas idea",
-      "saas idea validation tool",
-      "startup idea validator"
-    ]
+    pathname: "/tool/saas-idea-validator"
   });
 }
 
@@ -185,7 +180,13 @@ export default async function ToolPage({ params }: ToolPageProps) {
             }),
             breadcrumbSchema([
               { name: resolvedLocale === "zh" ? "首页" : "Home", path: localizedStaticPath(resolvedLocale, "home") },
-              { name: resolvedLocale === "zh" ? "工具" : "Tool", path: localizedStaticPath(resolvedLocale, "tool") }
+              {
+                name:
+                  resolvedLocale === "zh"
+                    ? "SaaS Idea Validator 工具"
+                    : "SaaS Idea Validator Tool",
+                path: localizedStaticPath(resolvedLocale, "tool")
+              }
             ]),
             faqSchema(faqs)
           ]}
@@ -193,28 +194,36 @@ export default async function ToolPage({ params }: ToolPageProps) {
         <Breadcrumbs
           items={[
             { label: resolvedLocale === "zh" ? "首页" : "Home", href: localizedStaticPath(resolvedLocale, "home") },
-            { label: resolvedLocale === "zh" ? "工具" : "Tool", href: localizedStaticPath(resolvedLocale, "tool") }
+            {
+              label:
+                resolvedLocale === "zh"
+                  ? "SaaS Idea Validator 工具"
+                  : "SaaS Idea Validator Tool",
+              href: localizedStaticPath(resolvedLocale, "tool")
+            }
           ]}
         />
 
         <section className="mt-8 grid gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
-            <SectionHeading
-              eyebrow={pageCopy.eyebrow}
-              title={pageCopy.title}
-              description={pageCopy.description}
-            />
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+              {pageCopy.eyebrow}
+            </p>
+            <h1 className="mt-4 max-w-4xl text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+              {pageCopy.title}
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{pageCopy.description}</p>
             <div className="mt-6 article-copy">
               {pageCopy.intro.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <ButtonLink href="#validator-form">
+                {resolvedLocale === "zh" ? "开始验证这个想法" : "Start validating this idea"}
+              </ButtonLink>
               <ButtonLink href={localizedStaticPath(resolvedLocale, "examples")} variant="secondary">
                 {resolvedLocale === "zh" ? "查看示例报告" : "See example reports"}
-              </ButtonLink>
-              <ButtonLink href={localizedStaticPath(resolvedLocale, "pricing")} variant="ghost">
-                {resolvedLocale === "zh" ? "查看定价" : "Compare plans"}
               </ButtonLink>
             </div>
           </div>
@@ -313,8 +322,30 @@ export default async function ToolPage({ params }: ToolPageProps) {
               <p className="mt-4 leading-7 text-slate-600">
                 {resolvedLocale === "zh"
                   ? `当前示例库包含 ${exampleReports.length} 份结构化报告，可帮助你对照不同方向在需求、竞争和变现上的差异。`
-                  : `The examples library currently includes ${exampleReports.length} structured reports you can use to compare demand, competition, and monetization patterns across ideas.`}
+                  : `The examples library currently includes ${exampleReports.length} structured reports you can use to compare demand, competition, monetization, and wedge strength across different SaaS ideas.`}
               </p>
+              <ul className="mt-5 space-y-3 text-base leading-7 text-slate-600">
+                <li>
+                  <Link href={localizedStaticPath(resolvedLocale, "examples")} className="text-accent hover:underline">
+                    {resolvedLocale === "zh"
+                      ? "查看 SaaS 想法验证示例"
+                      : "Browse SaaS idea validation examples"}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={localizedPath(
+                      resolvedLocale,
+                      `/blog/${validationGuide ? getBlogPostSlug(resolvedLocale, validationGuide) : "how-to-validate-a-saas-idea"}`
+                    )}
+                    className="text-accent hover:underline"
+                  >
+                    {resolvedLocale === "zh"
+                      ? "阅读如何验证 SaaS 想法"
+                      : "Read how to validate a SaaS idea"}
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
