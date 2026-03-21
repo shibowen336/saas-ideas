@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
 import { siteConfig } from "@/lib/site";
@@ -20,6 +20,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  manifest: "/site.webmanifest",
   title: {
     default: "SaaS Idea Validator",
     template: `%s | ${siteConfig.name}`
@@ -34,10 +35,22 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage]
   },
   icons: {
-    icon: "/brand-mark.svg",
-    shortcut: "/brand-mark.svg",
-    apple: "/brand-mark.svg"
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/brand-mark.svg", type: "image/svg+xml" },
+      { url: "/icon-16.png", type: "image/png", sizes: "16x16" },
+      { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png"
   }
+};
+
+export const viewport: Viewport = {
+  themeColor: "#111827"
 };
 
 export default function RootLayout({
