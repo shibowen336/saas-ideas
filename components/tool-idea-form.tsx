@@ -37,7 +37,7 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
           ],
           submit: "生成专业验证报告",
           footnote:
-            "报告会输出执行摘要、推荐动作、把握度、逐项评分依据、差异化建议、验证实验、获客路径和 MVP 边界。"
+            "报告会输出执行摘要、推荐动作、把握度、逐项评分依据、差异化建议、验证实验、获客路径和 MVP 边界。缺失信息会直接降低可信度，不再用默认样例补齐。"
         }
       : {
           title: "Generate your SaaS idea validation report",
@@ -68,7 +68,7 @@ export function ToolIdeaForm({ locale = "en", compact = false }: ToolIdeaFormPro
           ],
           submit: "Generate SaaS Idea Report",
           footnote:
-            "Your report includes an executive summary, score rationale, wedge recommendation, validation experiments, launch channels, and MVP boundaries."
+            "Your report includes an executive summary, score rationale, wedge recommendation, validation experiments, launch channels, and MVP boundaries. Missing inputs now lower confidence instead of being padded with sample data."
         };
 
   return (

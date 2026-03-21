@@ -1,7 +1,10 @@
 import type { Locale } from "@/lib/i18n";
 import type { ValidationReport } from "@/lib/report";
 
-export type ExampleReport = ValidationReport & {
+export type ExampleReport = Omit<
+  ValidationReport,
+  "inputCompletenessScore" | "missingInputs" | "methodologyNotes" | "confidenceFactors" | "uncertaintyNotes"
+> & {
   slug: string;
   category: string;
   summary: string;

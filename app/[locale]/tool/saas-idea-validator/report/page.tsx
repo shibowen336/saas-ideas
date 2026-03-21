@@ -5,7 +5,7 @@ import { ScoreGrid } from "@/components/score-grid";
 import { ButtonLink } from "@/components/ui/button-link";
 import { getUiCopy, isLocale, localizedStaticPath } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/metadata";
-import { buildValidationReport } from "@/lib/report";
+import { buildValidationReportWithResearch } from "@/lib/report";
 import { breadcrumbSchema } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/site";
 
@@ -55,7 +55,7 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
   const { locale } = await params;
   const resolvedLocale = isLocale(locale) ? locale : "en";
   const query = await searchParams;
-  const report = buildValidationReport(
+  const report = await buildValidationReportWithResearch(
     {
       idea: firstValue(query.idea),
       targetCustomer: firstValue(query.targetCustomer),
@@ -77,6 +77,11 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
   const validationExperiments = report.validationExperiments ?? [];
   const mvpMustHave = report.mvpMustHave ?? [];
   const mvpAvoidNow = report.mvpAvoidNow ?? [];
+  const methodologyNotes = report.methodologyNotes ?? [];
+  const confidenceFactors = report.confidenceFactors ?? [];
+  const uncertaintyNotes = report.uncertaintyNotes ?? [];
+  const missingInputs = report.missingInputs ?? [];
+  const research = report.researchSummary;
   const reportUrl = absoluteUrl(
     `${localizedStaticPath(resolvedLocale, "report")}?${toSearchParams(query).toString()}`
   );
@@ -90,6 +95,8 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
           eyebrow: "创始人验证备忘录",
           title: "你的 SaaS 想法验证备忘录",
           overall: "综合得分",
+          completeness: "输入完整度",
+          analysisMode: "分析模式",
           confidence: "当前把握度",
           recommendation: "当前推荐动作",
           summary: "执行摘要",
@@ -118,7 +125,20 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
           mvpNow: "第一版必须包含",
           mvpLater: "现在不要做",
           nextSteps: "接下来 2 周最值得做的动作",
-          risks: "关键风险"
+          risks: "关键风险",
+          methodology: "这份报告是怎么得出的",
+          research: "外部研究信号",
+          researchHighlights: "外部研究摘要",
+          researchSources: "参考来源",
+          communitySignal: "社区讨论信号",
+          pricingSignal: "定价/ROI 信号",
+          marketCrowding: "竞争拥挤度",
+          uncertainty: "当前不确定性",
+          confidenceFactors: "哪些输入提高了可信度",
+          missingInputs: "哪些缺失字段削弱了判断",
+          analysisModeRules: "规则评分",
+          analysisModeResearch: "规则评分 + 外部研究",
+          analysisModeAi: "规则评分 + 外部研究 + AI 解释"
         }
       : {
           home: "Home",
@@ -127,6 +147,8 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
           eyebrow: "Founder validation memo",
           title: "Your SaaS idea validation memo",
           overall: "Overall score",
+          completeness: "Input coverage",
+          analysisMode: "Analysis mode",
           confidence: "Current confidence",
           recommendation: "Recommended next move",
           summary: "Executive summary",
@@ -155,8 +177,28 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
           mvpNow: "Must-have in v1",
           mvpLater: "Do not build yet",
           nextSteps: "Best next actions for the next 2 weeks",
-          risks: "Key risks"
+          risks: "Key risks",
+          methodology: "How this report was generated",
+          research: "External research signals",
+          researchHighlights: "Research highlights",
+          researchSources: "Sources reviewed",
+          communitySignal: "Community signal",
+          pricingSignal: "Pricing / ROI signal",
+          marketCrowding: "Market crowding",
+          uncertainty: "Current uncertainty",
+          confidenceFactors: "What increased confidence",
+          missingInputs: "Missing inputs that weaken the report",
+          analysisModeRules: "Rules only",
+          analysisModeResearch: "Rules + external research",
+          analysisModeAi: "Rules + external research + AI"
         };
+
+  const analysisModeLabel =
+    report.analysisMode === "rules+research+ai"
+      ? pageCopy.analysisModeAi
+      : report.analysisMode === "rules+research"
+        ? pageCopy.analysisModeResearch
+        : pageCopy.analysisModeRules;
 
   return (
     <main className="section-space">
@@ -181,6 +223,9 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
               {pageCopy.eyebrow}
             </p>
+            <p className="mt-3 inline-flex rounded-full bg-sand px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-700">
+              {pageCopy.analysisMode}: {analysisModeLabel}
+            </p>
             <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
               {pageCopy.title}
             </h1>
@@ -192,13 +237,20 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
                 <p className="mt-2 text-5xl font-semibold tracking-tight">{report.overallScore}/100</p>
               </div>
               <div className="rounded-[1.75rem] bg-sand p-6">
+                <p className="text-sm font-medium text-slate-500">{pageCopy.completeness}</p>
+                <p className="mt-2 text-xl font-semibold text-slate-950">
+                  {report.inputCompletenessScore}/100
+                </p>
+              </div>
+              <div className="rounded-[1.75rem] border border-slate-200 p-6">
                 <p className="text-sm font-medium text-slate-500">{pageCopy.confidence}</p>
                 <p className="mt-2 text-xl font-semibold text-slate-950">{report.confidenceLabel}</p>
               </div>
-              <div className="rounded-[1.75rem] border border-slate-200 p-6">
-                <p className="text-sm font-medium text-slate-500">{pageCopy.recommendation}</p>
-                <p className="mt-2 text-xl font-semibold text-slate-950">{report.recommendation}</p>
-              </div>
+            </div>
+
+            <div className="mt-4 rounded-[1.75rem] border border-slate-200 p-6">
+              <p className="text-sm font-medium text-slate-500">{pageCopy.recommendation}</p>
+              <p className="mt-2 text-xl font-semibold text-slate-950">{report.recommendation}</p>
             </div>
 
             <div className="mt-8">
@@ -256,6 +308,105 @@ export default async function ReportPage({ params, searchParams }: ReportPagePro
             />
           </div>
         </section>
+
+        <section className="mt-10 grid gap-6 lg:grid-cols-2">
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.methodology}</h2>
+            <ul className="mt-4 space-y-3 text-slate-700">
+              {methodologyNotes.map((item) => (
+                <li key={item}>• {item}</li>
+              ))}
+            </ul>
+
+            <h3 className="mt-8 text-lg font-semibold text-slate-950">{pageCopy.confidenceFactors}</h3>
+            <ul className="mt-3 space-y-3 text-slate-700">
+              {confidenceFactors.map((item) => (
+                <li key={item}>• {item}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="surface-card p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.uncertainty}</h2>
+            <ul className="mt-4 space-y-3 text-slate-700">
+              {uncertaintyNotes.map((item) => (
+                <li key={item}>• {item}</li>
+              ))}
+            </ul>
+
+            {missingInputs.length > 0 ? (
+              <>
+                <h3 className="mt-8 text-lg font-semibold text-slate-950">{pageCopy.missingInputs}</h3>
+                <ul className="mt-3 space-y-3 text-slate-700">
+                  {missingInputs.map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </article>
+        </section>
+
+        {research ? (
+          <section className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <article className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.research}</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-[1.5rem] border border-slate-200 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    {pageCopy.communitySignal}
+                  </p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-950">
+                    {research.communitySignalScore}/100
+                  </p>
+                </div>
+                <div className="rounded-[1.5rem] border border-slate-200 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    {pageCopy.marketCrowding}
+                  </p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-950">
+                    {research.competitionSignalScore}/100
+                  </p>
+                </div>
+                <div className="rounded-[1.5rem] border border-slate-200 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    {pageCopy.pricingSignal}
+                  </p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-950">
+                    {research.pricingSignalScore}/100
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="mt-8 text-lg font-semibold text-slate-950">{pageCopy.researchHighlights}</h3>
+              <ul className="mt-3 space-y-3 text-slate-700">
+                {research.highlights.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">{pageCopy.researchSources}</h2>
+              <div className="mt-5 space-y-4">
+                {research.sources.map((item) => (
+                  <a
+                    key={`${item.source}-${item.url}`}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block rounded-[1.5rem] border border-slate-200 p-4 transition hover:border-accent"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                      {item.source}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold text-slate-950">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{item.snippet}</p>
+                  </a>
+                ))}
+              </div>
+            </article>
+          </section>
+        ) : null}
 
         <section className="mt-10 grid gap-6 lg:grid-cols-2">
           <article className="surface-card p-8">

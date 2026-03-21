@@ -3,7 +3,7 @@ import { ReportEmailForm } from "@/components/report-email-form";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { ButtonLink } from "@/components/ui/button-link";
-import { buildValidationReport } from "@/lib/report";
+import { buildValidationReportWithResearch } from "@/lib/report";
 import { createMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
 
@@ -42,12 +42,16 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
     }
   });
 
-  const report = buildValidationReport({
+  const report = await buildValidationReportWithResearch({
     idea: firstValue(params.idea),
     targetCustomer: firstValue(params.targetCustomer),
     problem: firstValue(params.problem),
     pricingIdea: firstValue(params.pricingIdea),
-    currentAlternatives: firstValue(params.currentAlternatives)
+    currentAlternatives: firstValue(params.currentAlternatives),
+    founderAdvantage: firstValue(params.founderAdvantage),
+    distributionPlan: firstValue(params.distributionPlan),
+    evidence: firstValue(params.evidence),
+    ideaStage: firstValue(params.ideaStage)
   });
   const reportUrl = `/en/tool/saas-idea-validator/report${reportUrlSearch.toString() ? `?${reportUrlSearch.toString()}` : ""}`;
 
@@ -73,6 +77,13 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
           <div className="surface-card p-8 sm:p-10">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
               Validation report
+            </p>
+            <p className="mt-3 inline-flex rounded-full bg-sand px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-700">
+              {report.analysisMode === "rules+research+ai"
+                ? "Rules + external research + AI"
+                : report.analysisMode === "rules+research"
+                  ? "Rules + external research"
+                  : "Rules only"}
             </p>
             <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
               Your SaaS idea validation report
@@ -130,6 +141,45 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
             ]}
           />
         </section>
+
+        {report.researchSummary ? (
+          <section className="mt-10 grid gap-6 lg:grid-cols-2">
+            <article className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">How this report was generated</h2>
+              <ul className="mt-4 space-y-3 text-slate-700">
+                {report.methodologyNotes.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
+              <h3 className="mt-8 text-lg font-semibold text-slate-950">External research highlights</h3>
+              <ul className="mt-3 space-y-3 text-slate-700">
+                {report.researchSummary.highlights.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="surface-card p-8">
+              <h2 className="text-2xl font-semibold text-slate-950">Sources reviewed</h2>
+              <div className="mt-5 space-y-4">
+                {report.researchSummary.sources.map((item) => (
+                  <a
+                    key={`${item.source}-${item.url}`}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block rounded-[1.5rem] border border-slate-200 p-4 transition hover:border-accent"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                      {item.source}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold text-slate-950">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{item.snippet}</p>
+                  </a>
+                ))}
+              </div>
+            </article>
+          </section>
+        ) : null}
 
         <section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="space-y-6">
