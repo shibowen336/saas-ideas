@@ -798,6 +798,240 @@ export const blogPosts: BlogPost[] = [
     ctaTitle: "Pressure-test your pricing logic with the validator",
     ctaCopy:
       "Use SaaS Idea Validator to score demand, monetization potential, and buyer clarity before you decide how to price the product."
+  },
+  {
+    slug: "how-to-know-if-a-saas-idea-is-worth-building",
+    title: "How to Know If a SaaS Idea Is Worth Building",
+    description:
+      "Learn how founders can decide whether a SaaS idea is worth building by checking buyer pain, alternatives, pricing logic, and MVP scope before coding.",
+    date: "March 22, 2026",
+    publishedTime: "2026-03-22T08:00:00.000Z",
+    readingTime: "9 min read",
+    category: "Validation",
+    keywords: [
+      "is a saas idea worth building",
+      "validate saas idea",
+      "saas idea validator"
+    ],
+    intro: [
+      "A lot of SaaS ideas sound promising in a notes app and fall apart the moment you ask who the buyer is, what the workaround costs, and why anyone should pay now. That is normal. The goal is not to fall in love with every idea. The goal is to find out which ones deserve deeper validation before engineering starts.",
+      "If you are trying to decide whether an idea is worth building, you need a better filter than excitement. You need a practical way to judge buyer pain, competition pressure, monetization, and how small the first version can stay."
+    ],
+    outline: [
+      "Start with the buyer and the painful workflow",
+      "Check whether the workaround already costs money or time",
+      "Ask whether the niche is reachable",
+      "Pressure-test monetization before product depth",
+      "Decide whether to build, narrow, or pause"
+    ],
+    sections: [
+      {
+        title: "1. Start with a buyer and a painful workflow",
+        paragraphs: [
+          "An idea is not worth building because it sounds clever. It becomes worth building when one specific type of buyer has a recurring workflow that is frustrating, slow, risky, or expensive enough to fix.",
+          "If the audience is still defined as startups, small businesses, or creators, the idea is usually too broad. Worth-building ideas usually begin with a narrower statement such as Shopify brands with high refund volume, recruiters sourcing passive candidates, or agencies producing recurring client reports."
+        ]
+      },
+      {
+        title: "2. Look for evidence that the problem already has a cost",
+        paragraphs: [
+          "Strong SaaS ideas usually sit on top of a problem that already costs time, money, missed revenue, or operational drag. Weak ideas often describe something that would be nice to automate, but not painful enough to change behavior.",
+          "Ask what buyers do today, who touches the workflow, how often the issue appears, and what happens when it goes wrong. If the current workaround already burns hours or budget, that is a much better sign than polite interest."
+        ]
+      },
+      {
+        title: "3. Make sure the niche is reachable before you worry about scale",
+        paragraphs: [
+          "A worth-building SaaS idea should not only have a buyer. It should have a buyer you can actually reach. If you do not know where the first 20 users will come from, the idea is not ready for a serious build yet.",
+          "Reachability usually comes from one of three places: direct founder access to the niche, a clear community or channel, or a workflow where potential buyers naturally search for help. Distribution clarity is part of idea quality."
+        ]
+      },
+      {
+        title: "4. Check whether monetization and MVP scope still make sense together",
+        paragraphs: [
+          "Founders often judge ideas only on demand. That is not enough. A workable SaaS idea also needs believable pricing logic and a small enough first version. If the MVP is broad and expensive to support, but the likely price point is low, the idea may be structurally weak.",
+          "The best early ideas usually have a clear wedge. One buyer. One painful use case. One promised outcome. That combination makes both pricing and validation easier."
+        ]
+      },
+      {
+        title: "5. Decide whether to build, narrow, or pause",
+        paragraphs: [
+          "Most ideas do not need a yes-or-no verdict. They need the right next move. If buyer pain is real but the audience is broad, narrow the niche. If the pain is weak, pause and keep exploring. If the pain is strong, the niche is reachable, and the MVP can stay small, then the idea may deserve a pilot or early build.",
+          "This is where structured scoring helps. A good first-pass validator can show whether you should validate harder, tighten the wedge, or stop before you waste months building the wrong product."
+        ]
+      }
+    ],
+    faq: [
+      {
+        question: "What makes a SaaS idea worth building?",
+        answer:
+          "Usually four things: a clear buyer, a painful workflow, a reachable niche, and believable monetization for a small first version."
+      },
+      {
+        question: "Does a strong idea mean I should build immediately?",
+        answer:
+          "Not necessarily. A strong idea usually deserves deeper validation first, such as interviews, landing page tests, or a narrow pilot."
+      }
+    ],
+    ctaTitle: "Check whether your idea deserves deeper validation",
+    ctaCopy:
+      "Run your idea through SaaS Idea Validator to score demand, buyer clarity, competition pressure, and the next validation steps before you build."
+  },
+  {
+    slug: "free-saas-idea-validation-template",
+    title: "Free SaaS Idea Validation Template for Founders",
+    description:
+      "Use this free SaaS idea validation template to assess buyer pain, niche clarity, pricing logic, alternatives, and next-step experiments before building.",
+    date: "March 22, 2026",
+    publishedTime: "2026-03-22T09:00:00.000Z",
+    readingTime: "8 min read",
+    category: "Templates",
+    keywords: [
+      "saas idea validation template",
+      "startup idea validation template",
+      "validate saas idea"
+    ],
+    intro: [
+      "Most founders do not need more idea generation. They need a better way to pressure-test the ideas they already have. A simple validation template helps because it turns vague enthusiasm into concrete questions about buyer pain, alternatives, pricing, distribution, and proof.",
+      "This template is built for early-stage SaaS founders, indie hackers, and solo builders who want to evaluate an idea before committing to a full roadmap."
+    ],
+    outline: [
+      "Define the idea in one sentence",
+      "Clarify the buyer and painful job",
+      "Write down alternatives and pricing logic",
+      "List evidence and missing proof",
+      "Choose the next validation experiment"
+    ],
+    sections: [
+      {
+        title: "1. Start with a one-sentence idea statement",
+        paragraphs: [
+          "A useful validation template begins with forced clarity. Write one sentence that explains who the buyer is, what problem they have, and what result your product promises.",
+          "If that sentence is hard to write, the problem is usually not the template. The problem is that the idea is still too broad. That is already valuable signal."
+        ]
+      },
+      {
+        title: "2. Capture the buyer, the job, and the current workaround",
+        paragraphs: [
+          "The strongest part of any idea validation template is the section that forces you to name the buyer and the current alternative. Most products do not fail because there was no problem. They fail because the founder did not understand who feels it most and what they already use today.",
+          "Write down the buyer segment, the painful workflow, the current workaround, and what that workaround costs in time, money, or missed opportunity."
+        ]
+      },
+      {
+        title: "3. Add pricing logic before you add feature depth",
+        paragraphs: [
+          "Good templates ask pricing questions early because pricing reveals whether the idea can become a business. What would the buyer be paying for: saved time, lower risk, higher revenue, or fewer mistakes?",
+          "If you cannot explain why a buyer would pay, the right move is not more features. It is usually more validation."
+        ]
+      },
+      {
+        title: "4. Separate evidence from assumptions",
+        paragraphs: [
+          "A founder-friendly template should clearly distinguish facts from guesses. Interviews, pilot requests, budget conversations, and message-test results belong in the evidence column. Unproven beliefs about demand or willingness to pay stay in the assumption column.",
+          "This separation is useful because it shows whether you are ready to build or whether you still need better proof."
+        ]
+      },
+      {
+        title: "5. End with one next validation action",
+        paragraphs: [
+          "Every good template should end with a single next step. That might be five interviews, a landing page test, a manual pilot, or a pricing conversation. The goal is not to create perfect documentation. The goal is to decide what you should validate next.",
+          "If you want the template in a more structured format, a SaaS idea validation tool can turn the same inputs into a scored report with risks, wedge ideas, and a practical next-step plan."
+        ]
+      }
+    ],
+    faq: [
+      {
+        question: "What should a SaaS idea validation template include?",
+        answer:
+          "At minimum: the idea statement, buyer segment, painful problem, current alternatives, pricing logic, evidence, risks, and the next validation action."
+      },
+      {
+        question: "Is a template enough to validate a SaaS idea?",
+        answer:
+          "No. A template helps you think clearly, but you still need real-world proof through interviews, pilots, message tests, or pricing conversations."
+      }
+    ],
+    ctaTitle: "Turn the template into a scored validation report",
+    ctaCopy:
+      "Use SaaS Idea Validator to convert your buyer, problem, alternatives, and pricing notes into a structured report with scores and next-step validation actions."
+  },
+  {
+    slug: "validate-saas-idea-with-landing-page-tests",
+    title: "Validate Your SaaS Idea With Landing Page Tests",
+    description:
+      "Learn how founders can validate a SaaS idea with landing page tests, clearer positioning, stronger CTAs, and the right early conversion signals.",
+    date: "March 22, 2026",
+    publishedTime: "2026-03-22T10:00:00.000Z",
+    readingTime: "9 min read",
+    category: "Experiments",
+    keywords: [
+      "validate saas idea landing page",
+      "landing page test for saas idea",
+      "saas idea validation"
+    ],
+    intro: [
+      "Landing page tests are one of the fastest ways to validate a SaaS idea without building a full product. They help founders test whether the buyer understands the problem, cares about the promise, and is willing to take a meaningful next step.",
+      "A landing page will not prove the business on its own, but it can reveal whether your positioning is clear enough, whether the wedge is narrow enough, and whether the audience responds to the commercial story."
+    ],
+    outline: [
+      "Choose one buyer and one promise",
+      "Build a page that tests message, not design",
+      "Use a CTA that reflects real intent",
+      "Measure the right signals",
+      "Turn results into a better validation plan"
+    ],
+    sections: [
+      {
+        title: "1. Start with one buyer and one promised outcome",
+        paragraphs: [
+          "The best landing page tests are narrow. One segment. One painful workflow. One clear promise. If you try to appeal to multiple audiences or stack several outcomes on one page, the result becomes hard to interpret.",
+          "A better page might say \"Support triage for Shopify brands with high refund volume\" instead of \"AI support platform for ecommerce teams.\" Narrow positioning is easier to test and easier to improve."
+        ]
+      },
+      {
+        title: "2. Test the message before you optimize the page design",
+        paragraphs: [
+          "Founders often over-focus on design polish. For validation, the message matters more. Can the visitor quickly understand who the page is for, what problem it solves, and why the result matters?",
+          "A useful landing page test should make the idea legible, not beautiful. A strong headline, one clear CTA, and practical supporting copy are more valuable than visual complexity."
+        ]
+      },
+      {
+        title: "3. Match the CTA to the level of proof you want",
+        paragraphs: [
+          "The CTA determines what you are really measuring. A waitlist signup measures weak interest. An interview request measures stronger curiosity. A pilot application or pricing conversation measures more serious intent.",
+          "Choose the CTA based on your stage. If the idea is still early, interview bookings may be the right goal. If you already know the buyer well, pilot requests may be a better signal."
+        ]
+      },
+      {
+        title: "4. Read the right signals from the test",
+        paragraphs: [
+          "Traffic alone does not validate anything. Look for the right kind of response: qualified clicks, replies from the intended niche, conversion on a focused CTA, and message resonance in follow-up conversations.",
+          "Weak conversion can mean several different things. The buyer may be wrong, the problem may not be urgent, or the page may still be too broad. That is why landing page tests are most useful when paired with interviews and structured scoring."
+        ]
+      },
+      {
+        title: "5. Use the results to decide the next experiment",
+        paragraphs: [
+          "The landing page is not the end of validation. It is a filter. If the message resonates, move into interviews, pricing conversations, or a manual pilot. If the response is weak, tighten the audience or change the promise before you build more.",
+          "Founders get the most value when they compare landing page performance with a broader idea score that also considers competition, monetization, and MVP simplicity."
+        ]
+      }
+    ],
+    faq: [
+      {
+        question: "Can a landing page validate a SaaS idea on its own?",
+        answer:
+          "Not fully. It can validate message resonance and early interest, but strong validation still requires interviews, pricing conversations, or pilot behavior."
+      },
+      {
+        question: "What CTA should I use on an early landing page test?",
+        answer:
+          "Use the CTA that best matches your stage: waitlist signup for weak interest, interview booking for discovery, or pilot request for stronger commercial intent."
+      }
+    ],
+    ctaTitle: "Score the idea before you test the landing page",
+    ctaCopy:
+      "Use SaaS Idea Validator to assess buyer clarity, competition, monetization, and MVP scope before you invest time in a landing page experiment."
   }
 ];
 

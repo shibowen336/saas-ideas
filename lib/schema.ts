@@ -25,6 +25,13 @@ type BlogSchemaInput = {
   modifiedTime?: string;
 };
 
+type ArticleSchemaInput = {
+  locale: Locale;
+  title: string;
+  description: string;
+  path: string;
+};
+
 export function organizationSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
@@ -140,6 +147,30 @@ export function blogPostingSchema({
     description,
     datePublished: publishedTime,
     dateModified: modifiedTime ?? publishedTime,
+    mainEntityOfPage: absoluteUrl(path),
+    inLanguage: locale === "zh" ? "zh-CN" : "en",
+    author: {
+      "@type": "Organization",
+      name: siteConfig.name
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/brand-mark.svg")
+      }
+    },
+    image: absoluteUrl(siteConfig.ogImage)
+  };
+}
+
+export function articleSchema({ locale, title, description, path }: ArticleSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
     mainEntityOfPage: absoluteUrl(path),
     inLanguage: locale === "zh" ? "zh-CN" : "en",
     author: {

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { blogPosts, getBlogPostSlug } from "@/content/blog-posts";
+import { exampleReports, getExampleReportSlug } from "@/content/example-reports";
 import { programmaticPages, getProgrammaticPageSlug } from "@/content/programmatic-pages";
 import { locales, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
@@ -11,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       [
         localizedStaticPath(locale, "home"),
         localizedStaticPath(locale, "tool"),
-        localizedStaticPath(locale, "report"),
         localizedStaticPath(locale, "examples"),
         localizedStaticPath(locale, "faq"),
         localizedStaticPath(locale, "about"),
@@ -26,6 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
           priority: route.endsWith(`/${locale}`) ? 1 : 0.8
         };
       })
+    ),
+    ...locales.flatMap((locale) =>
+      exampleReports.map((report) => ({
+        url: absoluteUrl(localizedPath(locale, `/examples/${getExampleReportSlug(locale, report)}`)),
+        changeFrequency: "monthly" as const,
+        priority: 0.72
+      }))
     ),
     ...locales.flatMap((locale) =>
       blogPosts.map((post) => ({

@@ -88,7 +88,9 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
 
   const contentHubs = [
     "how-to-validate-a-saas-idea",
+    "how-to-know-if-a-saas-idea-is-worth-building",
     "saas-idea-validation-checklist",
+    "validate-saas-idea-with-landing-page-tests",
     "micro-saas-ideas",
     "ai-saas-ideas",
     "saas-pricing-validation"

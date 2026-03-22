@@ -1,9 +1,11 @@
+import Link from "next/link";
+
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SchemaScript } from "@/components/schema-script";
 import { ScoreGrid } from "@/components/score-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { ButtonLink } from "@/components/ui/button-link";
-import { exampleReports } from "@/content/example-reports";
+import { exampleReports, getExampleReportSlug } from "@/content/example-reports";
 import { createMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
 
@@ -47,7 +49,11 @@ export default function ExamplesPage() {
                     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                       {report.category}
                     </p>
-                    <h2 className="mt-3 text-3xl font-semibold text-slate-950">{report.idea}</h2>
+                    <h2 className="mt-3 text-3xl font-semibold text-slate-950">
+                      <Link href={`/examples/${getExampleReportSlug("en", report)}`} className="hover:text-accent">
+                        {report.idea}
+                      </Link>
+                    </h2>
                     <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{report.summary}</p>
                   </div>
                   <div className="rounded-[1.5rem] bg-slate-950 px-6 py-5 text-white">
@@ -113,6 +119,11 @@ export default function ExamplesPage() {
                       </ul>
                     </section>
                   </div>
+                </div>
+                <div className="mt-8">
+                  <ButtonLink href={`/examples/${getExampleReportSlug("en", report)}`} variant="secondary">
+                    Read the full example report
+                  </ButtonLink>
                 </div>
               </div>
             </article>

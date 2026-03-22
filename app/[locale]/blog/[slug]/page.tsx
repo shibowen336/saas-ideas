@@ -73,6 +73,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           home: "首页",
           blog: "博客",
           outline: "文章提纲",
+          quickStartTitle: "先做快速判断",
+          quickStartPrefix: "如果你已经在比较方向，可以先",
+          quickStartTool: "用 SaaS 想法验证工具",
+          quickStartMiddle: "给想法做一次评估，再去",
+          quickStartExamples: "对照验证示例",
+          quickStartSuffix: "，看看不同方向在需求、竞争和变现上的差异。",
           useTool: "使用工具",
           examplesTitle: "查看 SaaS 想法验证示例",
           pricingTitle: "阅读 SaaS 定价验证指南",
@@ -86,6 +92,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           home: "Home",
           blog: "Blog",
           outline: "Article outline",
+          quickStartTitle: "Quick start",
+          quickStartPrefix: "If you are actively comparing directions,",
+          quickStartTool: "use the SaaS idea validation tool",
+          quickStartMiddle: "to score your idea first, then",
+          quickStartExamples: "review SaaS idea validation examples",
+          quickStartSuffix: "to compare how different startup angles look on demand, competition, and monetization.",
           useTool: "Use the tool",
           examplesTitle: "See SaaS idea validation examples",
           pricingTitle: "Read the SaaS pricing validation guide",
@@ -188,6 +200,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </aside>
 
             <div className="space-y-10">
+              <section className="surface-card p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+                  {pageCopy.quickStartTitle}
+                </p>
+                <p className="mt-4 text-lg leading-8 text-slate-600">
+                  {pageCopy.quickStartPrefix}{" "}
+                  <Link
+                    href={localizedStaticPath(resolvedLocale, "tool")}
+                    className="font-semibold text-accent hover:text-accent/80"
+                  >
+                    {pageCopy.quickStartTool}
+                  </Link>{" "}
+                  {pageCopy.quickStartMiddle}{" "}
+                  <Link
+                    href={localizedStaticPath(resolvedLocale, "examples")}
+                    className="font-semibold text-accent hover:text-accent/80"
+                  >
+                    {pageCopy.quickStartExamples}
+                  </Link>{" "}
+                  {pageCopy.quickStartSuffix}
+                </p>
+              </section>
               <section className="surface-card p-8">
                 {localizedPost.intro.map((paragraph) => (
                   <p key={paragraph} className="article-copy">

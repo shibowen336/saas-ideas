@@ -393,3 +393,24 @@ export function getLocalizedExampleReport(report: ExampleReport, locale: Locale)
     longFormInsights: translation?.longFormInsights ?? report.longFormInsights
   };
 }
+
+function normalizeIncomingSlug(slug: string) {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
+export function getExampleReport(slug: string) {
+  const normalizedSlug = normalizeIncomingSlug(slug);
+  return exampleReports.find((report) => report.slug === normalizedSlug);
+}
+
+export function getExampleReportByLocaleSlug(_locale: Locale, slug: string) {
+  return getExampleReport(slug);
+}
+
+export function getExampleReportSlug(_locale: Locale, report: ExampleReport) {
+  return report.slug;
+}

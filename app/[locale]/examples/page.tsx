@@ -6,7 +6,11 @@ import { ScoreGrid } from "@/components/score-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { ButtonLink } from "@/components/ui/button-link";
 import { blogPosts, getBlogPostSlug } from "@/content/blog-posts";
-import { exampleReports, getLocalizedExampleReport } from "@/content/example-reports";
+import {
+  exampleReports,
+  getExampleReportSlug,
+  getLocalizedExampleReport
+} from "@/content/example-reports";
 import { getProgrammaticPageSlug, programmaticPages } from "@/content/programmatic-pages";
 import { getUiCopy, isLocale, localizedPath, localizedStaticPath } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/metadata";
@@ -28,6 +32,7 @@ const copy = {
       "Use these reports to compare ideas, then run your own SaaS idea through the validator to see which direction deserves deeper validation.",
     supportPrimary: "Validate a SaaS idea now",
     supportSecondary: "Read the validation guide",
+    detailCta: "Read the full example report",
     clusterEyebrow: "Browse by intent",
     clusterTitle: "Browse SaaS idea examples by category and validation intent",
     overall: "Overall score",
@@ -67,6 +72,7 @@ const copy = {
       "先用这些报告对比方向，再把你自己的 SaaS 想法放进验证工具，看看哪个方向更值得继续推进。",
     supportPrimary: "现在就开始验证",
     supportSecondary: "阅读验证指南",
+    detailCta: "阅读完整示例报告",
     clusterEyebrow: "按研究意图浏览",
     clusterTitle: "从你正在研究的 SaaS 方向进入对应内容",
     overall: "综合得分",
@@ -159,7 +165,13 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
         resolvedLocale === "zh"
           ? "对照电商 SaaS 在需求、变现和分发上的强弱。"
           : "Compare ecommerce SaaS ideas where demand, monetization, and distribution are easier to pressure-test.",
-      href: "#shopify-onboarding-assistant"
+      href: localizedPath(
+        resolvedLocale,
+        `/examples/${getExampleReportSlug(
+          resolvedLocale,
+          exampleReports.find((report) => report.slug === "shopify-onboarding-assistant") ?? exampleReports[0]
+        )}`
+      )
     },
     {
       title: resolvedLocale === "zh" ? "SaaS 想法评分示例" : "SaaS idea scoring examples",
@@ -167,13 +179,16 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
         resolvedLocale === "zh"
           ? "直接查看完整评分报告，理解不同方向为什么得分不同。"
           : "Review full scoring reports to see why different startup ideas earn different recommendations.",
-      href: "#examples-list"
+      href: localizedPath(
+        resolvedLocale,
+        `/examples/${getExampleReportSlug(resolvedLocale, exampleReports[0])}`
+      )
     }
   ];
 
   const exampleListItems = exampleReports.map((report) => ({
     name: getLocalizedExampleReport(report, resolvedLocale).idea,
-    url: `${localizedStaticPath(resolvedLocale, "examples")}#${report.slug}`
+    url: localizedPath(resolvedLocale, `/examples/${getExampleReportSlug(resolvedLocale, report)}`)
   }));
 
   return (
@@ -236,6 +251,10 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
         <div id="examples-list" className="mt-12 space-y-10">
           {exampleReports.map((report) => {
             const localizedReport = getLocalizedExampleReport(report, resolvedLocale);
+            const reportHref = localizedPath(
+              resolvedLocale,
+              `/examples/${getExampleReportSlug(resolvedLocale, report)}`
+            );
 
             return (
               <article key={report.slug} id={report.slug} className="surface-card overflow-hidden scroll-mt-28">
@@ -245,7 +264,11 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                       <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
                         {localizedReport.category}
                       </p>
-                      <h2 className="mt-3 text-3xl font-semibold text-slate-950">{localizedReport.idea}</h2>
+                      <h2 className="mt-3 text-3xl font-semibold text-slate-950">
+                        <Link href={reportHref} className="hover:text-accent">
+                          {localizedReport.idea}
+                        </Link>
+                      </h2>
                       <p className="mt-4 text-base leading-7 text-slate-600">
                         <span className="font-semibold text-slate-950">{page.reportContext}:</span>{" "}
                         {localizedReport.targetCustomer}. {localizedReport.problem}
@@ -317,6 +340,9 @@ export default async function ExamplesPage({ params }: ExamplesPageProps) {
                     <h3 className="text-xl font-semibold text-slate-950">{page.related}</h3>
                     <p className="mt-4 text-base leading-7 text-slate-600">{page.relatedBody}</p>
                     <div className="mt-6 flex flex-col gap-3">
+                      <ButtonLink href={reportHref} variant="secondary">
+                        {page.detailCta}
+                      </ButtonLink>
                       <ButtonLink href={localizedStaticPath(resolvedLocale, "tool")}>{page.relatedTool}</ButtonLink>
                       <ButtonLink
                         href={localizedPath(
